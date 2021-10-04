@@ -1,16 +1,16 @@
-package ucm.appmenus.ui.home;
+package ucm.appmenus.ui.filtros;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class InicioViewModel extends ViewModel {
+public class FiltrosViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public InicioViewModel() {
+    public FiltrosViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("This is dashboard fragment");
     }
 
     public LiveData<String> getText() {

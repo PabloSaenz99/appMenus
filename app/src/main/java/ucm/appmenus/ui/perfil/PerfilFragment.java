@@ -1,4 +1,4 @@
-package ucm.appmenus.ui.notifications;
+package ucm.appmenus.ui.perfil;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

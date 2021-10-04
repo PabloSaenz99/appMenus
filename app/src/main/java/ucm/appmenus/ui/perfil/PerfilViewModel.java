@@ -1,4 +1,4 @@
-package ucm.appmenus.ui.notifications;
+package ucm.appmenus.ui.perfil;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

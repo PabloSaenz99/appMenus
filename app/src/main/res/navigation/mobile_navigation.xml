@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_inicio"
-        android:name="ucm.appmenus.ui.home.InicioFragment"
+        android:name="ucm.appmenus.ui.inicio.InicioFragment"
         android:label="@string/title_inicio"
         tools:layout="@layout/fragment_inicio" />
 
     <fragment
         android:id="@+id/navigation_filtros"
-        android:name="ucm.appmenus.ui.dashboard.FiltrosFragment"
+        android:name="ucm.appmenus.ui.filtros.FiltrosFragment"
         android:label="@string/title_filtros"
         tools:layout="@layout/fragment_filtros" />
 
     <fragment
         android:id="@+id/navigation_perfil"
-        android:name="ucm.appmenus.ui.notifications.PerfilFragment"
+        android:name="ucm.appmenus.ui.perfil.PerfilFragment"
         android:label="@string/title_perfil"
         tools:layout="@layout/fragment_perfil" />
 </navigation>
