@@ -11,32 +11,38 @@
         android:id="@+id/busquedaFiltros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </SearchView>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+    <!--Aqui se incluye de forma estatica el xml de prueba_layout-->
+    <include
+        android:id="@+id/prueba_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="Tipo filtro 1"
-        android:textAlignment="textStart"
-        android:textSize="18sp"
-        android:textStyle="bold|italic" />
+        layout="@layout/prueba_layout"/>
 
-    <TextView
-        android:id="@+id/textView2"
+    <!--Esto incluye de forma dinamica nuevo contenido xml
+    (especificado en el codigo de filtrosFragment (para asignarlo
+    y en FiltrosRecyclerAdapter (para implementar como carga la info))-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFiltrosComida"
         android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#FFEB3B"
+        android:scrollbars="vertical">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <include
+        android:id="@+id/prueba_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="Descripcion del filtro 1"
-        android:textAlignment="textStart"
-        android:textSize="14sp" />
+        layout="@layout/prueba_layout"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerFiltros"
+        android:id="@+id/recyclerFiltrosTipo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="#E91E63">
 
     </androidx.recyclerview.widget.RecyclerView>
 
