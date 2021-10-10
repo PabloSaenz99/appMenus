@@ -56,6 +56,7 @@ public class FiltrosRecyclerAdapter extends RecyclerView.Adapter<FiltrosRecycler
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recycler_filtros, viewGroup, false);
 
+        //Hola
         return new ViewHolder(view);
     }
 
