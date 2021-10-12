@@ -6,12 +6,12 @@ public class Restaurante {
 
     private final String nombre;
     private final String descripcion;
-    private final double valoracion;
+    private final float valoracion;
     private final String imagenPrincDir;
     private final ArrayList<String> filtros;
     private final ArrayList<String> imagenesDir;
 
-    public Restaurante(String nombre, String descripcion, double valoracion, String imagenPrincDir,
+    public Restaurante(String nombre, String descripcion, float valoracion, String imagenPrincDir,
                        ArrayList<String> filtros, ArrayList<String> imagenesDir){
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -29,7 +29,7 @@ public class Restaurante {
         return descripcion;
     }
 
-    public double getValoracion() {
+    public float getValoracion() {
         return valoracion;
     }
 

@@ -11,8 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 import ucm.appmenus.R;
+import ucm.appmenus.ui.filtros.FiltrosRecyclerAdapter;
 
 public class InicioFragment extends Fragment {
 
@@ -26,12 +31,26 @@ public class InicioFragment extends Fragment {
         //En este caso se usa ya que hay 3 fragments(inicio, filtros y perfil), pero no es lo tipico
         View root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
-        //Ejemplo: asigno la imagen, texto y checkbox a una bariable y objeto
-        ImageView imagenEjemplo = root.findViewById(R.id.ejemploImageView);
-        TextView textoEjemplo = root.findViewById(R.id.ejemploTextView);
-        CheckBox checkBoxEjemplo = root.findViewById(R.id.ejemploCheckBox);
-        
-        textoEjemplo.setText("Texto 1");
+        //Crear el recycler de los filtros por comidas (incluye en el xml un scrollbar)
+        RecyclerView recyclerViewComidas = root.findViewById(R.id.recyclerFiltrosComida);
+        recyclerViewComidas.setLayoutManager(new LinearLayoutManager(
+                this.getContext(), LinearLayoutManager.VERTICAL, false));
+        //Create adapter
+        //Arraylist de ejemplo
+        ArrayList<String> ejemplo = new ArrayList<String>();
+        ejemplo.add("Mexicana");
+        ejemplo.add("China");
+        ejemplo.add("Japonesa");
+        ejemplo.add("Vietnamita");
+        ejemplo.add("Argentina");
+        ejemplo.add("Peruana");
+        ejemplo.add("Alemana");
+        ejemplo.add("Italiana");
+        ejemplo.add("Hungara");
+        FiltrosRecyclerAdapter adapter = new FiltrosRecyclerAdapter(ejemplo);
+        //Set the adapter
+        recyclerViewComidas.setAdapter(adapter);
+
 
         return root;
     }
