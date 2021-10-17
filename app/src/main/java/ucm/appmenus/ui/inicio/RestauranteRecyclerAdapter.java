@@ -1,8 +1,6 @@
 package ucm.appmenus.ui.inicio;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,18 +28,17 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
 
         private final TextView nombre;
         private final TextView descripcion;
-        private final CheckBox favorito;
+        private final ToggleButton favorito;
         private final RatingBar valoracion;
         private final ImageView imagenPrincDir;
         private final RecyclerView filtrosRecycler;
-        //private final ArrayList<String> imagenesDir;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
             nombre = (TextView) view.findViewById(R.id.textRestarurantNameRecycler);
             descripcion = (TextView) view.findViewById(R.id.textRestaurantDescRecycler);
-            favorito = view.findViewById(R.id.checkBoxFavRestaurantRecycler);
+            favorito = view.findViewById(R.id.toggleButtonFavRestaurantRecycler);
             valoracion = view.findViewById(R.id.ratingRestaurantRecycler);
             imagenPrincDir = view.findViewById(R.id.imageRestaurantRecycler);
             filtrosRecycler = view.findViewById(R.id.filtrosRestauranteRecycler);
@@ -48,7 +46,7 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
             favorito.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    //Aqui se añadiria a los favoritos del usuario
                 }
             });
         }
@@ -81,14 +79,12 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recycler_restaurante_busqueda, viewGroup, false);
-        //Hola
         return new RestauranteRecyclerAdapter.ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(RestauranteRecyclerAdapter.ViewHolder viewHolder, final int position) {
-        //Obtener los datos de listadatos y pasarselos al viewholder para que los muestre en la vista
         viewHolder.setDatos(listaDatos.get(position));
     }
 

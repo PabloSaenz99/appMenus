@@ -38,12 +38,15 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxFavRestaurantRecycler"
+                <ToggleButton
+                    android:id="@+id/toggleButtonFavRestaurantRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
-                    android:button="@android:drawable/btn_star" />
+                    android:button="@android:drawable/btn_star"
+                    android:text=""
+                    android:textOff=""
+                    android:textOn=""/>
             </LinearLayout>
 
             <TextView

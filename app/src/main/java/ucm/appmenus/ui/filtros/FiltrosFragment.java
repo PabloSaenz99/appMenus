@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,13 +35,6 @@ public class FiltrosFragment extends Fragment {
             }
         });
 
-
-        //Crear el recycler de los filtros por comidas (incluye en el xml un scrollbar)
-        RecyclerView recyclerViewComidas = root.findViewById(R.id.recyclerFiltrosComida);
-        recyclerViewComidas.setLayoutManager(new LinearLayoutManager(
-                this.getContext(), LinearLayoutManager.VERTICAL, false));
-        //Create adapter
-        //Arraylist de ejemplo
         ArrayList<String> ejemplo = new ArrayList<String>();
         ejemplo.add("Mexicana");
         ejemplo.add("China");
@@ -49,25 +44,24 @@ public class FiltrosFragment extends Fragment {
         ejemplo.add("Peruana");
         ejemplo.add("Alemana");
         ejemplo.add("Italiana");
-        ejemplo.add("Hungara");
-        FiltrosRecyclerAdapter adapter = new FiltrosRecyclerAdapter(ejemplo, false);
-        //Set the adapter
-        recyclerViewComidas.setAdapter(adapter);
+        crearRecycler(root, ejemplo, R.id.recyclerFiltrosComida, 3);
 
-        //Crear el recycler de los filtros por tipo de comida
-        RecyclerView recyclerViewTipos = root.findViewById(R.id.recyclerFiltrosTipo);
-        recyclerViewTipos.setLayoutManager(new LinearLayoutManager(
-                this.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        //Create adapter
-        //Arraylist de ejemplo
         ArrayList<String> ejemplo2 = new ArrayList<String>();
         ejemplo2.add("Vegana");
         ejemplo2.add("Vegetariana");
         ejemplo2.add("Sin gluten");
-        FiltrosRecyclerAdapter adapterTipos = new FiltrosRecyclerAdapter(ejemplo2, false);
-        //Set the adapter
-        recyclerViewTipos.setAdapter(adapterTipos);
+        crearRecycler(root, ejemplo2, R.id.recyclerFiltrosTipo, 3);
 
         return root;
+    }
+
+    private void crearRecycler(final View root, ArrayList<String> filtros, int id, int nColums){
+        //Crear el recycler
+        RecyclerView recyclerView = root.findViewById(id);
+        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), nColums));
+        //Crear adapter
+        FiltrosRecyclerAdapter adapterTipos = new FiltrosRecyclerAdapter(filtros, false);
+        //Set the adapter
+        recyclerView.setAdapter(adapterTipos);
     }
 }
