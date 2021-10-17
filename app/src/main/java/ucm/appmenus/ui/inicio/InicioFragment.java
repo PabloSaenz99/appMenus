@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ucm.appmenus.R;
+import ucm.appmenus.Restaurante;
 import ucm.appmenus.ui.filtros.FiltrosRecyclerAdapter;
 
 public class InicioFragment extends Fragment {
@@ -31,27 +32,32 @@ public class InicioFragment extends Fragment {
         //En este caso se usa ya que hay 3 fragments(inicio, filtros y perfil), pero no es lo tipico
         View root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
-        //Crear el recycler de los filtros por comidas (incluye en el xml un scrollbar)
-        RecyclerView recyclerViewComidas = root.findViewById(R.id.recyclerFiltrosComida);
-        recyclerViewComidas.setLayoutManager(new LinearLayoutManager(
+        //Crear el recycler de los restaurantes
+        RecyclerView recyclerViewRestaurantes = root.findViewById(R.id.recyclerRestauranteInicio);
+        recyclerViewRestaurantes.setLayoutManager(new LinearLayoutManager(
                 this.getContext(), LinearLayoutManager.VERTICAL, false));
-        //Create adapter
-        //Arraylist de ejemplo
-        ArrayList<String> ejemplo = new ArrayList<String>();
-        ejemplo.add("Mexicana");
-        ejemplo.add("China");
-        ejemplo.add("Japonesa");
-        ejemplo.add("Vietnamita");
-        ejemplo.add("Argentina");
-        ejemplo.add("Peruana");
-        ejemplo.add("Alemana");
-        ejemplo.add("Italiana");
-        ejemplo.add("Hungara");
-        FiltrosRecyclerAdapter adapter = new FiltrosRecyclerAdapter(ejemplo);
-        //Set the adapter
-        recyclerViewComidas.setAdapter(adapter);
-
+        //Crear el adapter y asignarlo
+        RestauranteRecyclerAdapter adapterRestaurantes = new RestauranteRecyclerAdapter(cargarRestaurantes());
+        recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
 
         return root;
+    }
+
+    private ArrayList<Restaurante> cargarRestaurantes(){
+        ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
+        restaurantes.add(new Restaurante("El mexicano", "La mejor comida mexicana", 3.9f,
+                "/data/data/ucm.appmenus/files/mexicano.jpg",
+                new ArrayList<String>(){{add("Mexicana");add("Tacos");add("Picante");}},
+                new ArrayList<String>(){{add("img1");add("img2");add("img3");}}));
+        restaurantes.add(new Restaurante("La Fabada", "Comida asturiana", 4.4f,
+                "/data/data/ucm.appmenus/files/asturiano.jpg",
+                new ArrayList<String>(){{add("Asturiana");add("Fabada");add("Casera");}},
+                new ArrayList<String>(){{add("img1");add("img2");add("img3");}}));
+        restaurantes.add(new Restaurante("VIPS", "Hamburguesas y tortitas", 3.7f,
+                "/data/data/ucm.appmenus/files/vips.jpg",
+                new ArrayList<String>(){{add("Hamburguesa");add("Tacos");}},
+                new ArrayList<String>(){{add("img1");add("img2");}}));
+
+        return restaurantes;
     }
 }

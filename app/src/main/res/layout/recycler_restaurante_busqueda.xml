@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/imageRestaurantRecycler"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="130dp"
             android:contentDescription="@string/imageRestaurantRecycler"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -57,16 +57,19 @@
                 android:id="@+id/ratingRestaurantRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:numStars="3" />
+                android:numStars="5"
+                android:theme="@style/RatingBar" />
 
         </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/filterRestaurantRecycler"
+        android:id="@+id/filtrosRestauranteRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:scrollbars="horizontal" />
+
+    <View style="@style/HorizontalDivider" />
 
 </LinearLayout>

@@ -50,7 +50,7 @@ public class FiltrosFragment extends Fragment {
         ejemplo.add("Alemana");
         ejemplo.add("Italiana");
         ejemplo.add("Hungara");
-        FiltrosRecyclerAdapter adapter = new FiltrosRecyclerAdapter(ejemplo);
+        FiltrosRecyclerAdapter adapter = new FiltrosRecyclerAdapter(ejemplo, false);
         //Set the adapter
         recyclerViewComidas.setAdapter(adapter);
 
@@ -64,7 +64,7 @@ public class FiltrosFragment extends Fragment {
         ejemplo2.add("Vegana");
         ejemplo2.add("Vegetariana");
         ejemplo2.add("Sin gluten");
-        FiltrosRecyclerAdapter adapterTipos = new FiltrosRecyclerAdapter(ejemplo2);
+        FiltrosRecyclerAdapter adapterTipos = new FiltrosRecyclerAdapter(ejemplo2, false);
         //Set the adapter
         recyclerViewTipos.setAdapter(adapterTipos);
 

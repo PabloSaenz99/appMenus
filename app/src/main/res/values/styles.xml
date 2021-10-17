@@ -7,4 +7,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="HorizontalDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">#686868</item>
+    </style>
+
+    <style name="RatingBar" parent="@style/Base.Widget.AppCompat.RatingBar.Small">
+        <item name="colorControlActivated">#C5B846</item>
+        <item name="colorControlNormal">#787878</item>
+    </style>
 </resources>
