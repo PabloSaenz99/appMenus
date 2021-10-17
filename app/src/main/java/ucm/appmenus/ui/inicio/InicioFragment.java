@@ -57,6 +57,14 @@ public class InicioFragment extends Fragment {
                 "/data/data/ucm.appmenus/files/vips.jpg",
                 new ArrayList<String>(){{add("Hamburguesa");add("Tacos");}},
                 new ArrayList<String>(){{add("img1");add("img2");}}));
+        restaurantes.add(new Restaurante("Kebab", "Kebabs y durums", 5f,
+                "/data/data/ucm.appmenus/files/kebab.jpeg",
+                new ArrayList<String>(){{add("Turco");add("Kebab");}},
+                new ArrayList<String>(){{add("img1");add("img2");}}));
+        restaurantes.add(new Restaurante("Telepizza", "Pizzas", 3.5f,
+                "/data/data/ucm.appmenus/files/telepizza.png",
+                new ArrayList<String>(){{add("Pizza");}},
+                new ArrayList<String>(){{add("img1");add("img2");}}));
 
         return restaurantes;
     }
