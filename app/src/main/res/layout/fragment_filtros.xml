@@ -11,39 +11,90 @@
         android:id="@+id/busquedaFiltros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Busca aquí "></SearchView>
+        android:queryHint="Busca aquí ">
 
-    <!--Aqui se incluye de forma estatica el xml de prueba_layout-->
-    <include
-        android:id="@+id/prueba_layout"
-        android:layout_width="wrap_content"
+    </SearchView>
+    <View style="@style/HorizontalDivider" />
+
+
+    <!--Aqui se incluye de forma estatica el xml de layout_info-->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/prueba_layout"/>
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:scrollbars="vertical">
+
+        <include
+            android:id="@+id/layout_info"
+            layout="@layout/layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerFiltrosTipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00E91E63">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <View style="@style/HorizontalDivider" />
+
+        <include
+            android:id="@+id/layout_info"
+            layout="@layout/layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerFiltrosComida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FFEB3B"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <View style="@style/HorizontalDivider" />
+
+        <include
+            android:id="@+id/layout_info"
+            layout="@layout/layout_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerFiltros3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00E91E63">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <View style="@style/HorizontalDivider" />
+
+    </LinearLayout>
 
     <!--Esto incluye de forma dinamica nuevo contenido xml
     (especificado en el codigo de filtrosFragment (para asignarlo
     y en FiltrosRecyclerAdapter (para implementar como carga la info))-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerFiltrosComida"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00FFEB3B"
-        android:scrollbars="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <View style="@style/HorizontalDividerTransparent" />
 
-    <include
-        android:id="@+id/prueba_layout"
+    <Button
+        android:id="@+id/botonFiltrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        layout="@layout/prueba_layout"/>
+        android:layout_gravity="center"
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerFiltrosTipo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00E91E63">
+        android:background="@drawable/boton"
+        android:drawablePadding="10dp"
+        android:includeFontPadding="false"
+        android:text="Filtrar"
+        android:textSize="18sp" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <View style="@style/HorizontalDividerTransparent" />
+
 
 </LinearLayout>

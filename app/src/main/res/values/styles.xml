@@ -13,6 +13,11 @@
         <item name="android:background">#686868</item>
     </style>
 
+    <style name="HorizontalDividerTransparent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">3dp</item>
+    </style>
+
     <style name="RatingBar" parent="@style/Base.Widget.AppCompat.RatingBar.Small">
         <item name="colorControlActivated">#C5B846</item>
         <item name="colorControlNormal">#787878</item>
