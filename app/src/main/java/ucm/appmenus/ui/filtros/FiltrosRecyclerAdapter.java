@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ucm.appmenus.Pair;
 import ucm.appmenus.R;
 
 public class FiltrosRecyclerAdapter extends RecyclerView.Adapter<FiltrosRecyclerAdapter.ViewHolder> {
 
     private ArrayList<String> listaDatos;
     private boolean marcados;
+    private ArrayList<ViewHolder> viewHolder;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
@@ -27,19 +29,16 @@ public class FiltrosRecyclerAdapter extends RecyclerView.Adapter<FiltrosRecycler
             this.marcado = marcado;
             textView = (TextView) view.findViewById(R.id.textoRecyclerFiltros);
             checkBox = view.findViewById(R.id.checkBoxRecyclerFiltros);
-
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
 
         public void setDatos(String texto){
             textView.setText(texto);
             checkBox.setChecked(marcado);
             checkBox.setClickable(!marcado);
+        }
+
+        public Pair<String, Boolean> getDatos(){
+            return new Pair<String, Boolean>(textView.getText().toString(), checkBox.isChecked());
         }
 
         public TextView getTextView() {
@@ -53,23 +52,30 @@ public class FiltrosRecyclerAdapter extends RecyclerView.Adapter<FiltrosRecycler
     public FiltrosRecyclerAdapter(ArrayList<String> dataSet, boolean marcados) {
         listaDatos = dataSet;
         this.marcados = marcados;
+        viewHolder = new ArrayList<ViewHolder>();
+    }
+
+    public ArrayList<String> getDatos(){
+        ArrayList<String> l = new ArrayList<String>();
+        for (ViewHolder vh: viewHolder){
+            if(vh.getDatos().getSegundo())
+                l.add(vh.getDatos().getPrimero());
+        }
+        return l;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recycler_filtros, viewGroup, false);
-
-        //Hola
-        return new ViewHolder(view, marcados);
+        viewHolder.add(new ViewHolder(view, marcados));
+        return viewHolder.get(viewHolder.size() - 1);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        //Obtener los datos de listadatos y pasarselos al viewholder para que los muestre en la vista
         viewHolder.setDatos(listaDatos.get(position));
     }
 

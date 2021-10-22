@@ -8,10 +8,9 @@
     tools:context=".ui.inicio.InicioFragment" >
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textoDescripcionFiltrosAplicados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Restaurantes cerca de ti"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />

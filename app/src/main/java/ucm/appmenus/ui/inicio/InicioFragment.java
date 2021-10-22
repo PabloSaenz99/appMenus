@@ -14,8 +14,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import ucm.appmenus.BaseDatos;
+import ucm.appmenus.ManejadorFicheros;
 import ucm.appmenus.R;
 import ucm.appmenus.Restaurante;
 import ucm.appmenus.ui.filtros.FiltrosRecyclerAdapter;
@@ -32,40 +35,29 @@ public class InicioFragment extends Fragment {
         //En este caso se usa ya que hay 3 fragments(inicio, filtros y perfil), pero no es lo tipico
         View root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
+        BaseDatos bd = BaseDatos.getInstance();
+        //Usado para que cargue la query inicial
+        /*
+        ManejadorFicheros mf = new ManejadorFicheros();
+        String query = "";
+        try {
+            mf.abrirFicheroEntrada("");
+            query = mf.leerLinea();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+         */
+
+        TextView texto = root.findViewById(R.id.textoDescripcionFiltrosAplicados);
+        texto.setText("Restaurantes cerca de ti");
         //Crear el recycler de los restaurantes
         RecyclerView recyclerViewRestaurantes = root.findViewById(R.id.recyclerRestauranteInicio);
         recyclerViewRestaurantes.setLayoutManager(new LinearLayoutManager(
                 this.getContext(), LinearLayoutManager.VERTICAL, false));
         //Crear el adapter y asignarlo
-        RestauranteRecyclerAdapter adapterRestaurantes = new RestauranteRecyclerAdapter(cargarRestaurantes());
+        RestauranteRecyclerAdapter adapterRestaurantes = new RestauranteRecyclerAdapter(bd.cargarRestaurantes());
         recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
 
         return root;
-    }
-
-    private ArrayList<Restaurante> cargarRestaurantes(){
-        ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
-        restaurantes.add(new Restaurante("El mexicano", "La mejor comida mexicana", 3.9f,
-                "/data/data/ucm.appmenus/files/mexicano.jpg",
-                new ArrayList<String>(){{add("Mexicana");add("Tacos");add("Picante");}},
-                new ArrayList<String>(){{add("img1");add("img2");add("img3");}}));
-        restaurantes.add(new Restaurante("La Fabada", "Comida asturiana", 4.4f,
-                "/data/data/ucm.appmenus/files/asturiano.jpg",
-                new ArrayList<String>(){{add("Asturiana");add("Fabada");add("Casera");}},
-                new ArrayList<String>(){{add("img1");add("img2");add("img3");}}));
-        restaurantes.add(new Restaurante("VIPS", "Hamburguesas y tortitas", 3.7f,
-                "/data/data/ucm.appmenus/files/vips.jpg",
-                new ArrayList<String>(){{add("Hamburguesa");add("Tacos");}},
-                new ArrayList<String>(){{add("img1");add("img2");}}));
-        restaurantes.add(new Restaurante("Kebab", "Kebabs y durums", 5f,
-                "/data/data/ucm.appmenus/files/kebab.jpeg",
-                new ArrayList<String>(){{add("Turco");add("Kebab");}},
-                new ArrayList<String>(){{add("img1");add("img2");}}));
-        restaurantes.add(new Restaurante("Telepizza", "Pizzas", 3.5f,
-                "/data/data/ucm.appmenus/files/telepizza.png",
-                new ArrayList<String>(){{add("Pizza");}},
-                new ArrayList<String>(){{add("img1");add("img2");}}));
-
-        return restaurantes;
     }
 }

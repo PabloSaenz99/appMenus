@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.filtros.FiltrosRestauranteActivity">
+
+    <include
+        android:id="@+id/layoutFiltroRestaurantes"
+        layout="@layout/fragment_inicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/botonQuitarFiltros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:background="@drawable/boton"
+        android:drawablePadding="10dp"
+        android:includeFontPadding="false"
+        android:text="Quitar Filtros"
+        android:textSize="18sp" />
+
+</LinearLayout>
