@@ -16,7 +16,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
+        /*
         BottomNavigationView navView = findViewById(R.id.nav_view);
         //Carga la vista de la barra inferior con las 3 ventanas que contiene
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         new Localizacion(this);
+        */
+
     }
 
 }
