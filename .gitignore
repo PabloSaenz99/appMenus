@@ -14,7 +14,3 @@
 .cxx
 .idea/vcs.xml
 .idea/gradle.xml
-.idea/compiler.xml
-.idea/misc.xml
-.idea/runConfigurations.xml
-app/build.gradle
