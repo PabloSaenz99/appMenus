@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Restaurante {
 
+    private final int idRestaurante;
     private final String nombre;
     private final String descripcion;
     private final float valoracion;
@@ -11,8 +12,9 @@ public class Restaurante {
     private final ArrayList<String> filtros;
     private final ArrayList<String> imagenesDir;
 
-    public Restaurante(String nombre, String descripcion, float valoracion, String imagenPrincDir,
+    public Restaurante(int idRestaurante, String nombre, String descripcion, float valoracion, String imagenPrincDir,
                        ArrayList<String> filtros, ArrayList<String> imagenesDir){
+        this.idRestaurante = idRestaurante;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.valoracion = valoracion;

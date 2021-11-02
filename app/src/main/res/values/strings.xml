@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">appMenus</string>
+    <string name="app_name">Food Feeltr</string>
     <string name="title_inicio">Inicio</string>
     <string name="title_filtros">Filtros</string>
     <string name="title_perfil">Perfil</string>

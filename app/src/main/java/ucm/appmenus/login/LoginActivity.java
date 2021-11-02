@@ -25,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
         String usuario = sp.getString(getString(R.string.nombre_usuario), null);
         if(usuario == null){
             //Pide login
+            //IMPORTANTE: a parte de email, password etc, tiene que mostrar la lista de filtros para
+            //que elija 3 y usarlos por defecto en las busquedas
             /*
             //Usado para guardar el login en un archivo y no pedirlo cada vez que se entra en la app
             SharedPreferences.Editor editor = sp.edit();
