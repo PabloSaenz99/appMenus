@@ -1,6 +1,8 @@
 package ucm.appmenus;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,20 +28,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_iniciosesion);
-        //setContentView(R.layout.activity_registro);
-        //ACCION BOTON DE LA PAGINA LOGIN
+        setContentView(R.layout.activity_main);
 
-      final  Button botonRegistro = findViewById(R.id.boton_registro);
-        botonRegistro.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                //Buscar resultados y abrir activity
-                Intent intent = new Intent(botonRegistro.getContext(), RegistroActivity.class);
-                startActivity(intent);
-            }
-        });
-        /*
         BottomNavigationView navView = findViewById(R.id.nav_view);
         //Carga la vista de la barra inferior con las 3 ventanas que contiene
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -48,9 +38,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        new Localizacion(this);
-        */
-
+        //new Localizacion(this);
     }
 
 }

@@ -84,7 +84,7 @@
                     android:text="iniciar sesion con google" />
 
                 <Button
-                    android:id="@+id/boton_registro"
+                    android:id="@+id/botonInicioSesion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#2196F3"

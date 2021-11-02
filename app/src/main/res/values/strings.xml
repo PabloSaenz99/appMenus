@@ -4,6 +4,12 @@
     <string name="title_filtros">Filtros</string>
     <string name="title_perfil">Perfil</string>
     <string name="imageRestaurantRecycler">Foto del restaurante</string>
+    <!--Cosas del login-->
+    <!--Fichero que almacena el login del usuario para que no tenga que escribirlo cada vez
+        que entre a la app-->
+    <string name="ucm.appmenus.ficherologin">Login</string>
+    <!--Strings para referenciar las claves usadas en el fichero del login-->
+    <string name="nombre_usuario">Usuario</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

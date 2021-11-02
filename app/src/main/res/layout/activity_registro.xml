@@ -15,41 +15,28 @@
         android:layout_height="match_parent"
         android:background="#D6D0D0"
         android:orientation="vertical"
+        android:layout_weight="7"
         tools:context=".login">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="7"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="196dp"
+                android:layout_height="196dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/logo" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="196dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/logo" />
-
-                    <Button
-                        android:id="@+id/button3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Iniciar Sesión"
-                        android:textColor="#2196F3" />
-
-                </LinearLayout>
-            </LinearLayout>
+            <Button
+                android:id="@+id/botonRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Iniciar Sesión"
+                android:textColor="#2196F3" />
 
         </LinearLayout>
 
@@ -58,13 +45,8 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:background="#C8C3C3"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:textAlignment="center">
+            android:orientation="vertical"
+            android:textAlignment="center">
 
                 <TextView
                     android:id="@+id/textView4"
@@ -109,14 +91,12 @@
                     android:layout_height="38dp" />
 
                 <Button
-                    android:id="@+id/boton_registro"
+                    android:id="@+id/botonInicioSesion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#2196F3"
                     android:text="registrarse" />
-
             </LinearLayout>
 
-        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
