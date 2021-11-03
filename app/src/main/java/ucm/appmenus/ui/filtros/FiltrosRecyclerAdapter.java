@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import ucm.appmenus.Pair;
+import ucm.appmenus.utils.Pair;
 import ucm.appmenus.R;
 
 public class FiltrosRecyclerAdapter extends RecyclerView.Adapter<FiltrosRecyclerAdapter.ViewHolder> {

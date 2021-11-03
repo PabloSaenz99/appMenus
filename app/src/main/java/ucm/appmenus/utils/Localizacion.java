@@ -1,4 +1,4 @@
-package ucm.appmenus;
+package ucm.appmenus.utils;
 
 import android.Manifest;
 import android.content.Context;
@@ -12,6 +12,8 @@ import androidx.core.app.ActivityCompat;
 
 import java.util.List;
 import java.util.Locale;
+
+import ucm.appmenus.MainActivity;
 
 public class Localizacion {
 

@@ -1,4 +1,4 @@
-package ucm.appmenus;
+package ucm.appmenus.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -1,5 +1,6 @@
 package ucm.appmenus;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -9,6 +10,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import org.json.JSONException;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import ucm.appmenus.utils.JSONReader;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         //new Localizacion(this);
+        JSONReader r = null;
+        try {
+            //data/user/0/ucm.appmenus/files/ejemplomenus.json
+            r = new JSONReader(getApplicationContext(),"ejemplomenus.json");
+            r.parsePlaceDetailsJSON();
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

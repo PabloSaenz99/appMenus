@@ -1,10 +1,9 @@
-package ucm.appmenus;
-
-import android.database.Cursor;
+package ucm.appmenus.utils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.function.ToDoubleBiFunction;
+
+import ucm.appmenus.Restaurante;
 
 public class BaseDatos {
 
@@ -85,26 +84,31 @@ public class BaseDatos {
         }
         else {
             //Aqui habria que devolver un error, mientras devuelvo datos de pruueba
-            restaurantes.add(new Restaurante(0,"El mexicano", "La mejor comida mexicana", 3.9f,
+            restaurantes.add(new Restaurante("0","El mexicano", "La mejor comida mexicana", 3.9f,
                     "/data/data/ucm.appmenus/files/mexicano.jpg",
                     new ArrayList<String>(){{add("Mexicana");add("Tacos");add("Picante");}},
-                    new ArrayList<String>(){{add("img1");add("img2");add("img3");}}));
-            restaurantes.add(new Restaurante(1,"La Fabada", "Comida asturiana", 4.4f,
+                    //new ArrayList<String>(){{add("img1");add("img2");add("img3");}}
+                    null));
+            restaurantes.add(new Restaurante("1","La Fabada", "Comida asturiana", 4.4f,
                     "/data/data/ucm.appmenus/files/asturiano.jpg",
                     new ArrayList<String>(){{add("Asturiana");add("Fabada");add("Casera");}},
-                    new ArrayList<String>(){{add("img1");add("img2");add("img3");}}));
-            restaurantes.add(new Restaurante(2,"VIPS", "Hamburguesas y tortitas", 3.7f,
+                    //new ArrayList<String>(){{add("img1");add("img2");add("img3");}}
+                    null));
+            restaurantes.add(new Restaurante("2","VIPS", "Hamburguesas y tortitas", 3.7f,
                     "/data/data/ucm.appmenus/files/vips.jpg",
                     new ArrayList<String>(){{add("Hamburguesa");add("Tacos");}},
-                    new ArrayList<String>(){{add("img1");add("img2");}}));
-            restaurantes.add(new Restaurante(3,"Kebab", "Kebabs y durums", 5f,
+                    //new ArrayList<String>(){{add("img1");add("img2");}}
+                    null));
+            restaurantes.add(new Restaurante("3","Kebab", "Kebabs y durums", 5f,
                     "/data/data/ucm.appmenus/files/kebab.jpeg",
                     new ArrayList<String>(){{add("Turco");add("Kebab");}},
-                    new ArrayList<String>(){{add("img1");add("img2");}}));
-            restaurantes.add(new Restaurante(4,"Telepizza", "Pizzas", 3.5f,
+                    //new ArrayList<String>(){{add("img1");add("img2");}}
+                    null));
+            restaurantes.add(new Restaurante("4","Telepizza", "Pizzas", 3.5f,
                     "/data/data/ucm.appmenus/files/telepizza.png",
                     new ArrayList<String>(){{add("Pizza");}},
-                    new ArrayList<String>(){{add("img1");add("img2");}}));
+                    //new ArrayList<String>(){{add("img1");add("img2");}}
+                    null));
         }
         return restaurantes;
     }

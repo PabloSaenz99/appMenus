@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,14 +12,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-
-import ucm.appmenus.BaseDatos;
-import ucm.appmenus.ManejadorFicheros;
+import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.R;
-import ucm.appmenus.Restaurante;
-import ucm.appmenus.ui.filtros.FiltrosRecyclerAdapter;
 
 public class InicioFragment extends Fragment {
 
