@@ -25,7 +25,7 @@ public class Restaurante {
         this.imagenPrincDir = imagenPrincDir;
         this.filtros = filtros;
         this.imagenesDir = imagenesDir;
-        //TODO: Hacer algo para buscar tipos de comida
+        //TODO: Hacer algo para buscar tipos de comida abriendo la url del restaurante
         if(url != null){
 
         }

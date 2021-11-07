@@ -56,7 +56,6 @@ public class PlaceDetails {
         // Specify the fields to return.
         final List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS,
                 Place.Field.WEBSITE_URI, Place.Field.ICON_URL);
-
         // Construct a request object, passing the place ID and fields array.
         final FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
 
@@ -85,7 +84,6 @@ public class PlaceDetails {
     public List<Restaurante> getCurrentPlaces(){
         // Use fields to define the data types to return.
         List<Place.Field> placeFields = Collections.singletonList(Place.Field.ID);
-
         // Use the builder to create a FindCurrentPlaceRequest.
         FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
 
