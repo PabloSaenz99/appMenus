@@ -13,8 +13,11 @@ import androidx.navigation.ui.NavigationUI;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import ucm.appmenus.ficheros.JSONPlaceReader;
+import ucm.appmenus.ficheros.JSONRestaurante;
+import ucm.appmenus.utils.BaseDatos;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
             //data/user/0/ucm.appmenus/files/ejemplomenus.json
             r = new JSONPlaceReader(getApplicationContext(),"ejemplomenus.json");
             r.parsePlaceDetailsJSON();
+            //Guardar restaurantes
+            JSONRestaurante restaur = new JSONRestaurante(getApplicationContext(), "ejemplomenus.json", "restaurantes.json");
+            restaur.writeRestaurantesJSON(BaseDatos.getInstance().cargarRestaurantes());
+            System.out.println("--------------------------------------Escriboooooo------------------------------------");
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }

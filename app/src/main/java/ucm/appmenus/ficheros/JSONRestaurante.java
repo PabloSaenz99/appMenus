@@ -41,7 +41,12 @@ public class JSONRestaurante {
     private JSONObject init;
 
     public JSONRestaurante(Context context, String inFile, String outFile) throws JSONException, IOException {
+        //TODO: Da error, lo abre en modo solo lectura y peta
         out = outFile == null ? System.out : new FileOutputStream(new File(outFile));
+        /*
+        out = outFile == null ? System.out : new OutputStreamWriter(
+                context.openFileOutput(outFile, Context.MODE_PRIVATE));
+         */
 
         InputStreamReader inputStreamReader =
                 new InputStreamReader(context.openFileInput(inFile), StandardCharsets.UTF_8);
@@ -60,8 +65,8 @@ public class JSONRestaurante {
         try {
             PrintStream p = new PrintStream(out);
             p.println("{");
-
-            JSONArray arrayRestaurantes = new JSONArray("restaurantes");
+            p.println("restaurantes : [");
+            JSONArray arrayRestaurantes = new JSONArray();
             //Iterar sobre los restaurantes
             for (Restaurante r: restaurantes) {
                 JSONObject jRestaurante = new JSONObject();
@@ -86,6 +91,8 @@ public class JSONRestaurante {
                 arrayRestaurantes.put(jRestaurante);
             }
             //TODO: Guardar (puede que ya esté(?))
+            p.println(arrayRestaurantes);
+            p.println("]");
             p.println("}");
         } catch (JSONException e) {
             e.printStackTrace();
