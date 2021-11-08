@@ -38,11 +38,22 @@ public class JSONRestaurante {
      */
 
     private OutputStream out;
-    //private InputStream in;
+    private JSONObject init;
 
-    public JSONRestaurante(Context context, String file) throws JSONException, IOException {
-        out = file == null ? System.out : new FileOutputStream(new File(file));
-        //in = file == null ? System.in : new FileInputStream(new File(file));
+    public JSONRestaurante(Context context, String inFile, String outFile) throws JSONException, IOException {
+        out = outFile == null ? System.out : new FileOutputStream(new File(outFile));
+
+        InputStreamReader inputStreamReader =
+                new InputStreamReader(context.openFileInput(inFile), StandardCharsets.UTF_8);
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader reader = new BufferedReader(inputStreamReader);
+        String line = reader.readLine();
+        while (line != null) {
+            stringBuilder.append(line).append('\n');
+            line = reader.readLine();
+        }
+        inputStreamReader.close();
+        init = new JSONObject(stringBuilder.toString());
     }
 
     public void writeRestaurantesJSON(ArrayList<Restaurante> restaurantes){
@@ -84,29 +95,28 @@ public class JSONRestaurante {
     public ArrayList<Restaurante> readRestaurantesJSON(){
         ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
         try {
-            //TODO: Pasar bien el argumento
-            JSONObject jo = new JSONObject(new JSONTokener("in"));
-            JSONArray jArray = jo.getJSONArray("restaurantes");
+            //TODO: Pasar bien el argumento (hecho?)
+            JSONArray jArray = init.getJSONArray("restaurantes");
             for (int k = 0; k < jArray.length(); k++) {
                 JSONObject jObject = jArray.getJSONObject(k);
                 //Informacion general
-                String id = jObject.getString("place_id");
-                String nombre = jObject.getString("name");
-                String url = jObject.getString("url");
-                float valoracion = jObject.getLong("rating");
-                String imagenPrincDir = jObject.getString("imagenPrincDir");
+                    String id = jObject.getString("idRestaurante");
+                    String nombre = jObject.getString("nombre");
+                    String url = jObject.getString("url");
+                    float valoracion = jObject.getLong("valoracion");
+                    String imagenPrincDir = jObject.getString("imagenPrincDir");
                 //Filtros
-                ArrayList<String> filtros = new ArrayList<String>();
-                JSONArray jArrayFiltros = jObject./*getJSONObject("filtros").*/getJSONArray("filtros");
-                for (int i = 0; i < jArrayFiltros.length(); i++) {
-                    filtros.add(jArrayFiltros.getString(i));
-                }
+                    ArrayList<String> filtros = new ArrayList<String>();
+                    JSONArray jArrayFiltros = jObject./*getJSONObject("filtros").*/getJSONArray("filtros");
+                    for (int i = 0; i < jArrayFiltros.length(); i++) {
+                        filtros.add(jArrayFiltros.getString(i));
+                    }
                 //Fotos
-                ArrayList<Foto> fotos = new ArrayList<Foto>();
-                JSONArray jArrayFotos = jObject.getJSONArray("fotos");
-                for (int i = 0; i < jArrayFotos.length(); i++) {
-                    fotos.add(new Foto(jArrayFotos.getJSONObject(i)));
-                }
+                    ArrayList<Foto> fotos = new ArrayList<Foto>();
+                    JSONArray jArrayFotos = jObject.getJSONArray("fotos");
+                    for (int i = 0; i < jArrayFotos.length(); i++) {
+                        fotos.add(new Foto(jArrayFotos.getJSONObject(i)));
+                    }
                 restaurantes.add(new Restaurante(id, nombre, url, valoracion, imagenPrincDir, filtros, fotos));
             }
         } catch (JSONException e) {
