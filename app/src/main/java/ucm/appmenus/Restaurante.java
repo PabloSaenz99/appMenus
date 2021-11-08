@@ -10,13 +10,13 @@ public class Restaurante {
 
     private final String idRestaurante;
     private final String nombre;
-    private final Uri url;
+    private final String url;
     private final double valoracion;
     private final String imagenPrincDir;
     private final ArrayList<String> filtros;
     private final ArrayList<Foto> imagenesDir;
 
-    public Restaurante(String idRestaurante, String nombre, Uri url, double valoracion,
+    public Restaurante(String idRestaurante, String nombre, String url, double valoracion,
                        String imagenPrincDir, ArrayList<String> filtros, ArrayList<Foto> imagenesDir){
         this.idRestaurante = idRestaurante;
         this.nombre = nombre;
@@ -35,8 +35,7 @@ public class Restaurante {
     public String getNombre() {
         return nombre;
     }
-    public Uri getUri() {return url;}
-    public String getStringURL() { return url.toString(); }
+    public String getStringURL() { return url; }
     public double getValoracion() {
         return valoracion;
     }
@@ -45,6 +44,9 @@ public class Restaurante {
     }
     public ArrayList<String> getFiltros() {
         return filtros;
+    }
+    public ArrayList<Foto> getFotos() {
+        return imagenesDir;
     }
 
     @Override

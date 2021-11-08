@@ -1,4 +1,4 @@
-package ucm.appmenus.utils;
+package ucm.appmenus.ficheros;
 
 import android.content.Context;
 
@@ -24,7 +24,7 @@ import ucm.appmenus.Restaurante;
  *
  * https://developers.google.com/maps/documentation/places/web-service/search-find-place
  * */
-public class JSONReader {
+public class JSONPlaceReader {
 
     /**
      * Al buscar places usar las etiquetas: bar, cafe, restaurant (meal_delivery, meal_takeaway)
@@ -34,7 +34,7 @@ public class JSONReader {
 
     private JSONObject init;
 
-    public JSONReader(Context context,String src) throws JSONException, IOException {
+    public JSONPlaceReader(Context context, String src) throws JSONException, IOException {
         InputStreamReader inputStreamReader =
                 new InputStreamReader(context.openFileInput(src), StandardCharsets.UTF_8);
         StringBuilder stringBuilder = new StringBuilder();

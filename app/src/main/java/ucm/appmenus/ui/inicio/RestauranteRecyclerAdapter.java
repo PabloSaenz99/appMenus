@@ -4,7 +4,6 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -27,7 +26,7 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
         private final View view;
 
         private final TextView nombre;
-        private final TextView descripcion;
+        private final TextView url;
         private final ToggleButton favorito;
         private final RatingBar valoracion;
         private final ImageView imagenPrincDir;
@@ -37,7 +36,7 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
             super(view);
             this.view = view;
             nombre = (TextView) view.findViewById(R.id.textRestarurantNameRecycler);
-            descripcion = (TextView) view.findViewById(R.id.textRestaurantDescRecycler);
+            url = (TextView) view.findViewById(R.id.textRestaurantURLRecycler);
             favorito = view.findViewById(R.id.toggleButtonFavRestaurantRecycler);
             valoracion = view.findViewById(R.id.ratingRestaurantRecycler);
             imagenPrincDir = view.findViewById(R.id.imageRestaurantRecycler);
@@ -53,9 +52,9 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
 
         public void setDatos(Restaurante restaurante){
             nombre.setText(restaurante.getNombre());
-            descripcion.setText(restaurante.getDescripcion());
+            url.setText(restaurante.getStringURL());
             favorito.setChecked(false);
-            valoracion.setRating(restaurante.getValoracion());
+            valoracion.setRating((float )restaurante.getValoracion());
             valoracion.setClickable(false);
             imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
             //Recycler filtros

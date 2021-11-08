@@ -63,7 +63,7 @@ public class PlaceDetails {
             @Override
             public void onSuccess(FetchPlaceResponse response) {
                 Place place = response.getPlace();
-                restaurante =  new Restaurante(place.getId(), place.getName(), place.getWebsiteUri(),
+                restaurante =  new Restaurante(place.getId(), place.getName(), place.getWebsiteUri().toString(),
                         place.getRating(), place.getIconUrl(), null, null);
                 Log.i(TAG, "Place found: " + place.getName());
             }
@@ -104,7 +104,7 @@ public class PlaceDetails {
                                     place.getName(),
                                     placeLikelihood.getLikelihood()));
                             listaRestaurantes.add(new Restaurante(place.getId(), place.getName(),
-                                    place.getWebsiteUri(), place.getRating(), place.getIconUrl(),
+                                    place.getWebsiteUri().toString(), place.getRating(), place.getIconUrl(),
                                     null, null));
                         }
                     } else {
