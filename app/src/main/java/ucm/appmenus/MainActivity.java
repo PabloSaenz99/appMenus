@@ -1,5 +1,7 @@
 package ucm.appmenus;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -17,8 +19,11 @@ import java.util.ArrayList;
 
 import ucm.appmenus.ficheros.JSONPlaceReader;
 import ucm.appmenus.ficheros.JSONRestaurante;
+import ucm.appmenus.utils.Localizacion;
 
-
+/**
+ * IMPORTANTE: Esta activity ya loguea al usuario desde SharedPreferences
+ * */
 public class MainActivity extends AppCompatActivity {
 
     //En principio no hay que hacer nada mas en esta actividad ya que tod0 se hace en los fragments
@@ -35,25 +40,21 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        //new Localizacion(this);
-        JSONPlaceReader r = null;
-        try {
-            //data/user/0/ucm.appmenus/files/ejemplomenus.json
-            r = new JSONPlaceReader(getApplicationContext(),"ejemplomenus.json");
-            r.parsePlaceDetailsJSON();
-            //Guardar restaurantes
-            JSONRestaurante restaur = new JSONRestaurante(getApplicationContext(),
-                    "restaurantes.json", "restaurantes.json");
-            //restaur.writeRestaurantesJSON(BaseDatos.getInstance().cargarRestaurantes());
-            //*
-            ArrayList<Restaurante> listaRes = restaur.readRestaurantesJSON();
-            System.out.println("Tam: " + listaRes.size());
-            for(Restaurante restaurant: listaRes)
-                System.out.println(restaurant);
-            //*/
-            System.out.println("--------------------------------------Escriboooooo------------------------------------");
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
+
+        /**
+         * Loguea al usuario
+         * */
+        final SharedPreferences sp = this.getSharedPreferences(
+                getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
+        String email = sp.getString(getString(R.string.nombre_usuario), null);
+        String nombre = sp.getString(getString(R.string.nombre_usuario), null);
+        String imagen = sp.getString(getString(R.string.imagen_usuario), null);
+        JSONRestaurante jsonRes = new JSONRestaurante(getApplicationContext(),
+                getString(R.string.ucm_appmenus_restaurantesFavoritos),
+                getString(R.string.ucm_appmenus_restaurantesFavoritos));
+        ArrayList<Restaurante> favoritos = jsonRes.readRestaurantesJSON();
+        Localizacion localizacion = new Localizacion(this);
+        Usuario user1 = new Usuario(email, nombre, localizacion, imagen,
+                null, favoritos, null);
     }
 }

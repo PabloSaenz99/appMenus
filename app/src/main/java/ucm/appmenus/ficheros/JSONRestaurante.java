@@ -23,6 +23,7 @@ public class JSONRestaurante {
     /**
      * Lee los JSON que contienen los restaurantes favoritos, para no tener que llamar a places cada vez
      */
+
     public JSONRestaurante(Context context, String inFile, String outFile) {
         this.outFile = outFile;
         this.context = context;

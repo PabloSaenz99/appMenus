@@ -9,8 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.Restaurante;
+import ucm.appmenus.Usuario;
+import ucm.appmenus.ficheros.JSONRestaurante;
+import ucm.appmenus.utils.Localizacion;
+import ucm.appmenus.utils.Pair;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -22,8 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         //Usado para comprobar si el usuario está ya logueado
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
-        String usuario = sp.getString(getString(R.string.nombre_usuario), null);
-        if(usuario == null){
+        String email = sp.getString(getString(R.string.nombre_usuario), null);
+        if(email == null){
             //Pide login
             //IMPORTANTE: a parte de email, password etc, tiene que mostrar la lista de filtros para
             //que elija 3 y usarlos por defecto en las busquedas
