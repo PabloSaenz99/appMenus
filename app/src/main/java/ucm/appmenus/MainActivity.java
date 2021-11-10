@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 import ucm.appmenus.ficheros.JSONPlaceReader;
 import ucm.appmenus.ficheros.JSONRestaurante;
-import ucm.appmenus.utils.BaseDatos;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,12 +42,18 @@ public class MainActivity extends AppCompatActivity {
             r = new JSONPlaceReader(getApplicationContext(),"ejemplomenus.json");
             r.parsePlaceDetailsJSON();
             //Guardar restaurantes
-            JSONRestaurante restaur = new JSONRestaurante(getApplicationContext(), "ejemplomenus.json", "restaurantes.json");
-            restaur.writeRestaurantesJSON(BaseDatos.getInstance().cargarRestaurantes());
+            JSONRestaurante restaur = new JSONRestaurante(getApplicationContext(),
+                    "restaurantes.json", "restaurantes.json");
+            //restaur.writeRestaurantesJSON(BaseDatos.getInstance().cargarRestaurantes());
+            //*
+            ArrayList<Restaurante> listaRes = restaur.readRestaurantesJSON();
+            System.out.println("Tam: " + listaRes.size());
+            for(Restaurante restaurant: listaRes)
+                System.out.println(restaurant);
+            //*/
             System.out.println("--------------------------------------Escriboooooo------------------------------------");
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
     }
-
 }

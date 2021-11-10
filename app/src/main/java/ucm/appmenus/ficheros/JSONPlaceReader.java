@@ -5,25 +5,13 @@ import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import ucm.appmenus.Foto;
 import ucm.appmenus.Restaurante;
 
-/**
- * Lee los JSON devueltos por:
- *
- * https://developers.google.com/maps/documentation/places/web-service/search-find-place
- * */
 public class JSONPlaceReader {
 
     /**
@@ -34,17 +22,13 @@ public class JSONPlaceReader {
 
     private JSONObject init;
 
+    /**
+     * Lee los JSON devueltos por:
+     *
+     * https://developers.google.com/maps/documentation/places/web-service/search-find-place
+     * */
     public JSONPlaceReader(Context context, String src) throws JSONException, IOException {
-        InputStreamReader inputStreamReader =
-                new InputStreamReader(context.openFileInput(src), StandardCharsets.UTF_8);
-        StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader reader = new BufferedReader(inputStreamReader);
-        String line = reader.readLine();
-        while (line != null) {
-            stringBuilder.append(line).append('\n');
-            line = reader.readLine();
-        }
-        init = new JSONObject(stringBuilder.toString());
+        init = new JSONObject(ManejadorFicheros.fileToString(context, src));
     }
     /**
      * Para buscar hay que:

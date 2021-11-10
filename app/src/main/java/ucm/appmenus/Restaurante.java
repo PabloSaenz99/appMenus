@@ -23,12 +23,14 @@ public class Restaurante {
         this.url = url;
         this.valoracion = valoracion;
         this.imagenPrincDir = imagenPrincDir;
-        this.filtros = filtros;
-        this.imagenesDir = imagenesDir;
         //TODO: Hacer algo para buscar tipos de comida abriendo la url del restaurante
         if(url != null){
 
         }
+        if(filtros == null) this.filtros = new ArrayList<String>();
+        else this.filtros = filtros;
+        if(imagenesDir == null) this.imagenesDir = new ArrayList<Foto>();
+        else this.imagenesDir = imagenesDir;
     }
 
     public String getIdRestaurante(){return idRestaurante;}
