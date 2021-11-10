@@ -51,7 +51,7 @@
                 android:layout_height="31dp" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText"
+                android:id="@+id/textEmailLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@android:drawable/sym_action_email"
@@ -63,10 +63,11 @@
                 android:layout_height="30dp" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editText2"
+                android:id="@+id/textPasswordLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@android:drawable/ic_secure"
+                android:inputType="textPassword"
                 android:hint="password" />
 
             <TextView

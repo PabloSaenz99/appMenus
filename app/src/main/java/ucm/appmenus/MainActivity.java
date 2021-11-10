@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        /**
+        /*
          * Loguea al usuario
          * */
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
-        String email = sp.getString(getString(R.string.nombre_usuario), null);
+        String email = sp.getString(getString(R.string.email_usuario), null);
         String nombre = sp.getString(getString(R.string.nombre_usuario), null);
         String imagen = sp.getString(getString(R.string.imagen_usuario), null);
         JSONRestaurante jsonRes = new JSONRestaurante(getApplicationContext(),

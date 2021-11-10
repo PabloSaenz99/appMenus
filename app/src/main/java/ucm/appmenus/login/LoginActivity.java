@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -30,18 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
         String email = sp.getString(getString(R.string.nombre_usuario), null);
+
+        //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
         if(email == null){
-            //Pide login
-            //IMPORTANTE: a parte de email, password etc, tiene que mostrar la lista de filtros para
-            //que elija 3 y usarlos por defecto en las busquedas
-            /*
-            //Usado para guardar el login en un archivo y no pedirlo cada vez que se entra en la app
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putString(getString(R.string.nombre_usuario), "Pablo Saenz");
-            editor.commit();
-            */
-        }
-        else{
             //Inicia la main activity
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -50,8 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         final Button botonRegistro = findViewById(R.id.botonRegistro);
         botonRegistro.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Buscar resultados
-
                 //Abrir activity
                 Intent intent = new Intent(botonRegistro.getContext(), RegistroActivity.class);
                 startActivity(intent);
@@ -62,10 +52,29 @@ public class LoginActivity extends AppCompatActivity {
         botonInicioSesion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Buscar resultados
+                TextView emailText = findViewById(R.id.textEmailLogin);
+                TextView passwordText = findViewById(R.id.textPasswordLogin);
 
-                //Abrir activity
-                Intent intent = new Intent(botonInicioSesion.getContext(), MainActivity.class);
-                startActivity(intent);
+                //TODO: Mirar en la BD que sea correcto
+                //Busca en la BD si es correcto
+                String emailUsuario = "AQUI BUSCO EN LA BD";
+                String passwordUsuario = "AQUI BUSCO EN LA BD";
+                String nombreUsuario = "AQUI BUSCO EN LA BD";
+                String imagenUsuario = "AQUI BUSCO EN LA BD";
+
+                if(emailText.getText().toString().equals(emailUsuario) &&
+                        passwordText.getText().toString().equals(passwordUsuario)) {
+                    //Guarda el login en SharedPreferences
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString(getString(R.string.email_usuario), emailUsuario);
+                    editor.putString(getString(R.string.nombre_usuario), nombreUsuario);
+                    editor.putString(getString(R.string.imagen_usuario), imagenUsuario);
+                    editor.commit();
+
+                    //Abrir activity
+                    Intent intent = new Intent(botonInicioSesion.getContext(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

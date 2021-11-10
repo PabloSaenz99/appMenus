@@ -31,7 +31,7 @@
                 app:srcCompat="@drawable/logo" />
 
             <Button
-                android:id="@+id/botonRegistro"
+                android:id="@+id/botonInicioSesion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -53,49 +53,48 @@
                     android:layout_width="match_parent"
                     android:layout_height="36dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="hint"
-                    android:text="Nombre:" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textNombreRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre:" />
 
-                <TextView
+            <TextView
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="31dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@android:drawable/sym_action_email"
-                    android:hint="hint"
-                    android:text="Correo:" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textEmailRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@android:drawable/sym_action_email"
+                android:hint="Correo:" />
 
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="30dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@android:drawable/ic_secure"
-                    android:hint="hint"
-                    android:text="contraseña" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textPasswordRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@android:drawable/ic_secure"
+                android:inputType="textPassword"
+                android:hint="Contraseña" />
 
                 <TextView
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="38dp" />
 
-                <Button
-                    android:id="@+id/botonInicioSesion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#2196F3"
-                    android:text="registrarse" />
+            <Button
+                android:id="@+id/botonRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#2196F3"
+                android:text="registrarse" />
             </LinearLayout>
 
     </LinearLayout>
