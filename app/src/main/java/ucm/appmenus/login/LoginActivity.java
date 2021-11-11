@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = sp.getString(getString(R.string.nombre_usuario), null);
 
         //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
-        if(email == null){
+        if(email != null){
             //Inicia la main activity
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
