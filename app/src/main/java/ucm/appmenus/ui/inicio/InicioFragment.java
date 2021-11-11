@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import ucm.appmenus.recyclers.RestauranteRecyclerAdapter;
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.R;
 

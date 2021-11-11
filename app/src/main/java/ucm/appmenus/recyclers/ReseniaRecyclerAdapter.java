@@ -1,4 +1,4 @@
-package ucm.appmenus.ui.perfil;
+package ucm.appmenus.recyclers;
 
 import android.view.LayoutInflater;
 import android.view.View;

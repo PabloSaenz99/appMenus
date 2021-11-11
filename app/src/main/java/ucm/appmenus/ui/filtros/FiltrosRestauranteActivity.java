@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.R;
-import ucm.appmenus.ui.inicio.RestauranteRecyclerAdapter;
+import ucm.appmenus.recyclers.RestauranteRecyclerAdapter;
 
 public class FiltrosRestauranteActivity extends AppCompatActivity {
 

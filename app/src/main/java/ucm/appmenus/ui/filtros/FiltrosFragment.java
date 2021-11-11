@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ucm.appmenus.R;
-import ucm.appmenus.Restaurante;
+import ucm.appmenus.recyclers.FiltrosRecyclerAdapter;
 
 public class FiltrosFragment extends Fragment {
 
