@@ -1,17 +1,25 @@
 package ucm.appmenus.ficheros;
 
 import android.content.Context;
+import android.os.Environment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import ucm.appmenus.Foto;
+import ucm.appmenus.R;
 import ucm.appmenus.Restaurante;
 
 public class JSONRestaurante {
@@ -93,7 +101,13 @@ public class JSONRestaurante {
                     }
                 restaurantes.add(new Restaurante(id, nombre, url, valoracion, imagenPrincDir, filtros, fotos));
             }
-        } catch (JSONException | IOException e) {
+        }
+        catch (IOException e) {
+            //Crea el fichero vacio
+            ManejadorFicheros.crearFichero(context.getFilesDir(),
+                    context.getString(R.string.ucm_appmenus_restaurantesFavoritos),
+                    "{\"restaurantes\":[]}");
+        }catch (JSONException e) {
             e.printStackTrace();
         }
         return restaurantes;
