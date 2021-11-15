@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import ucm.appmenus.Foto;
 import ucm.appmenus.R;
-import ucm.appmenus.Restaurante;
+import ucm.appmenus.entities.Restaurante;
 
 public class JSONRestaurante {
 

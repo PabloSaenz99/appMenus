@@ -1,4 +1,6 @@
-package ucm.appmenus;
+package ucm.appmenus.entities;
+
+import ucm.appmenus.entities.Restaurante;
 
 public class Resenia {
 

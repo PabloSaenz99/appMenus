@@ -1,4 +1,4 @@
-package ucm.appmenus;
+package ucm.appmenus.entities;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,7 @@ public class Usuario {
 
     public static final int MAX_FAV = 5;
 
+    private final int idUsuario;
     private final String email;
     private String nombre;
     private Localizacion localizacion;
@@ -29,15 +30,25 @@ public class Usuario {
         this.preferencias = preferencias;
     }
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
     public String getEmail() {
         return email;
     }
+
     public String getNombre() {
         return nombre;
     }
     public Localizacion getLocalizacion() {
         return localizacion;
     }
+
+    public void setLocalizacion(String localizacion) {
+        this.localizacion = localizacion;
+    }
+
     public String getImagenDir() {
         return imagenDir;
     }
@@ -45,6 +56,11 @@ public class Usuario {
     public ArrayList<Restaurante> getRestaurantesFavoritos() {
         return restaurantesFavoritos;
     }
+
+    public void setRestaurantesFavoritos(ArrayList<Restaurante> restaurantesFavoritos) {
+        this.restaurantesFavoritos = restaurantesFavoritos;
+    }
+
     public ArrayList<String> getPreferencias() {
         return preferencias;
     }

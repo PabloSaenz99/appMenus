@@ -1,4 +1,4 @@
-package ucm.appmenus;
+package ucm.appmenus.entities;
 
 import android.net.Uri;
 

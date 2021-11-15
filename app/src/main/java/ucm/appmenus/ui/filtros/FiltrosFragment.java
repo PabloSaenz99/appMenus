@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ucm.appmenus.R;
-import ucm.appmenus.recyclers.FiltrosRecyclerAdapter;
+import ucm.appmenus.Restaurante;
 
 public class FiltrosFragment extends Fragment {
 
@@ -83,5 +83,23 @@ public class FiltrosFragment extends Fragment {
         listaAdaptadores.add(adapterTipos);
         //Set the adapter
         recyclerView.setAdapter(listaAdaptadores.get(listaAdaptadores.size() - 1));
+    }
+
+    private ArrayList<Restaurante> cargarRestaurantes(){
+        ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
+        restaurantes.add(new Restaurante("El mexicano", "La mejor comida mexicana", 3.9f,
+                "/data/data/ucm.appmenus/files/mexicano.jpg",
+                new ArrayList<String>(){{add("Mexicana");add("Tacos");add("Picante");}},
+                new ArrayList<String>(){{add("img1");add("img2");add("img3");}}));
+        restaurantes.add(new Restaurante("La Fabada", "Comida asturiana", 4.4f,
+                "/data/data/ucm.appmenus/files/asturiano.jpg",
+                new ArrayList<String>(){{add("Asturiana");add("Fabada");add("Casera");}},
+                new ArrayList<String>(){{add("img1");add("img2");add("img3");}}));
+        restaurantes.add(new Restaurante("Kebab", "Kebabs y durums", 5f,
+                "/data/data/ucm.appmenus/files/kebab.jpeg",
+                new ArrayList<String>(){{add("Turco");add("Kebab");}},
+                new ArrayList<String>(){{add("img1");add("img2");}}));
+
+        return restaurantes;
     }
 }

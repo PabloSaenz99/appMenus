@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ucm.appmenus.R;
-import ucm.appmenus.Resenia;
+import ucm.appmenus.entities.Resenia;
 
 public class ReseniaRecyclerAdapter extends RecyclerView.Adapter<ReseniaRecyclerAdapter.ViewHolder> {
 
