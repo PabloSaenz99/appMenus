@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ucm.appmenus.R;
-import ucm.appmenus.Restaurante;
+import ucm.appmenus.entities.Restaurante;
 
 public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<RestauranteRecyclerAdapter.ViewHolder> {
 

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ucm.appmenus.Foto;
+import ucm.appmenus.entities.Foto;
 import ucm.appmenus.entities.Restaurante;
 
 public class JSONPlaceReader {

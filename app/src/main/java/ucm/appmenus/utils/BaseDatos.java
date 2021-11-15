@@ -3,7 +3,7 @@ package ucm.appmenus.utils;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import ucm.appmenus.Restaurante;
+import ucm.appmenus.entities.Restaurante;
 
 public class BaseDatos {
 

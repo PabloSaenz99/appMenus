@@ -1,10 +1,6 @@
 package ucm.appmenus.entities;
 
-import android.net.Uri;
-
 import java.util.ArrayList;
-
-import ucm.appmenus.exceptions.RestaurantNotFoundException;
 
 public class Restaurante {
 

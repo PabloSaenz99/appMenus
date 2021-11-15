@@ -12,14 +12,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
-import ucm.appmenus.ficheros.JSONPlaceReader;
+import ucm.appmenus.entities.Restaurante;
+import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
-import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Localizacion;
 
 /**

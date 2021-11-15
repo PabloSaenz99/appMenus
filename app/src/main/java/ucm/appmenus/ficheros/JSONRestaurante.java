@@ -1,25 +1,17 @@
 package ucm.appmenus.ficheros;
 
 import android.content.Context;
-import android.os.Environment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import ucm.appmenus.Foto;
+import ucm.appmenus.entities.Foto;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Restaurante;
 

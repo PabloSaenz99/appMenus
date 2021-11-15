@@ -1,7 +1,5 @@
 package ucm.appmenus.entities;
 
-import ucm.appmenus.entities.Restaurante;
-
 public class Resenia {
 
     private final Restaurante restaurante;

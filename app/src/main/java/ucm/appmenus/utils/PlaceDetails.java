@@ -26,7 +26,7 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import ucm.appmenus.Restaurante;
+import ucm.appmenus.entities.Restaurante;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.content.ContentValues.TAG;

@@ -1,4 +1,4 @@
-package ucm.appmenus;
+package ucm.appmenus.entities;
 
 import org.json.JSONException;
 import org.json.JSONObject;

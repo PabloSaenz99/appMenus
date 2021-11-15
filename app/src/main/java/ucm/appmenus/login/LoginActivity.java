@@ -10,15 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
-import ucm.appmenus.Restaurante;
-import ucm.appmenus.Usuario;
-import ucm.appmenus.ficheros.JSONRestaurante;
-import ucm.appmenus.utils.Localizacion;
-import ucm.appmenus.utils.Pair;
 
 public class LoginActivity extends AppCompatActivity {
 

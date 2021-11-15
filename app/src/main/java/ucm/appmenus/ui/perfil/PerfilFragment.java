@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ucm.appmenus.R;
-import ucm.appmenus.Usuario;
+import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.recyclers.ReseniaRecyclerAdapter;
 
 public class PerfilFragment extends Fragment {
