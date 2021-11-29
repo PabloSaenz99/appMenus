@@ -18,6 +18,7 @@ import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
 import ucm.appmenus.utils.Localizacion;
+import ucm.appmenus.utils.OpenStreetPlaces;
 
 /**
  * IMPORTANTE: Esta activity ya loguea al usuario desde SharedPreferences

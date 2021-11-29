@@ -7,16 +7,23 @@ public class Restaurante {
     private final String idRestaurante;
     private final String nombre;
     private final String url;
+    private final String direccion;
+    private final int telefono;
+    private final String horarios;
     private final double valoracion;
     private final String imagenPrincDir;
     private final ArrayList<String> filtros;
     private final ArrayList<Foto> imagenesDir;
 
-    public Restaurante(String idRestaurante, String nombre, String url, double valoracion,
-                       String imagenPrincDir, ArrayList<String> filtros, ArrayList<Foto> imagenesDir){
+    public Restaurante(String idRestaurante, String nombre, String url, String direccion,
+                       int telefono, String horarios, double valoracion, String imagenPrincDir,
+                       ArrayList<String> filtros, ArrayList<Foto> imagenesDir){
         this.idRestaurante = idRestaurante;
         this.nombre = nombre;
         this.url = url;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.horarios = horarios;
         this.valoracion = valoracion;
         this.imagenPrincDir = imagenPrincDir;
         //TODO: Hacer algo para buscar tipos de comida abriendo la url del restaurante
@@ -34,6 +41,9 @@ public class Restaurante {
         return nombre;
     }
     public String getStringURL() { return url; }
+    public String getDireccion() { return direccion; }
+    public int getTelefono() { return telefono; }
+    public String getHorarios() { return horarios; }
     public double getValoracion() {
         return valoracion;
     }

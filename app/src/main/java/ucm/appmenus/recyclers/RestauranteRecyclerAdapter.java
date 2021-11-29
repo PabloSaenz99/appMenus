@@ -71,6 +71,11 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
      */
     public RestauranteRecyclerAdapter(ArrayList<Restaurante> dataSet) {listaDatos = dataSet;}
 
+    public void setDatos(ArrayList<Restaurante> dataSet){
+        listaDatos = dataSet;
+        this.notifyDataSetChanged();
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public RestauranteRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {

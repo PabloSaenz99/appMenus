@@ -12,9 +12,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
+import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.recyclers.RestauranteRecyclerAdapter;
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.R;
+import ucm.appmenus.utils.OpenStreetPlaces;
 
 public class InicioFragment extends Fragment {
 
@@ -40,17 +44,24 @@ public class InicioFragment extends Fragment {
             e.printStackTrace();
         }
          */
-
         TextView texto = root.findViewById(R.id.textoDescripcionFiltrosAplicados);
         texto.setText("Restaurantes cerca de ti");
+
+        ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
+        OpenStreetPlaces placesOpenStreetMap = new OpenStreetPlaces(this);
+        placesOpenStreetMap.getPlaces(restaurantes, null, null, 500, null);
+
         //Crear el recycler de los restaurantes
         RecyclerView recyclerViewRestaurantes = root.findViewById(R.id.recyclerRestauranteInicio);
         recyclerViewRestaurantes.setLayoutManager(new LinearLayoutManager(
                 this.getContext(), LinearLayoutManager.VERTICAL, false));
-        //Crear el adapter y asignarlo
-        RestauranteRecyclerAdapter adapterRestaurantes = new RestauranteRecyclerAdapter(bd.cargarRestaurantes());
-        recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
 
+        //Crear el adapter y asignarlo
+        //RestauranteRecyclerAdapter adapterRestaurantes = new RestauranteRecyclerAdapter(bd.cargarRestaurantes());
+        RestauranteRecyclerAdapter adapterRestaurantes = new RestauranteRecyclerAdapter(restaurantes);
+        placesOpenStreetMap.getPlaces(restaurantes, null, null, 500, null);
+
+        recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
         return root;
     }
 }

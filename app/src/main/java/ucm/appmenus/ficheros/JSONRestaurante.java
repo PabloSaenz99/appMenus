@@ -77,7 +77,7 @@ public class JSONRestaurante {
                 for (int i = 0; i < jArrayFotos.length(); i++) {
                     fotos.add(new Foto(jArrayFotos.getJSONObject(i)));
                 }
-                restaurantes.add(new Restaurante(id, nombre, url, valoracion, imagenPrincDir, filtros, fotos));
+                //restaurantes.add(new Restaurante(id, nombre, url, valoracion, imagenPrincDir, filtros, fotos));
             }
         }
         catch (JSONException e) {
