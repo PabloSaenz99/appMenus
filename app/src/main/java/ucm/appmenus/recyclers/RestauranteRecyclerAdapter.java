@@ -55,7 +55,8 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
             favorito.setChecked(false);
             valoracion.setRating((float )restaurante.getValoracion());
             valoracion.setClickable(false);
-            imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
+            //TODO: Hacer algo con la imiagen
+            //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
             //Recycler filtros
             filtrosRecycler.setLayoutManager(new LinearLayoutManager(
                     view.getContext(), LinearLayoutManager.HORIZONTAL, false));

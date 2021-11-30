@@ -3,27 +3,40 @@ package ucm.appmenus;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.os.HandlerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
 import ucm.appmenus.utils.Localizacion;
-import ucm.appmenus.utils.OpenStreetPlaces;
 
 /**
  * IMPORTANTE: Esta activity ya loguea al usuario desde SharedPreferences
  * */
 public class MainActivity extends AppCompatActivity {
+
+    /**
+     * Usados para crear subprocesos (nuevos hilos) para no sobrecargar el hilo principal de la app,
+     * el cual se deberia encargar solo de la UI
+     *
+     * ExecutorService envia una tarea a un subproceso
+     */
+    ExecutorService executorService = Executors.newFixedThreadPool(2);
+    Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
 
     //En principio no hay que hacer nada mas en esta actividad ya que tod0 se hace en los fragments
     @Override
