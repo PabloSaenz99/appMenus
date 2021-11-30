@@ -1,5 +1,7 @@
 package ucm.appmenus.utils;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,16 +21,18 @@ public class OpenStreetMap {
 
     private static final String URL_STRING = "https://overpass-api.de/api/interpreter?data=[out:json]";
 
-    public void setPlaces(final InicioViewModel inicioViewModel, ArrayList<String> tiposRestaurantes,
-                          ArrayList<String> tiposCocina, int area, Localizacion loc) {
+    public void setPlaces(final MutableLiveData<ArrayList<Restaurante>> actualizable,
+                          ArrayList<String> tiposRestaurantes, ArrayList<String> tiposCocina,
+                          int area, Localizacion loc) {
         final String query = construirQuery(25, tiposRestaurantes,
                 tiposCocina, area, loc.longitude, loc.latitude);
+        //Necesario el thread para no lanzar excepciones y no sobrecargar el hilo principal
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    inicioViewModel.getRestaurantes().postValue(getURLData(query));
-                    System.out.println("Datoooos cargadoooos");
+                    //Obtiene los resultados y los guarda en la cola para que se publiquen en cuanto sea posible
+                    actualizable.postValue(getURLData(query));
                 } catch (Exception ignored) {}
             }
         });
