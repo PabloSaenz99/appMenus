@@ -19,6 +19,7 @@ import ucm.appmenus.MainActivity;
 import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.recyclers.RestauranteRecyclerAdapter;
 import ucm.appmenus.R;
+import ucm.appmenus.utils.Localizacion;
 import ucm.appmenus.utils.OpenStreetMap;
 
 public class InicioFragment extends Fragment {
@@ -34,15 +35,12 @@ public class InicioFragment extends Fragment {
         //En este caso se usa ya que hay 3 fragments(inicio, filtros y perfil), pero no es lo tipico
         this.root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
-        TextView texto = root.findViewById(R.id.textoDescripcionFiltrosAplicados);
-        texto.setText("Restaurantes cerca de ti");
-
         //Usado para no hacer la busqueda cada vez que se abre el fragment
         //if(getArguments().getBoolean("actualizar") || ultimaListaDeRestaurantes.size() > 0){
             //Usado para cargar los datos de OpenStreetMap (ver funciones para mas informacion)
             MainActivity main = (MainActivity) getActivity();
-            OpenStreetMap osp = new OpenStreetMap();
-            osp.setPlaces(inicioViewModel.getRestaurantes(), new ArrayList<String>(),
+            OpenStreetMap osm = new OpenStreetMap();
+            osm.setPlaces(inicioViewModel.getRestaurantes(), new ArrayList<String>(),
                     new ArrayList<String>(), 500, main.getUsuario().getLocalizacion());
             ultimaListaDeRestaurantes = inicioViewModel.getRestaurantes().getValue();
         /*}

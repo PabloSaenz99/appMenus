@@ -1,54 +1,185 @@
 package ucm.appmenus.utils;
 
 import android.Manifest;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Looper;
+import android.provider.Settings;
+import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-import java.util.List;
-import java.util.Locale;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import ucm.appmenus.MainActivity;
+
+/*
+Paginas de utilidad:
+https://www.geeksforgeeks.org/how-to-get-user-location-in-android/
+https://stackoverflow.com/questions/10524381/gps-android-get-positioning-only-once/10524443#10524443 (respuesta 40)
+ */
 
 public class Localizacion {
 
     private final Context context;
     private final MainActivity mainActivity;
-    Location gps_loc;
-    Location network_loc;
-    Location final_loc;
+    private final int PERMISSION_ID = 44;
+
+    private FusedLocationProviderClient fusedLocationClient;
+
     double longitude;
     double latitude;
-    String userCountry, userAddress;
 
     public Localizacion(MainActivity mainActivity){
         this.mainActivity = mainActivity;
         this.context = this.mainActivity.getApplicationContext();
-        init();
+        refrescarLocalizacion();
     }
 
+    @SuppressLint("MissingPermission")
+    public void refrescarLocalizacion(){
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+
+        if (checkPermissions()) {
+            // check if location is enabled
+            if (isLocationEnabled()) {
+                final LocationManager lm = (LocationManager) mainActivity.getSystemService(Context.LOCATION_SERVICE);
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if(location != null) {
+                    longitude = location.getLongitude();
+                    latitude = location.getLatitude();
+                    Log.d("Localizacion", longitude + " and " + latitude);
+                }
+                else{
+                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                        @Override
+                        public void onLocationChanged(@NonNull Location location) {
+                            longitude = location.getLongitude();
+                            latitude = location.getLatitude();
+                            lm.removeUpdates(this);
+                            Log.d("Location Changed", longitude + " and " + latitude);
+                        }
+                    });
+                }
+            } else {
+                Toast.makeText(context, "Por favor permitenos utilizar la localizacion", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                mainActivity.startActivity(intent);
+            }
+        } else {
+            // if permissions aren't available, request for permissions
+            requestPermissions();
+        }
+    }
+
+    private boolean checkPermissions() {
+        return ActivityCompat.checkSelfPermission(context,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context,
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(mainActivity, new String[]{
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
+    }
+
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) mainActivity.getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    @SuppressLint("MissingPermission")
+    private void requestNewLocationData() {
+
+        // Initializing LocationRequest object with appropriate methods
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(5);
+        mLocationRequest.setFastestInterval(0);
+        mLocationRequest.setNumUpdates(1);
+
+        LocationCallback mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                Location mLastLocation = locationResult.getLastLocation();
+                latitude = mLastLocation.getLatitude();
+                longitude = mLastLocation.getLongitude();
+            }
+        };
+
+        // setting LocationRequest on FusedLocationClient
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+        fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+    }
+    /*
     private void init(){
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
+        if(!isLocationEnabled(locationManager)) {
+            showAlert();
+        }
+
+        ActivityCompat.requestPermissions(mainActivity, new String[] {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_NETWORK_STATE}, 1);
+
         try {
-            gps_loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            network_loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            //LocationManager.GPS_PROVIDER
+            LocationServices.getFusedLocationProviderClient(context).getLastLocation()
+                    .addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    System.out.println("Entreeeeeeeeeeeeeeeeeeeeesadgnajndgsa---------sf,ñsdf-.saf,asi");
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    System.out.println("Cagaste weyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+                }
+            })
+            .addOnCanceledListener(new OnCanceledListener() {
+                @Override
+                public void onCanceled() {
+                    System.out.println("Canceladiiiisimoooooooooooooooooooooooooo");
+                }
+            })
+            .addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    System.out.println("Completadoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+                }
+            });
+            //network_loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        /*
         if (gps_loc != null) {
             final_loc = gps_loc;
             latitude = final_loc.getLatitude();
@@ -64,10 +195,8 @@ public class Localizacion {
             longitude = 0.0;
         }
 
-        ActivityCompat.requestPermissions(mainActivity, new String[] {
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_NETWORK_STATE}, 1);
+
+        System.out.println("Localizacion: " + longitude + ", " + latitude);
 
         try {
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
@@ -89,4 +218,30 @@ public class Localizacion {
             e.printStackTrace();
         }
     }
+
+    private boolean isLocationEnabled(LocationManager locationManager) {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    private void showAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle("Ubicaicón")
+            .setMessage("La ubicación esta desactivada.\nPor favor activa la ubicación")
+            .setPositiveButton("Configuración de ubicación", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    context.startActivity(myIntent);
+                }
+            })
+            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                }
+            });
+        dialog.show();
+    }
+    */
 }

@@ -7,7 +7,7 @@ public class Restaurante {
     private final String idRestaurante;
     private final String nombre;
     private final String url;
-    private final String direccion;
+    private String direccion;
     private final int telefono;
     private final String horarios;
     private final double valoracion;
@@ -56,6 +56,8 @@ public class Restaurante {
     public ArrayList<Foto> getFotos() {
         return imagenesDir;
     }
+
+    public void setDireccion(String direccion) { this.direccion = direccion; }
 
     @Override
     public String toString(){
