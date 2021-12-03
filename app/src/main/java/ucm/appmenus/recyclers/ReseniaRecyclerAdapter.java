@@ -29,7 +29,7 @@ public class ReseniaRecyclerAdapter extends RecyclerView.Adapter<ReseniaRecycler
             super(view);
             this.view = view;
             titulo = (TextView) view.findViewById(R.id.textRestarurantNameRecycler);
-            texto = (TextView) view.findViewById(R.id.textRestaurantURLRecycler);
+            texto = (TextView) view.findViewById(R.id.textRestaurantURL);
             valoracion = view.findViewById(R.id.toggleButtonFavRestaurantRecycler);
             restauranteNombre = view.findViewById(R.id.ratingRestaurantRecycler);
         }

@@ -1,6 +1,5 @@
 package ucm.appmenus.recyclers;
 
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +33,8 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
         public ViewHolder(View view) {
             super(view);
             this.view = view;
-            nombre = (TextView) view.findViewById(R.id.textRestarurantNameRecycler);
-            url = (TextView) view.findViewById(R.id.textRestaurantURLRecycler);
+            nombre = view.findViewById(R.id.textRestarurantNameRecycler);
+            url = view.findViewById(R.id.textRestaurantURL);
             favorito = view.findViewById(R.id.toggleButtonFavRestaurantRecycler);
             valoracion = view.findViewById(R.id.ratingRestaurantRecycler);
             imagenPrincDir = view.findViewById(R.id.imageRestaurantRecycler);
@@ -61,7 +60,8 @@ public class RestauranteRecyclerAdapter extends RecyclerView.Adapter<Restaurante
             filtrosRecycler.setLayoutManager(new LinearLayoutManager(
                     view.getContext(), LinearLayoutManager.HORIZONTAL, false));
             //Create adapter
-            FiltrosRecyclerAdapter adapterFiltros = new FiltrosRecyclerAdapter(restaurante.getFiltros(), true);
+            FiltrosRecyclerAdapter adapterFiltros = new FiltrosRecyclerAdapter(
+                    restaurante.getFiltros().toArray(new String[0]), true);
             //Set the adapter
             filtrosRecycler.setAdapter(adapterFiltros);
         }

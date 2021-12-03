@@ -20,6 +20,21 @@ import ucm.appmenus.recyclers.FiltrosRecyclerAdapter;
 
 public class FiltrosFragment extends Fragment {
 
+    //https://wiki.openstreetmap.org/wiki/Category:Food_and_beverages
+    public static final String[] filtrosLocal = {"bar","cafe", "fast+food", "nightclub", "pub", "restaurant"};
+    //Las 3 siguientes (comida, pais y postres) se podrian poner en una misma lista
+    //https://wiki.openstreetmap.org/wiki/Key:cuisine
+    public static final String[] filtrosComida = {"barbecue", "brazilian", "burger", "chicken",
+            "curry", "dessert", "fish", "friture", "hot+dog", "ice-cream", "kebab", "noodle", "pasta",
+            "pizza", "ramen", "sandwich", "sausage", "seafood", "soap", "steak-house", "sushi",
+            "tapas", "waffle"};
+    public static final String[] filtrosPais = {};
+    public static final String[] filtrosPostres = {};
+    //https://wiki.openstreetmap.org/wiki/Key:drink
+    public static final String[] filtrosBebida = {};
+    //https://wiki.openstreetmap.org/wiki/Key:diet
+    public static final String[] filtrosDieta = {};
+
     private FiltrosViewModel filtrosViewModel;
     private ArrayList<FiltrosRecyclerAdapter> listaAdaptadores;
 
@@ -47,34 +62,14 @@ public class FiltrosFragment extends Fragment {
         /**
          * CUIDADO: EL ORDEN DE INSERCION DE LOS FILTROS ES IMPORTANTE PARA LA QUERY
          * */
-        ArrayList<String> ejemplo2 = new ArrayList<String>();
-        ejemplo2.add("Vegana");
-        ejemplo2.add("Vegetariana");
-        ejemplo2.add("Sin gluten");
-        crearRecyclerFiltros(root, ejemplo2, R.id.recyclerFiltrosTipo, 3);
-
-        ArrayList<String> ejemplo = new ArrayList<String>();
-        ejemplo.add("Mexicana");
-        ejemplo.add("China");
-        ejemplo.add("Japonesa");
-        ejemplo.add("Vietnamita");
-        ejemplo.add("Argentina");
-        ejemplo.add("Peruana");
-        ejemplo.add("Alemana");
-        ejemplo.add("Italiana");
-        ejemplo.add("Vietnamita");
-        crearRecyclerFiltros(root, ejemplo, R.id.recyclerFiltrosComida, 3);
-
-        ArrayList<String> ejemplo3 = new ArrayList<String>();
-        ejemplo3.add("Filtro1");ejemplo3.add("Filtro2");ejemplo3.add("Filtro3");ejemplo3.add("Filtro4");
-        ejemplo3.add("Filtro5");ejemplo3.add("Filtro6");ejemplo3.add("Filtro7");ejemplo3.add("Filtro8");
-        ejemplo3.add("Filtro9");ejemplo3.add("Filtro10");ejemplo3.add("Filtro11");ejemplo3.add("Filtro12");
-        crearRecyclerFiltros(root, ejemplo3, R.id.recyclerFiltros3, 1);
+        crearRecyclerFiltros(root, filtrosLocal, R.id.recyclerFiltrosTipo, 3);
+        crearRecyclerFiltros(root, filtrosComida, R.id.recyclerFiltrosComida, 3);
+        crearRecyclerFiltros(root, filtrosPais, R.id.recyclerFiltros3, 1);
 
         return root;
     }
 
-    private void crearRecyclerFiltros(final View root, ArrayList<String> filtros, int id, int nColums){
+    private void crearRecyclerFiltros(final View root, String[] filtros, int id, int nColums){
         //Crear el recycler
         RecyclerView recyclerView = root.findViewById(id);
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), nColums));

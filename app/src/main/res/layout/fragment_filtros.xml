@@ -31,6 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <!--TODO: Hacer que el recycler haga un wrap hasta un tam
+        maximo, asi ocupara menos si lo necesita pero no mucho si es muy grande-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFiltrosTipo"
             android:layout_width="match_parent"
@@ -50,7 +52,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFiltrosComida"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:background="#00FFEB3B"
             android:scrollbars="vertical">
 
@@ -67,7 +69,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFiltros3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:background="#00E91E63">
 
         </androidx.recyclerview.widget.RecyclerView>

@@ -25,23 +25,29 @@ import ucm.appmenus.utils.OpenStreetMap;
 public class InicioFragment extends Fragment {
 
     private static ArrayList<Restaurante> ultimaListaDeRestaurantes = new ArrayList<Restaurante>();
+
+    private MainActivity mainActivity;
+
     private InicioViewModel inicioViewModel;
     private View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
-        //Inflater se usa cuando se quiere mostrar en bucle una cosa, por ejemplo para poner 100 fotos
-        //En este caso se usa ya que hay 3 fragments(inicio, filtros y perfil), pero no es lo tipico
+
         this.root = inflater.inflate(R.layout.fragment_inicio, container, false);
+        this.mainActivity = (MainActivity) getActivity();
+        //Actualizar la localizacion:
+        mainActivity.getUsuario().getLocalizacion().refrescarLocalizacion();
 
         //Usado para no hacer la busqueda cada vez que se abre el fragment
         //if(getArguments().getBoolean("actualizar") || ultimaListaDeRestaurantes.size() > 0){
             //Usado para cargar los datos de OpenStreetMap (ver funciones para mas informacion)
-            MainActivity main = (MainActivity) getActivity();
             OpenStreetMap osm = new OpenStreetMap();
-            osm.setPlaces(inicioViewModel.getRestaurantes(), new ArrayList<String>(),
-                    new ArrayList<String>(), 500, main.getUsuario().getLocalizacion());
+            osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
+                    new ArrayList<String>(), new ArrayList<String>(), 500,
+                    mainActivity.getUsuario().getLocalizacion().latitude,
+                    mainActivity.getUsuario().getLocalizacion().longitude));
             ultimaListaDeRestaurantes = inicioViewModel.getRestaurantes().getValue();
         /*}
         else{

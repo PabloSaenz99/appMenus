@@ -1,5 +1,7 @@
 package ucm.appmenus.ficheros;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +12,10 @@ import ucm.appmenus.entities.Foto;
 import ucm.appmenus.entities.Restaurante;
 
 public class JSONOpenStreetReader {
+
+    private final ArrayList<String> websites = new ArrayList<String>(){
+        {add("website"); add("contact:website"); add("contact:facebook");}
+    };
 
     public ArrayList<Restaurante> parsearResultado(final String s){
         ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
@@ -22,9 +28,9 @@ public class JSONOpenStreetReader {
                 String id = getStringFor(jObject, "id");
 
                 String nombre = getStringFor(info, "name");
-                String url =  getStringFor(info, "website");
-                String dir =  getStringFor(info, "addr:street");
-                dir += getStringFor(info, "addr:housenumber");
+                String url =  getStringFor(info, websites);
+
+                String dir =  getStringFor(info, "addr:street") +", " + getStringFor(info, "addr:housenumber");
                 int telefono = getIntFor(info,"contact:phone");
                 String horario = getStringFor(info, "opening_hours");
 
@@ -50,6 +56,16 @@ public class JSONOpenStreetReader {
         return restaurantes;
     }
 
+    private String getStringFor(JSONObject jo, ArrayList<String> opciones) {
+        for (String s: opciones) {
+            try {
+                return jo.getString(s);
+            } catch (JSONException ignored) {}
+        }
+        Log.d("Uys", "Devuelvo vacio");
+        return "";
+    }
+
     private String getStringFor(JSONObject jo, String s){
         try{
             return jo.getString(s);
@@ -59,11 +75,10 @@ public class JSONOpenStreetReader {
         }
     }
 
-    private int getIntFor(JSONObject jo, String s){
-        try{
+    private int getIntFor(JSONObject jo, String s) {
+        try {
             return jo.getInt(s);
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             return 0;
         }
     }

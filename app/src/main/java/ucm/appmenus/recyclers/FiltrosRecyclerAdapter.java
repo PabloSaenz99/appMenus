@@ -15,7 +15,7 @@ import ucm.appmenus.R;
 
 public class FiltrosRecyclerAdapter extends RecyclerView.Adapter<FiltrosRecyclerAdapter.ViewHolder> {
 
-    private ArrayList<String> listaDatos;
+    private String[] listaDatos;
     private boolean marcados;
     private ArrayList<ViewHolder> viewHolder;
 
@@ -49,7 +49,7 @@ public class FiltrosRecyclerAdapter extends RecyclerView.Adapter<FiltrosRecycler
     /**
      * Initialize the dataset of the Adapter.
      */
-    public FiltrosRecyclerAdapter(ArrayList<String> dataSet, boolean marcados) {
+    public FiltrosRecyclerAdapter(String[] dataSet, boolean marcados) {
         listaDatos = dataSet;
         this.marcados = marcados;
         viewHolder = new ArrayList<ViewHolder>();
@@ -76,12 +76,10 @@ public class FiltrosRecyclerAdapter extends RecyclerView.Adapter<FiltrosRecycler
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        viewHolder.setDatos(listaDatos.get(position));
+        viewHolder.setDatos(listaDatos[position]);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
-    public int getItemCount() {
-        return listaDatos.size();
-    }
+    public int getItemCount() { return listaDatos.length; }
 }

@@ -50,10 +50,10 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textRestaurantURLRecycler"
+                android:id="@+id/textRestaurantURL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripcion restaurante"
+                android:text="Sitio web"
                 android:textAlignment="textStart" />
 
             <RatingBar

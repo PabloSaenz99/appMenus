@@ -40,8 +40,8 @@ public class Localizacion {
 
     private FusedLocationProviderClient fusedLocationClient;
 
-    double longitude;
-    double latitude;
+    public double longitude;
+    public double latitude;
 
     public Localizacion(MainActivity mainActivity){
         this.mainActivity = mainActivity;
@@ -76,8 +76,9 @@ public class Localizacion {
                 }
             } else {
                 Toast.makeText(context, "Por favor permitenos utilizar la localizacion", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mainActivity.startActivity(intent);
+                //Va mal en android 10
+                //Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                //mainActivity.startActivity(intent);
             }
         } else {
             // if permissions aren't available, request for permissions
