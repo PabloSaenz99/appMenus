@@ -22,5 +22,16 @@
         android:textAlignment="center"
         android:textSize="14sp" />
 
+    <!--
+    TODO: esto se usara en un futuro junto con la parte mencionada en fragment_filtros
+    Es el recycler que conntendra todos los recyclers con sus tipos de comida. Ej:
+        En la pos 1 irá el recycler con los filtros por tipo de local
+        En la pos 2 irá el recycler con los filtros por tipo de pais...
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFiltros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
+    -->
 
 </LinearLayout>

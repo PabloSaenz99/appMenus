@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context=".ui.filtros.FiltrosFragment">
 
+    <!--
+        TODO: LAYOUT FUTURO (leer debajo)
+        Este layout debera ser un recycler de recyclers de tipo layout_info:filtros (ya que ese layout
+        implementa ya los recyclers y la informacion de a que filtro hacen referencia).
+        Si es muy complejo o poco util, no hace falta implementarlo
+    -->
+
     <SearchView
         android:id="@+id/busquedaFiltros"
         android:layout_width="match_parent"
@@ -16,8 +23,7 @@
     </SearchView>
     <View style="@style/HorizontalDivider" />
 
-
-    <!--Aqui se incluye de forma estatica el xml de layout_info-->
+    <!--Aqui se incluye de forma estatica el xml de layout_info_filtros-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,14 +33,14 @@
 
         <include
             android:id="@+id/layout_info"
-            layout="@layout/layout_info"
+            layout="@layout/layout_info_filtros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <!--TODO: Hacer que el recycler haga un wrap hasta un tam
         maximo, asi ocupara menos si lo necesita pero no mucho si es muy grande-->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFiltrosTipo"
+            android:id="@+id/recyclerFiltrosLocal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#00E91E63">
@@ -45,14 +51,14 @@
 
         <include
             android:id="@+id/layout_info"
-            layout="@layout/layout_info"
+            layout="@layout/layout_info_filtros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFiltrosComida"
+            android:id="@+id/recyclerFiltrosPais"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             android:background="#00FFEB3B"
             android:scrollbars="vertical">
 
@@ -62,7 +68,7 @@
 
         <include
             android:id="@+id/layout_info"
-            layout="@layout/layout_info"
+            layout="@layout/layout_info_filtros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -97,6 +103,5 @@
         android:textSize="18sp" />
 
     <View style="@style/HorizontalDividerTransparent" />
-
 
 </LinearLayout>

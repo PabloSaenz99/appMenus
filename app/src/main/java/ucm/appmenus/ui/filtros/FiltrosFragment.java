@@ -62,8 +62,8 @@ public class FiltrosFragment extends Fragment {
         /**
          * CUIDADO: EL ORDEN DE INSERCION DE LOS FILTROS ES IMPORTANTE PARA LA QUERY
          * */
-        crearRecyclerFiltros(root, filtrosLocal, R.id.recyclerFiltrosTipo, 3);
-        crearRecyclerFiltros(root, filtrosComida, R.id.recyclerFiltrosComida, 3);
+        crearRecyclerFiltros(root, filtrosLocal, R.id.recyclerFiltrosLocal, 3);
+        crearRecyclerFiltros(root, filtrosComida, R.id.recyclerFiltrosPais, 3);
         crearRecyclerFiltros(root, filtrosPais, R.id.recyclerFiltros3, 1);
 
         return root;
