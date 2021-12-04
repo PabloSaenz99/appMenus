@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,9 +16,9 @@ import java.util.ArrayList;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.entities.Restaurante;
-import ucm.appmenus.recyclers.RestauranteRecyclerAdapter;
+import ucm.appmenus.recyclers.RecyclerAdapter;
+import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.R;
-import ucm.appmenus.utils.Localizacion;
 import ucm.appmenus.utils.OpenStreetMap;
 
 public class InicioFragment extends Fragment {
@@ -68,13 +67,13 @@ public class InicioFragment extends Fragment {
     }
 
     private void crearRecycler(ArrayList<Restaurante> restaurantes){
-        //Crear el recycler de los restaurantes
         RecyclerView recyclerViewRestaurantes = root.findViewById(R.id.recyclerRestauranteInicio);
         recyclerViewRestaurantes.setLayoutManager(new LinearLayoutManager(
                 this.getContext(), LinearLayoutManager.VERTICAL, false));
 
-        //Crear el adapter y asignarlo
-        RestauranteRecyclerAdapter adapterRestaurantes = new RestauranteRecyclerAdapter(restaurantes);
+        RecyclerAdapter<ViewHolderRestaurantes, Restaurante> adapterRestaurantes =
+                new RecyclerAdapter<ViewHolderRestaurantes, Restaurante>(
+                        restaurantes, R.layout.recycler_restaurantes, ViewHolderRestaurantes.class);
         recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
     }
 }

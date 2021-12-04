@@ -11,24 +11,30 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import ucm.appmenus.R;
-import ucm.appmenus.recyclers.FiltrosRecyclerAdapter;
+import ucm.appmenus.recyclers.RecyclerAdapter;
+import ucm.appmenus.recyclers.ViewHolderFiltros;
+import ucm.appmenus.ui.inicio.InicioFragment;
+import ucm.appmenus.utils.Pair;
 
 public class FiltrosFragment extends Fragment {
 
     //https://wiki.openstreetmap.org/wiki/Category:Food_and_beverages
-    public static final String[] filtrosLocal = {"bar","cafe", "fast+food", "nightclub", "pub", "restaurant"};
+    public static final ArrayList<String> filtrosLocal = new ArrayList<String>(){{
+        add("bar"); add("cafe"); add("fast+food"); add("nightclub"); add("pub"); add("restaurant");}};
     //Las 3 siguientes (comida, pais y postres) se podrian poner en una misma lista
     //https://wiki.openstreetmap.org/wiki/Key:cuisine
-    public static final String[] filtrosComida = {"barbecue", "brazilian", "burger", "chicken",
-            "curry", "dessert", "fish", "friture", "hot+dog", "ice-cream", "kebab", "noodle", "pasta",
-            "pizza", "ramen", "sandwich", "sausage", "seafood", "soap", "steak-house", "sushi",
-            "tapas", "waffle"};
-    public static final String[] filtrosPais = {};
+    public static final  ArrayList<String> filtrosComida = new ArrayList<String>(){{
+        add("barbecue"); add("brazilian"); add("burger"); add("chicken"); add( "curry");
+        add("dessert"); add("fish"); add("friture"); add("hot+dog"); add("ice-cream"); add("kebab");
+        add("noodle"); add("pasta"); add("pizza"); add("ramen"); add("sandwich"); add("sausage");
+        add("seafood"); add("soap"); add("steak-house"); add("sushi");  add("tapas");}};
+    public static final ArrayList<String> filtrosPais = new ArrayList<String>();
     public static final String[] filtrosPostres = {};
     //https://wiki.openstreetmap.org/wiki/Key:drink
     public static final String[] filtrosBebida = {};
@@ -36,7 +42,7 @@ public class FiltrosFragment extends Fragment {
     public static final String[] filtrosDieta = {};
 
     private FiltrosViewModel filtrosViewModel;
-    private ArrayList<FiltrosRecyclerAdapter> listaAdaptadores;
+    private ArrayList<ViewHolderFiltros> listaAdaptadores;
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
@@ -44,17 +50,18 @@ public class FiltrosFragment extends Fragment {
                 ViewModelProviders.of(this).get(FiltrosViewModel.class);
         View root = inflater.inflate(R.layout.fragment_filtros, container, false);
 
-        listaAdaptadores = new ArrayList<FiltrosRecyclerAdapter>();
+        listaAdaptadores = new ArrayList<ViewHolderFiltros>();
 
         Button botonFiltrar = root.findViewById(R.id.botonFiltrar);
         botonFiltrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ArrayList<String> listaFiltros = new ArrayList<String>();
-                for (FiltrosRecyclerAdapter adaptador: listaAdaptadores){
-                    listaFiltros.addAll(adaptador.getDatos());
+                for (ViewHolderFiltros adaptador: listaAdaptadores){
+                    if(adaptador.getDatos().getSegundo())
+                        listaFiltros.add(adaptador.getDatos().getPrimero());
                 }
                 //Buscar resultados y abrir activity
-                Intent intent = new Intent(getActivity(), FiltrosRestauranteActivity.class);
+                Intent intent = new Intent(getActivity(), InicioFragment.class);
                 intent.putStringArrayListExtra("query", listaFiltros);
                 startActivity(intent);
             }
@@ -69,14 +76,21 @@ public class FiltrosFragment extends Fragment {
         return root;
     }
 
-    private void crearRecyclerFiltros(final View root, String[] filtros, int id, int nColums){
-        //Crear el recycler
-        RecyclerView recyclerView = root.findViewById(id);
-        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), nColums));
-        //Crear adapter
-        FiltrosRecyclerAdapter adapterTipos = new FiltrosRecyclerAdapter(filtros, false);
-        listaAdaptadores.add(adapterTipos);
-        //Set the adapter
-        recyclerView.setAdapter(listaAdaptadores.get(listaAdaptadores.size() - 1));
+    private void crearRecyclerFiltros(final View root, ArrayList<String> filtros, int id, int nColums){
+        RecyclerView recyclerViewRestaurantes = root.findViewById(id);
+        recyclerViewRestaurantes.setLayoutManager(new GridLayoutManager(root.getContext(), nColums));
+
+        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterRestaurantes =
+                new RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>(
+                        transform(filtros, true), R.layout.recycler_filtros, ViewHolderFiltros.class);
+        recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
+    }
+
+    public static ArrayList<Pair<String, Boolean>> transform(ArrayList<String> filtros, boolean modo){
+        ArrayList<Pair<String, Boolean>> datos = new ArrayList<>();
+        for (String s: filtros) {
+            datos.add(new Pair<String, Boolean>(s, modo));
+        }
+        return datos;
     }
 }
