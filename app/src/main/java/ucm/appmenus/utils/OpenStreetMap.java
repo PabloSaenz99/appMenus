@@ -34,12 +34,15 @@ public class OpenStreetMap {
                 try {
                     //Obtiene los resultados y los guarda en la cola para que se publiquen en cuanto sea posible
                     JSONOpenStreetReader reader = new JSONOpenStreetReader();
+                    /*
                     actualizable.postValue(reader.parsearResultado(getURLData(
                             construirQueryRestaurante(new OpenStreetAttributes(10,
                                     new ArrayList<String>(){{add("restaurant");}},
                                     new ArrayList<String>(),
                                     //1500, loc.longitude, loc.latitude))));
                                     1500, 40.41676, -3.70329)))));
+                     */
+                    actualizable.postValue(reader.parsearResultado(getURLData(query)));
                 } catch (Exception ignored) {}
             }
         });
@@ -78,7 +81,7 @@ public class OpenStreetMap {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             urlConnection.connect();
 
-            Log.d("Fin de busqueda", "Fin del hilo de OpenStreetMap");
+            Log.d("Fin", "Fin del hilo de OpenStreetMap");
             return bufferedReader.lines().collect(Collectors.joining());
         } catch (IOException e) {
             return "";
@@ -120,7 +123,7 @@ public class OpenStreetMap {
         }
 
         res+=");out+10;";
-        System.out.println(res);
+        Log.i("QUERY OSM", res);
         return res;
     }
 

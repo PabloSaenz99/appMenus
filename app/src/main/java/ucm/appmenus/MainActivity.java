@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -30,6 +31,7 @@ import ucm.appmenus.utils.Localizacion;
 public class MainActivity extends AppCompatActivity {
 
     private Usuario usuario;
+    private NavController navController;
 
     //En principio no hay que hacer nada mas en esta actividad ya que tod0 se hace en los fragments
     @Override
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         loginUsuario();
-
         //Importante que esté después del login de usuario o lanzará nullpointer
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -45,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_inicio, R.id.navigation_filtros, R.id.navigation_perfil)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    public void changeFragment(int id, Bundle b){ navController.navigate(id, b); }
     public Usuario getUsuario() { return usuario; }
 
     /**

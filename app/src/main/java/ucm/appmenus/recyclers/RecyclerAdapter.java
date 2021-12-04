@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import ucm.appmenus.R;
 import ucm.appmenus.utils.Pair;
@@ -21,6 +22,8 @@ import ucm.appmenus.utils.Pair;
  *      @see IReclycerElement
  * @param <ViewHolder> La clase que almacena los datos de ELEMENT, debe extender
  *      a RecyclerView.ViewHolder e implementar IReclycerElement
+ *      IMPORTANTE: Su unico constructor debe tener por unico parametro View, para añadir datos
+ *          extra, pasarlos por setDatos
  *      @see ViewHolderNULL para un ejemplo muy basico
  * IMPORTANTE: Esta clase no debe ser modificada
  * */
@@ -30,6 +33,7 @@ public class RecyclerAdapter<ViewHolder extends
 
     private int viewID;
     private ArrayList<ELEMENT> listaDatos;
+    private ArrayList<ViewHolder> holders;
     private Class<ViewHolder> clase;
 
     /**
@@ -41,14 +45,23 @@ public class RecyclerAdapter<ViewHolder extends
         this.listaDatos = dataSet;
         this.viewID = viewID;
         this.clase = clase;
+        this.holders = new ArrayList<ViewHolder>();
     }
+
+    /*
+    * Funciones usadas para moverse por los elementos del recycler
+    * */
+    public ViewHolder get(int i){ return holders.get(i); }
+    public int size(){ return holders.size(); }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewID, parent, false);
         try {
-            return clase.getConstructor(View.class).newInstance(view);
+            ViewHolder v = clase.getConstructor(View.class).newInstance(view);
+            holders.add(v);
+            return v;
         } catch (IllegalAccessException | InstantiationException |
                 InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();

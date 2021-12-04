@@ -47,7 +47,6 @@ public class JSONOpenStreetReader {
 
                 restaurantes.add(new Restaurante(id, nombre, url, dir, telefono, horario,
                         valoracion, imagenPrincDir, filtros, null));
-                System.out.println(restaurantes.get(k));
             }
         }
         catch (JSONException e) {
@@ -62,7 +61,6 @@ public class JSONOpenStreetReader {
                 return jo.getString(s);
             } catch (JSONException ignored) {}
         }
-        Log.d("Uys", "Devuelvo vacio");
         return "";
     }
 

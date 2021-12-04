@@ -11,7 +11,7 @@ import ucm.appmenus.entities.Restaurante;
 
 public class InicioViewModel extends ViewModel {
 
-    private MutableLiveData<ArrayList<Restaurante>> restaurantes;
+    private static MutableLiveData<ArrayList<Restaurante>> restaurantes;
 
     public InicioViewModel() {
         restaurantes = new MutableLiveData<ArrayList<Restaurante>>();

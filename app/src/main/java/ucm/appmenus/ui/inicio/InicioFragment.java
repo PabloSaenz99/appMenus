@@ -1,6 +1,7 @@
 package ucm.appmenus.ui.inicio;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import ucm.appmenus.utils.OpenStreetMap;
 
 public class InicioFragment extends Fragment {
 
-    private static ArrayList<Restaurante> ultimaListaDeRestaurantes = new ArrayList<Restaurante>();
+    //private static ArrayList<Restaurante> ultimaListaDeRestaurantes = new ArrayList<Restaurante>();
 
     private MainActivity mainActivity;
 
@@ -40,19 +41,20 @@ public class InicioFragment extends Fragment {
         mainActivity.getUsuario().getLocalizacion().refrescarLocalizacion();
 
         //Usado para no hacer la busqueda cada vez que se abre el fragment
-        //if(getArguments().getBoolean("actualizar") || ultimaListaDeRestaurantes.size() > 0){
+        if(getArguments() != null && getArguments().getBoolean("actualizar")) {
             //Usado para cargar los datos de OpenStreetMap (ver funciones para mas informacion)
             OpenStreetMap osm = new OpenStreetMap();
             osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
-                    new ArrayList<String>(), new ArrayList<String>(), 500,
+                    getArguments().getStringArrayList("tiposLocal"),
+                    getArguments().getStringArrayList("tiposCocina"),
+                    getArguments().getInt("area"),
                     mainActivity.getUsuario().getLocalizacion().latitude,
                     mainActivity.getUsuario().getLocalizacion().longitude));
-            ultimaListaDeRestaurantes = inicioViewModel.getRestaurantes().getValue();
-        /*}
-        else{
-            crearRecycler(ultimaListaDeRestaurantes);
         }
-         */
+        else {
+            crearRecycler(new ArrayList<Restaurante>());
+        }
+
         //Actualiza el recycler cuando se reciben los datos
         final Observer<ArrayList<Restaurante>> observer = new Observer<ArrayList<Restaurante>>() {
             @Override
@@ -76,4 +78,24 @@ public class InicioFragment extends Fragment {
                         restaurantes, R.layout.recycler_restaurantes, ViewHolderRestaurantes.class);
         recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
     }
+
+    /**
+     * Patron Singleton:
+     * Usado para inicializar solo una vez la clase, en aperturas siguientes no será necesario
+     * */
+    /*
+    private void init(){
+        primeraApertura = false;
+
+        OpenStreetMap osm = new OpenStreetMap();
+        osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
+                new ArrayList<String>(),
+                new ArrayList<String>(),
+                500,
+                mainActivity.getUsuario().getLocalizacion().latitude,
+                mainActivity.getUsuario().getLocalizacion().longitude));
+        ultimaListaDeRestaurantes = inicioViewModel.getRestaurantes().getValue();
+    }
+
+     */
 }

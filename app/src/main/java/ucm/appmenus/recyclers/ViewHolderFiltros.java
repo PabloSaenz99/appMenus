@@ -1,5 +1,6 @@
 package ucm.appmenus.recyclers;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -25,8 +26,17 @@ public class ViewHolderFiltros extends RecyclerView.ViewHolder implements IRecly
     public void setDatos(Pair<String, Boolean> data) {
         this.datos = data;
         textView.setText(datos.getPrimero());
-        checkBox.setChecked(!datos.getSegundo());
         checkBox.setClickable(datos.getSegundo());
+        checkBox.setChecked(!datos.getSegundo());
+        datos.setSegundo(false);
+        if(checkBox.isClickable()) {
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    datos.setSegundo(checkBox.isChecked());
+                }
+            });
+        }
     }
 
     @Override

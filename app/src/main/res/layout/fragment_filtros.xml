@@ -73,7 +73,7 @@
             android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFiltros3"
+            android:id="@+id/recyclerFiltrosComida"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:background="#00E91E63">
