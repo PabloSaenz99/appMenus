@@ -39,6 +39,42 @@
 
         <!--TODO: Hacer que el recycler haga un wrap hasta un tam
         maximo, asi ocupara menos si lo necesita pero no mucho si es muy grande-->
+        <RadioGroup
+            android:id="@+id/radioGroupDistancia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton1000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="1000" />
+
+            <RadioButton
+                android:id="@+id/radioButton1500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="1500" />
+
+            <RadioButton
+                android:id="@+id/radioButton2000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2000" />
+        </RadioGroup>
+
+        <include
+            android:id="@+id/layout_info"
+            layout="@layout/layout_info_filtros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFiltrosLocal"
             android:layout_width="match_parent"

@@ -122,7 +122,7 @@ public class OpenStreetMap {
             res+="(around:" + attr.area +"," + attr.latitud + "," + attr.longitud + ");";
         }
 
-        res+=");out+10;";
+        res+=");out+30;";
         Log.i("QUERY OSM", res);
         return res;
     }

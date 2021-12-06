@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    public void changeFragment(int id, Bundle b){ navController.navigate(id, b); }
+    public void changeFragment(int id, Bundle b){
+        Log.d("BUNDLE", b.toString());
+        navController.navigate(id, b); }
     public Usuario getUsuario() { return usuario; }
 
     /**

@@ -73,6 +73,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -92,6 +93,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
     private final TextView url;
     private final ToggleButton favorito;
     private final RatingBar valoracion;
+    private final TextView direccion;
     private final ImageView imagenPrincDir;
     private final RecyclerView filtrosRecycler;
 
@@ -102,6 +104,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         url = view.findViewById(R.id.textRestaurantURL);
         favorito = view.findViewById(R.id.toggleButtonFavRestaurantRecycler);
         valoracion = view.findViewById(R.id.ratingRestaurantRecycler);
+        direccion = view.findViewById(R.id.textDireccionRestaurantRecycler);
         imagenPrincDir = view.findViewById(R.id.imageRestaurantRecycler);
         filtrosRecycler = view.findViewById(R.id.filtrosRestauranteRecycler);
 
@@ -120,18 +123,15 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         favorito.setChecked(false);
         valoracion.setRating((float )restaurante.getValoracion());
         valoracion.setClickable(false);
+        direccion.setText(restaurante.getDireccion());
         //TODO: Hacer algo con la imagen
         //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
 
         //Recycler filtros
-        filtrosRecycler.setLayoutManager(new LinearLayoutManager(
-                view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        //Create adapter
-        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros =
-                new RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>(
-                        FiltrosFragment.transform(restaurante.getFiltros(), false),
-                        R.layout.recycler_filtros, ViewHolderFiltros.class);
-        //Set the adapter
+        filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
+        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>(
+                FiltrosFragment.transform(restaurante.getFiltros(), false),
+                R.layout.recycler_filtros, ViewHolderFiltros.class);
         filtrosRecycler.setAdapter(adapterFiltros);
     }
 

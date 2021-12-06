@@ -2,10 +2,13 @@ package ucm.appmenus.ui.filtros;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -49,13 +52,15 @@ public class FiltrosFragment extends Fragment {
     //https://wiki.openstreetmap.org/wiki/Key:diet
     public static final String[] filtrosDieta = {};
 
+    private View root;
+
     private FiltrosViewModel filtrosViewModel;
     private ArrayList<RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>> listaRecyclers;
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
         filtrosViewModel = ViewModelProviders.of(this).get(FiltrosViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_filtros, container, false);
+        root = inflater.inflate(R.layout.fragment_filtros, container, false);
 
         listaRecyclers = new ArrayList<RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>>();
 
@@ -96,6 +101,11 @@ public class FiltrosFragment extends Fragment {
     private void realizarBusqueda(){
         MainActivity main = (MainActivity) getActivity();
         if(main != null) {
+            //Obtiene la distancia
+            RadioGroup rg = root.findViewById(R.id.radioGroupDistancia);
+            RadioButton but = root.findViewById(rg.getCheckedRadioButtonId());
+            int area = Integer.parseInt(but.getText().toString());
+
             //Primero busca los tipos de local
             ArrayList<String> tiposLocal = new ArrayList<String>();
             RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> vh = listaRecyclers.get(0);
@@ -115,12 +125,11 @@ public class FiltrosFragment extends Fragment {
                 }
             }
             //Buscar resultados y abrir activity
-            Intent intent = new Intent(getActivity(), InicioFragment.class);
             Bundle b = new Bundle();
             b.putBoolean("actualizar", true);
             b.putStringArrayList("tiposLocal", tiposLocal);
             b.putStringArrayList("tiposCocina", tiposCocina);
-            b.putInt("area", 1500);
+            b.putInt("area", area);
 
             main.changeFragment(R.id.navigation_inicio, b);
         }

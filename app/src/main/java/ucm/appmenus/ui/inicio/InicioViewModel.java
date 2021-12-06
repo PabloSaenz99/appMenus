@@ -1,7 +1,10 @@
 package ucm.appmenus.ui.inicio;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
@@ -16,6 +19,11 @@ public class InicioViewModel extends ViewModel {
     public InicioViewModel() {
         restaurantes = new MutableLiveData<ArrayList<Restaurante>>();
     }
+    public InicioViewModel(SavedStateHandle savedStateHandle) {
+        Log.i("ESTADO", "Recuperando-ViewModel");
+        restaurantes = savedStateHandle.getLiveData("listaResaturantes");
+    }
+
 
     public MutableLiveData<ArrayList<Restaurante>> getRestaurantes() { return restaurantes; }
 }

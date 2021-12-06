@@ -37,7 +37,9 @@ public class JSONOpenStreetReader {
                 //Filtros
                 ArrayList<String> filtros = new ArrayList<String>();
                 filtros.add(getStringFor(info, "amenity"));
-                filtros.add(getStringFor(info, "cuisine"));
+                String cuisineAux = getStringFor(info, "cuisine");
+                if(!cuisineAux.equals(""))
+                    filtros.add(cuisineAux);
 
                 //TODO: Datos que no existen en OpenStreet, ver como obtenerlos
                 //float valoracion = jObject.getLong("valoracion");
