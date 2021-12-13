@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,6 +22,7 @@ import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.R;
+import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.OpenStreetMap;
 
 public class InicioFragment extends Fragment {
@@ -32,36 +34,38 @@ public class InicioFragment extends Fragment {
     private InicioViewModel inicioViewModel;
     private View root;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
-        //inicioViewModel = new ViewModelProvider(this).get(InicioViewModel.class);
-        this.root = inflater.inflate(R.layout.fragment_inicio, container, false);
         this.mainActivity = (MainActivity) getActivity();
-        //Actualizar la localizacion:
-        mainActivity.getUsuario().getLocalizacion().refrescarLocalizacion();
+
+        //inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
+        inicioViewModel = new ViewModelProvider(mainActivity).get(InicioViewModel.class);
+        this.root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
         //Usado para no hacer la busqueda cada vez que se abre el fragment
         if(getArguments()/*savedInstanceState*/ != null){
-            if(getArguments()/*savedInstanceState*/.getBoolean("actualizar")) {
-                Log.i("ESTADO", "Actualizando");
+            if(getArguments()/*savedInstanceState*/.getBoolean(Constantes.ACTUALIZAR_INTENT)) {
+                Log.i("ESTADO", "Actualizando datos");
+                //Actualizar la localizacion:
+                mainActivity.getUsuario().getLocalizacion().refrescarLocalizacion();
                 //Usado para cargar los datos de OpenStreetMap (ver funciones para mas informacion)
                 OpenStreetMap osm = new OpenStreetMap();
                 osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
-                        getArguments().getStringArrayList("tiposLocal"),
-                        getArguments().getStringArrayList("tiposCocina"),
-                        getArguments().getInt("area"),
+                        getArguments().getStringArrayList(Constantes.TIPOS_LOCAL),
+                        getArguments().getStringArrayList(Constantes.TIPOS_COCINA),
+                        getArguments().getInt(Constantes.AREA),
                         mainActivity.getUsuario().getLocalizacion().latitude,
                         mainActivity.getUsuario().getLocalizacion().longitude));
             }
             else{
-                Log.i("ESTADO", "Recuperando");
+                Log.i("ESTADO", "Recuperando datos");
                 inicioViewModel.getRestaurantes().postValue(
-                        savedInstanceState.<Restaurante>getParcelableArrayList("listaResaturantes"));
+                        savedInstanceState.<Restaurante>getParcelableArrayList(Constantes.LISTA_RESTAURANTES));
             }
         }
         else {
-            Log.i("ESTADO", "Nuevo");
+            Log.i("ESTADO", "Nuevos datos");
             //TODO: Pedir los datos por defecto (los almacenados en la config inicial en un fichero) en vez de estos
             OpenStreetMap osm = new OpenStreetMap();
             osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
@@ -90,7 +94,7 @@ public class InicioFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.i("ESTADO", "Guardando");
-        outState.putParcelableArrayList("listaResaturantes", inicioViewModel.getRestaurantes().getValue());
+        outState.putParcelableArrayList(Constantes.LISTA_RESTAURANTES, inicioViewModel.getRestaurantes().getValue());
     }
 
     private void crearRecycler(ArrayList<Restaurante> restaurantes){

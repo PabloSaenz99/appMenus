@@ -97,22 +97,18 @@ public class OpenStreetMap {
             res+="[timeout:" + 7 + "];";
         }
         //Tipos restaurantes
-        if(attr.tiposLocal.size() == 1){
-            res+="(node[%22amenity%22=%22" + attr.tiposLocal.get(0) + "%22]";
-        }
-        else{
-            //Poner lo de tiposCocina.size()>1???
-        }
-        //Tipos cocina
-        if(attr.tiposCocina.size() == 1){
-            res+="[%22cuisine%22=%22" + attr.tiposCocina.get(0) + "%22]";
-        }
-        else if(attr.tiposCocina.size() > 1){
-            res+="[%22cuisine%22~%22";
-            for(int i = 0; i < attr.tiposCocina.size() - 1; i++) {
-                res += attr.tiposCocina.get(i) + "|";
+        for (String local: attr.tiposLocal) {
+            res += "(node[%22amenity%22=%22" + local + "%22]";
+            //Tipos cocina
+            if (attr.tiposCocina.size() == 1) {
+                res += "[%22cuisine%22=%22" + attr.tiposCocina.get(0) + "%22]";
+            } else if (attr.tiposCocina.size() > 1) {
+                res += "[%22cuisine%22~%22";
+                for (int i = 0; i < attr.tiposCocina.size() - 1; i++) {
+                    res += attr.tiposCocina.get(i) + "|";
+                }
+                res += attr.tiposCocina.get(attr.tiposCocina.size() - 1) + "%22]";
             }
-            res += attr.tiposCocina.get(attr.tiposCocina.size() - 1) + "%22]";
         }
         //Distancia
         if(attr.area < 500){

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
@@ -33,8 +34,9 @@ public class PerfilFragment extends Fragment {
                 ViewModelProviders.of(this).get(PerfilViewModel.class);
         View root = inflater.inflate(R.layout.fragment_perfil, container, false);
 
-        //TODO: Obtener el usuario de mainactivity
-        Usuario usuario = null;
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Usuario usuario = mainActivity.getUsuario();
+
         ImageView imagen = root.findViewById(R.id.imagenUsuarioPerfilFragment);
         TextView email = root.findViewById(R.id.emailUsuarioPerfilFragment);
         TextView nombre = root.findViewById(R.id.nombreUsuarioPerfilFragment);

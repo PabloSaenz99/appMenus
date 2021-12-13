@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import ucm.appmenus.BuildConfig;
 import ucm.appmenus.entities.Restaurante;
+import ucm.appmenus.utils.Constantes;
 
 public class InicioViewModel extends ViewModel {
 
@@ -20,10 +21,8 @@ public class InicioViewModel extends ViewModel {
         restaurantes = new MutableLiveData<ArrayList<Restaurante>>();
     }
     public InicioViewModel(SavedStateHandle savedStateHandle) {
-        Log.i("ESTADO", "Recuperando-ViewModel");
-        restaurantes = savedStateHandle.getLiveData("listaResaturantes");
+        restaurantes = savedStateHandle.getLiveData(Constantes.LISTA_RESTAURANTES);
     }
-
 
     public MutableLiveData<ArrayList<Restaurante>> getRestaurantes() { return restaurantes; }
 }

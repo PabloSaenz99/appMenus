@@ -1,8 +1,6 @@
 package ucm.appmenus.ui.filtros;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,40 +15,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderFiltros;
-import ucm.appmenus.ui.inicio.InicioFragment;
+import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Pair;
 
 public class FiltrosFragment extends Fragment {
-
-    //https://wiki.openstreetmap.org/wiki/Category:Food_and_beverages
-    public static final ArrayList<String> filtrosLocal = new ArrayList<String>(){{
-        add("bar"); add("cafe"); add("fast+food"); add("nightclub"); add("pub"); add("restaurant");
-    }};
-    //Las 3 siguientes (comida, pais y postres) se podrian poner en una unica lista
-    //https://wiki.openstreetmap.org/wiki/Key:cuisine
-    public static final  ArrayList<String> filtrosComida = new ArrayList<String>(){{
-        add("barbecue"); add("burger"); add("chicken"); add( "curry"); add("fish"); add("hot+dog");
-        add("kebab"); add("noodle"); add("pasta"); add("pizza"); add("ramen"); add("sandwich");
-        add("seafood"); add("steak-house"); add("sushi");  add("tapas");
-    }};
-    public static final ArrayList<String> filtrosPais = new ArrayList<String>(){{
-        add("asian"); add("brazilian"); add("greek"); add("indian"); add("indonesian");
-        add("italian"); add("japanese"); add("korean"); add("mediterranean"); add("mexican");
-        add("spanish"); add("thai"); add("traditional");
-    }};
-    public static final ArrayList<String> filtrosPostres = new ArrayList<String>(){{
-        add("cake"); add("coffe+shop"); add("crepe"); add("dessert"); add("ice+cream");
-        add("waffle"); add("teahouse");
-    }};
-    //https://wiki.openstreetmap.org/wiki/Key:drink
-    public static final String[] filtrosBebida = {};
-    //https://wiki.openstreetmap.org/wiki/Key:diet
-    public static final String[] filtrosDieta = {};
 
     private View root;
 
@@ -64,9 +38,9 @@ public class FiltrosFragment extends Fragment {
 
         listaRecyclers = new ArrayList<RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>>();
 
-        crearRecyclerFiltros(root, filtrosLocal, R.id.recyclerFiltrosLocal, 3);
-        crearRecyclerFiltros(root, filtrosPais, R.id.recyclerFiltrosPais, 3);
-        crearRecyclerFiltros(root, filtrosComida, R.id.recyclerFiltrosComida, 3);
+        crearRecyclerFiltros(root, Constantes.filtrosLocal, R.id.recyclerFiltrosLocal, 3);
+        crearRecyclerFiltros(root, Constantes.filtrosPais, R.id.recyclerFiltrosPais, 3);
+        crearRecyclerFiltros(root, Constantes.filtrosComida, R.id.recyclerFiltrosComida, 3);
 
         //Carga los filtros y realiza la busqueda
         Button botonFiltrar = root.findViewById(R.id.botonFiltrar);
@@ -79,7 +53,7 @@ public class FiltrosFragment extends Fragment {
         return root;
     }
 
-    public static ArrayList<Pair<String, Boolean>> transform(ArrayList<String> filtros, boolean modo){
+    public static ArrayList<Pair<String, Boolean>> transform(List<String> filtros, boolean modo){
         ArrayList<Pair<String, Boolean>> datos = new ArrayList<>();
         for (String s: filtros) {
             datos.add(new Pair<String, Boolean>(s, modo));
@@ -87,7 +61,7 @@ public class FiltrosFragment extends Fragment {
         return datos;
     }
 
-    private void crearRecyclerFiltros(final View root, ArrayList<String> filtros, int id, int nColums){
+    private void crearRecyclerFiltros(final View root, List<String> filtros, int id, int nColums){
         RecyclerView recyclerViewRestaurantes = root.findViewById(id);
         recyclerViewRestaurantes.setLayoutManager(new GridLayoutManager(root.getContext(), nColums));
 
@@ -126,10 +100,10 @@ public class FiltrosFragment extends Fragment {
             }
             //Buscar resultados y abrir activity
             Bundle b = new Bundle();
-            b.putBoolean("actualizar", true);
-            b.putStringArrayList("tiposLocal", tiposLocal);
-            b.putStringArrayList("tiposCocina", tiposCocina);
-            b.putInt("area", area);
+            b.putBoolean(Constantes.ACTUALIZAR_INTENT, true);
+            b.putStringArrayList(Constantes.TIPOS_LOCAL, tiposLocal);
+            b.putStringArrayList(Constantes.TIPOS_COCINA, tiposCocina);
+            b.putInt(Constantes.AREA, area);
 
             main.changeFragment(R.id.navigation_inicio, b);
         }

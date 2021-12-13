@@ -3,24 +3,16 @@ package ucm.appmenus;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.os.HandlerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
 import ucm.appmenus.utils.Localizacion;
@@ -39,9 +31,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         loginUsuario();
+
         //Importante que esté después del login de usuario o lanzará nullpointer
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        final BottomNavigationView navView = findViewById(R.id.nav_view);
         //Carga la vista de la barra inferior con las 3 ventanas que contiene
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_inicio, R.id.navigation_filtros, R.id.navigation_perfil)
@@ -54,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void changeFragment(int id, Bundle b){
         Log.d("BUNDLE", b.toString());
-        navController.navigate(id, b); }
+        navController.navigate(id, b);
+    }
+
     public Usuario getUsuario() { return usuario; }
 
     /**
