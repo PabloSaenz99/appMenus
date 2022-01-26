@@ -36,10 +36,7 @@ public class Usuario {
     public String getNombre() {
         return nombre;
     }
-    public Localizacion getLocalizacion() {
-        return localizacion;
-    }
-
+    public Localizacion getLocalizacion() { return localizacion; }
     public String getImagenDir() {
         return imagenDir;
     }
@@ -69,7 +66,7 @@ public class Usuario {
         int i = 0;
         boolean encontrado = false;
         while(i < restaurantesFavoritos.size() && !encontrado) {
-            if(restaurantesFavoritos.get(i).getIdRestaurante().contentEquals(r.getIdRestaurante())) {
+            if(restaurantesFavoritos.get(i).equals(r)) {
                 restaurantesFavoritos.remove(i);
                 encontrado = true;
             }

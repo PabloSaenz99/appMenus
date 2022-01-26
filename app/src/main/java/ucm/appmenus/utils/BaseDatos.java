@@ -88,27 +88,32 @@ public class BaseDatos {
         }
         else {
             //Aqui habria que devolver un error, mientras devuelvo datos de pruueba
-            restaurantes.add(new Restaurante("0","El mexicano", "null", 3.9f,
+            restaurantes.add(new Restaurante("0","El mexicano", "null",
+                    "Calle Mayor", 6950, "Abierto", 3.9f,
                     "/data/data/ucm.appmenus/files/mexicano.jpg",
                     new ArrayList<String>(){{add("Mexicana");add("Tacos");add("Picante");}},
                     //new ArrayList<String>(){{add("img1");add("img2");add("img3");}}
                     null));
-            restaurantes.add(new Restaurante("1","La Fabada", "null", 4.4f,
+            restaurantes.add(new Restaurante("1","La Fabada", "null",
+                    "Calle Mayor", 6950, "Abierto",4.4f,
                     "/data/data/ucm.appmenus/files/asturiano.jpg",
                     new ArrayList<String>(){{add("Asturiana");add("Fabada");add("Casera");}},
                     //new ArrayList<String>(){{add("img1");add("img2");add("img3");}}
                     null));
-            restaurantes.add(new Restaurante("2","VIPS", "null", 3.7f,
+            restaurantes.add(new Restaurante("2","VIPS", "null",
+                    "Calle Mayor", 6950, "Abierto",3.7f,
                     "/data/data/ucm.appmenus/files/vips.jpg",
                     new ArrayList<String>(){{add("Hamburguesa");add("Tacos");}},
                     //new ArrayList<String>(){{add("img1");add("img2");}}
                     null));
-            restaurantes.add(new Restaurante("3","Kebab", "null", 5f,
+            restaurantes.add(new Restaurante("3","Kebab", "null",
+                    "Calle Mayor", 6950, "Abierto",5f,
                     "/data/data/ucm.appmenus/files/kebab.jpeg",
                     new ArrayList<String>(){{add("Turco");add("Kebab");}},
                     //new ArrayList<String>(){{add("img1");add("img2");}}
                     null));
-            restaurantes.add(new Restaurante("4","Telepizza", "null", 3.5f,
+            restaurantes.add(new Restaurante("4","Telepizza", "null",
+                    "Calle Mayor", 6950, "Abierto",3.5f,
                     "/data/data/ucm.appmenus/files/telepizza.png",
                     new ArrayList<String>(){{add("Pizza");}},
                     //new ArrayList<String>(){{add("img1");add("img2");}}

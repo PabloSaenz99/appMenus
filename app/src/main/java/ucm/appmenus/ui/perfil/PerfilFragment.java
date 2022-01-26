@@ -14,9 +14,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
+import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
-import ucm.appmenus.recyclers.ReseniaRecyclerAdapter;
+import ucm.appmenus.recyclers.RecyclerAdapter;
+import ucm.appmenus.recyclers.ViewHolderResenia;
+import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 
 public class PerfilFragment extends Fragment {
 
@@ -28,8 +34,9 @@ public class PerfilFragment extends Fragment {
                 ViewModelProviders.of(this).get(PerfilViewModel.class);
         View root = inflater.inflate(R.layout.fragment_perfil, container, false);
 
-        //TODO: Obtener el usuario de mainactivity
-        Usuario usuario = null;
+        MainActivity mainActivity = (MainActivity) getActivity();
+        Usuario usuario = mainActivity.getUsuario();
+
         ImageView imagen = root.findViewById(R.id.imagenUsuarioPerfilFragment);
         TextView email = root.findViewById(R.id.emailUsuarioPerfilFragment);
         TextView nombre = root.findViewById(R.id.nombreUsuarioPerfilFragment);
@@ -38,14 +45,18 @@ public class PerfilFragment extends Fragment {
         email.setText(usuario.getEmail());
         nombre.setText(usuario.getNombre());
 
-        //Crear el recycler de los comentarios
-        RecyclerView recyclerViewComentarios = root.findViewById(R.id.recyclerComentariosUsuarioPerfilFragment);
+        crearRecycler(new ArrayList<Resenia>(), root);
+        return root;
+    }
+
+    private void crearRecycler(ArrayList<Resenia> resenias, View root){
+        RecyclerView recyclerViewComentarios = root.findViewById(R.id.recyclerReseniasPerfilFragment);
         recyclerViewComentarios.setLayoutManager(new LinearLayoutManager(
                 this.getContext(), LinearLayoutManager.VERTICAL, false));
-        //TODO: Crear el adapter y asignarlo
-        ReseniaRecyclerAdapter adapterRestaurantes = new ReseniaRecyclerAdapter(usuario.getResenias());
-        recyclerViewComentarios.setAdapter(adapterRestaurantes);
 
-        return root;
+        RecyclerAdapter<ViewHolderResenia, Resenia> adapterResenias =
+                new RecyclerAdapter<ViewHolderResenia, Resenia>(
+                        resenias, R.layout.recycler_resenias, ViewHolderResenia.class);
+        recyclerViewComentarios.setAdapter(adapterResenias);
     }
 }

@@ -63,8 +63,8 @@ public class PlaceDetails {
             @Override
             public void onSuccess(FetchPlaceResponse response) {
                 Place place = response.getPlace();
-                restaurante =  new Restaurante(place.getId(), place.getName(), place.getWebsiteUri().toString(),
-                        place.getRating(), place.getIconUrl(), null, null);
+                restaurante =  null;//new Restaurante(place.getId(), place.getName(), place.getWebsiteUri().toString(),
+                        //place.getRating(), place.getIconUrl(), null, null);
                 Log.i(TAG, "Place found: " + place.getName());
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -103,9 +103,9 @@ public class PlaceDetails {
                             Log.i(TAG, String.format("Place '%s' has likelihood: %f",
                                     place.getName(),
                                     placeLikelihood.getLikelihood()));
-                            listaRestaurantes.add(new Restaurante(place.getId(), place.getName(),
+                            listaRestaurantes.add(null);/*new Restaurante(place.getId(), place.getName(),
                                     place.getWebsiteUri().toString(), place.getRating(), place.getIconUrl(),
-                                    null, null));
+                                    null, null));*/
                         }
                     } else {
                         Exception exception = task.getException();

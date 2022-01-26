@@ -77,7 +77,7 @@ public class JSONRestaurante {
                 for (int i = 0; i < jArrayFotos.length(); i++) {
                     fotos.add(new Foto(jArrayFotos.getJSONObject(i)));
                 }
-                restaurantes.add(new Restaurante(id, nombre, url, valoracion, imagenPrincDir, filtros, fotos));
+                //restaurantes.add(new Restaurante(id, nombre, url, valoracion, imagenPrincDir, filtros, fotos));
             }
         }
         catch (JSONException e) {
@@ -129,11 +129,13 @@ public class JSONRestaurante {
         }
         jRestaurante.put("filtros", jArrayFiltros);
         //Array de fotos:
+        /*
         JSONArray jArrayFotos = new JSONArray();
         for(Foto foto: r.getFotos()) {
             jArrayFiltros.put(foto.getJSONObject());
         }
         jRestaurante.put("fotos", jArrayFotos);
+         */
         //Añadir el restaurante al array
         arrayRestaurantesWrite.put(jRestaurante);
     }

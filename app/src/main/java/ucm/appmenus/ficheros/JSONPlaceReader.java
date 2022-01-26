@@ -79,8 +79,8 @@ public class JSONPlaceReader {
                 fotos.add(new Foto(dir, h, w));
             }
 
-            Restaurante r = new Restaurante(id, nombre, abierto, rating, icono, null, fotos);
-            System.out.println(r);
+            //Restaurante r = new Restaurante(id, nombre, abierto, rating, icono, null, fotos);
+            //System.out.println(r);
         } catch (JSONException e) {
             e.printStackTrace();
         }
