@@ -5,16 +5,13 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/fondoOscuro"
    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#D6D0D0"
         android:orientation="vertical"
+        android:layout_marginTop="100dp"
         tools:context=".login">
 
         <LinearLayout
@@ -38,7 +35,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/logo" />
+                        app:srcCompat="@drawable/sinfondo" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -49,7 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:background="#C8C3C3"
             android:orientation="vertical">
 
             <TextView
@@ -68,17 +64,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="Iniciar sesión con:"
+                    android:text="Iniciar sesión:"
                     android:textAlignment="center"
                     android:textAllCaps="false"
-                    android:textColor="#0C0C0C" />
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/botonIniciarSesion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#C3CFCE"
-                    android:capitalize="characters"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:backgroundTint="@color/logoAzul0"
                     android:drawableStart="@drawable/common_google_signin_btn_icon_dark"
                     android:fontFamily="sans-serif-medium"
                     android:text="iniciar sesion con google" />
@@ -87,7 +84,10 @@
                     android:id="@+id/botonInicioSesion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#2196F3"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:backgroundTint="@color/logoVerde0"
+                    android:textColor="#000000"
                     android:text="registrarse" />
 
                 <LinearLayout
@@ -105,7 +105,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="¿Ya tienes una cuenta?"
+                            android:text="¿Ya tienes una cuenta? "
+                            android:textColor="#FFFFFF"
                             android:textAlignment="textEnd" />
 
                         <TextView
