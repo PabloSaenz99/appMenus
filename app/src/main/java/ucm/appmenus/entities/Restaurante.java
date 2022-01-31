@@ -7,6 +7,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ucm.appmenus.utils.WebScrapping;
+
 public class Restaurante implements Parcelable {
 
     private final String idRestaurante;
@@ -31,16 +33,18 @@ public class Restaurante implements Parcelable {
         this.horarios = horarios;
         this.valoracion = valoracion;
         this.imagenPrincDir = imagenPrincDir;
-        //TODO: Hacer algo para buscar tipos de comida abriendo la url del restaurante
-        if(url != null){
 
-        }
         //Parsea los filtros, separandolos por ";"
         this.filtros = new ArrayList<String>();
         if(filtros != null) {
             for (String s: filtros) {
                 this.filtros.addAll(Arrays.asList(s.split(";")));
             }
+        }
+
+        //Importante que vaya despues de iniciar los filtros
+        if(url != null){
+            new WebScrapping(url, filtros);
         }
         //if(imagenesDir == null) this.imagenesDir = new ArrayList<Foto>();
         //else this.imagenesDir = imagenesDir;

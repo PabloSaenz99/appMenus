@@ -63,7 +63,7 @@ public class JSONOpenStreetReader {
                 return jo.getString(s);
             } catch (JSONException ignored) {}
         }
-        return "";
+        return null;
     }
 
     private String getStringFor(JSONObject jo, String s){
