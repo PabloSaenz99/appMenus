@@ -4,9 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import ucm.appmenus.utils.Pair;
 import ucm.appmenus.utils.WebScrapping;
 
 public class Restaurante implements Parcelable {
@@ -20,6 +23,8 @@ public class Restaurante implements Parcelable {
     private final double valoracion;
     private final String imagenPrincDir;
     private final ArrayList<String> filtros;
+
+    private MutableLiveData<ArrayList<String>> liveFiltros;
     //private final ArrayList<Foto> imagenesDir;
 
     public Restaurante(String idRestaurante, String nombre, String url, String direccion,
@@ -36,6 +41,7 @@ public class Restaurante implements Parcelable {
 
         //Parsea los filtros, separandolos por ";"
         this.filtros = new ArrayList<String>();
+        liveFiltros = new MutableLiveData<>();
         if(filtros != null) {
             for (String s: filtros) {
                 this.filtros.addAll(Arrays.asList(s.split(";")));
@@ -44,8 +50,9 @@ public class Restaurante implements Parcelable {
 
         //Importante que vaya despues de iniciar los filtros
         if(url != null){
-            new WebScrapping(url, filtros);
+            new WebScrapping().setFiltros(url, liveFiltros);
         }
+
         //if(imagenesDir == null) this.imagenesDir = new ArrayList<Foto>();
         //else this.imagenesDir = imagenesDir;
     }
@@ -66,10 +73,9 @@ public class Restaurante implements Parcelable {
     }
     public ArrayList<String> getFiltros() {
         return filtros;
-    }/*
-    public ArrayList<Foto> getFotos() {
-        return imagenesDir;
-    }*/
+    }
+    public MutableLiveData<ArrayList<String>> getLivedataFiltros(){return liveFiltros;}
+    //public ArrayList<Foto> getFotos() {return imagenesDir;}
 
     public void setDireccion(String direccion) { this.direccion = direccion; }
 

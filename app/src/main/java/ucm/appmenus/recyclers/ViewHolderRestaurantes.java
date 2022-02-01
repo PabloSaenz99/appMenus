@@ -73,6 +73,9 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -86,7 +89,7 @@ import ucm.appmenus.utils.Pair;
 
 public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante>{
 
-    private View view;
+    private final View view;
     private Restaurante datos;
 
     private final TextView nombre;
@@ -114,10 +117,11 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
                 //Aqui se añadiria a los favoritos del usuario
             }
         });
+
     }
 
     @Override
-    public void setDatos(Restaurante restaurante) {
+    public void setDatos(final Restaurante restaurante) {
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
         favorito.setChecked(false);
@@ -127,12 +131,20 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         //TODO: Hacer algo con la imagen
         //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
 
-        //Recycler filtros
-        filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
-        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>(
-                FiltrosFragment.transform(restaurante.getFiltros(), false),
-                R.layout.recycler_filtros, ViewHolderFiltros.class);
-        filtrosRecycler.setAdapter(adapterFiltros);
+        //Actualiza el recycler cuando se reciben los datos
+        final Observer<ArrayList<String>> observer = new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> filtros) {
+                //view.findViewById(R.id.progressBarInicio).setVisibility(View.GONE);
+                //Recycler filtros
+                filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
+                RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<>(
+                        FiltrosFragment.transform(restaurante.getFiltros(), false),
+                        R.layout.recycler_filtros, ViewHolderFiltros.class);
+                filtrosRecycler.setAdapter(adapterFiltros);
+            }
+        };
+        restaurante.getLivedataFiltros().observe((LifecycleOwner) view.getContext(), observer);
     }
 
     @Override
