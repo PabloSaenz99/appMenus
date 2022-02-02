@@ -66,6 +66,8 @@ public class RecyclerTest extends AbstractViewHolder<Restaurante>{
  */
 package ucm.appmenus.recyclers;
 
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -74,13 +76,10 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import ucm.appmenus.R;
@@ -98,7 +97,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
     private final ToggleButton favorito;
     private final RatingBar valoracion;
     private final TextView direccion;
-    private final ImageView imagenPrincDir;
+    private final ImageView imagenPrinc;
     private final RecyclerView filtrosRecycler;
 
     public ViewHolderRestaurantes(@NonNull View view) {
@@ -109,7 +108,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         favorito = view.findViewById(R.id.toggleButtonFavRestaurantRecycler);
         valoracion = view.findViewById(R.id.ratingRestaurantRecycler);
         direccion = view.findViewById(R.id.textDireccionRestaurantRecycler);
-        imagenPrincDir = view.findViewById(R.id.imageRestaurantRecycler);
+        imagenPrinc = view.findViewById(R.id.imageRestaurantRecycler);
         filtrosRecycler = view.findViewById(R.id.filtrosRestauranteRecycler);
 
         favorito.setOnClickListener(new View.OnClickListener() {
@@ -131,24 +130,29 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         direccion.setText(restaurante.getDireccion());
         //TODO: Hacer algo con la imagen
         //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
+        final Observer<Bitmap> observerImagen = new Observer<Bitmap>() {
+            @Override
+            public void onChanged(Bitmap img) {
+                imagenPrinc.setImageBitmap(img);
+            }
+        };
+        restaurante.getliveDataImagen().observe((LifecycleOwner) view.getContext(), observerImagen);
 
         //Actualiza el recycler cuando se reciben los datos
-        final Observer<HashSet<String>> observer = new Observer<HashSet<String>>() {
+        final Observer<HashSet<String>> observerFiltros = new Observer<HashSet<String>>() {
             @Override
             public void onChanged(HashSet<String> filtros) {
                 //Recycler filtros
                 filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
                 RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<>(
-                        FiltrosFragment.transform(restaurante.getFiltros(), false),
+                        FiltrosFragment.transform(filtros, false),
                         R.layout.recycler_filtros, ViewHolderFiltros.class);
                 filtrosRecycler.setAdapter(adapterFiltros);
             }
         };
-        restaurante.getLivedataFiltros().observe((LifecycleOwner) view.getContext(), observer);
+        restaurante.getLivedataFiltros().observe((LifecycleOwner) view.getContext(), observerFiltros);
     }
 
     @Override
-    public Restaurante getDatos() {
-        return datos;
-    }
+    public Restaurante getDatos() { return datos; }
 }

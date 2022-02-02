@@ -1,11 +1,16 @@
 package ucm.appmenus.entities;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Base64;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -21,7 +26,7 @@ public class Restaurante implements Parcelable {
     private final int telefono;
     private final String horarios;
     private final double valoracion;
-    private final String imagenPrincDir;
+    private final MutableLiveData<Bitmap> imagenPrincDir;
 
     private MutableLiveData<HashSet<String>> filtros;
     //private final ArrayList<Foto> imagenesDir;
@@ -36,7 +41,7 @@ public class Restaurante implements Parcelable {
         this.telefono = telefono;
         this.horarios = horarios;
         this.valoracion = valoracion;
-        this.imagenPrincDir = imagenPrincDir;
+        this.imagenPrincDir = new MutableLiveData<>(BitmapFactory.decodeFile(imagenPrincDir));
 
         //Parsea los filtros, separandolos por ";"
         HashSet<String> filtrosAux = new HashSet<>();
@@ -49,7 +54,7 @@ public class Restaurante implements Parcelable {
 
         //Importante que vaya despues de iniciar los filtros
         if(url != null){
-            new WebScrapping().setFiltros(url, this.filtros);
+            new WebScrapping().setFiltros(url, this.filtros, this.imagenPrincDir);
         }
 
         //if(imagenesDir == null) this.imagenesDir = new ArrayList<Foto>();
@@ -67,7 +72,8 @@ public class Restaurante implements Parcelable {
     public double getValoracion() {
         return valoracion;
     }
-    public String getimagenPrincDir() {
+    public Bitmap getImagenPrincDir() { return imagenPrincDir.getValue(); }
+    public LiveData<Bitmap> getliveDataImagen() {
         return imagenPrincDir;
     }
     public HashSet<String> getFiltros() { return filtros.getValue(); }
@@ -100,7 +106,7 @@ public class Restaurante implements Parcelable {
         dest.writeInt(this.telefono);
         dest.writeString(this.horarios);
         dest.writeDouble(this.valoracion);
-        dest.writeString(this.imagenPrincDir);
+        dest.writeValue(this.imagenPrincDir.getValue());
         dest.writeStringList(new ArrayList<String>(this.filtros.getValue()));
     }
 
@@ -112,7 +118,7 @@ public class Restaurante implements Parcelable {
         telefono = in.readInt();
         horarios = in.readString();
         valoracion = in.readDouble();
-        imagenPrincDir = in.readString();
+        imagenPrincDir = new MutableLiveData<Bitmap>((Bitmap) in.readParcelable(Bitmap.class.getClassLoader()));
         filtros.setValue(new HashSet<String>(in.createStringArrayList()));
     }
 
