@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:scrollbars="horizontal" />
-
+    <!--https://stackoverflow.com/questions/42694355/how-to-set-recyclerview-max-height altura max-->
     <View style="@style/HorizontalDivider" />
 
 </LinearLayout>
