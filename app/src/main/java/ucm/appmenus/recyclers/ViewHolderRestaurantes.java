@@ -81,6 +81,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Restaurante;
@@ -132,10 +133,9 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
 
         //Actualiza el recycler cuando se reciben los datos
-        final Observer<ArrayList<String>> observer = new Observer<ArrayList<String>>() {
+        final Observer<HashSet<String>> observer = new Observer<HashSet<String>>() {
             @Override
-            public void onChanged(ArrayList<String> filtros) {
-                //view.findViewById(R.id.progressBarInicio).setVisibility(View.GONE);
+            public void onChanged(HashSet<String> filtros) {
                 //Recycler filtros
                 filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
                 RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<>(

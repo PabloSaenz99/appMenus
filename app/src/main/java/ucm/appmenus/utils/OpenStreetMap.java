@@ -111,7 +111,7 @@ public class OpenStreetMap {
         }
 
         res+=");out+30;";
-        Log.i("QUERY OSM", res);
+        //Log.i("QUERY OSM", res);
         return res;
     }
 

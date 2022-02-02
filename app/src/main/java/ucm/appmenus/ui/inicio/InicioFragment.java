@@ -46,7 +46,7 @@ public class InicioFragment extends Fragment {
         //Usado para no hacer la busqueda cada vez que se abre el fragment
         if(getArguments()/*savedInstanceState*/ != null){
             if(getArguments()/*savedInstanceState*/.getBoolean(Constantes.ACTUALIZAR_INTENT)) {
-                Log.i("ESTADO", "Actualizando datos");
+                //Log.i("ESTADO", "Actualizando datos");
                 //Actualizar la localizacion:
                 mainActivity.getUsuario().getLocalizacion().refrescarLocalizacion();
                 //Usado para cargar los datos de OpenStreetMap (ver funciones para mas informacion)
@@ -59,13 +59,13 @@ public class InicioFragment extends Fragment {
                         mainActivity.getUsuario().getLocalizacion().longitude));
             }
             else{
-                Log.i("ESTADO", "Recuperando datos");
+                //Log.i("ESTADO", "Recuperando datos");
                 inicioViewModel.getRestaurantes().postValue(
                         savedInstanceState.<Restaurante>getParcelableArrayList(Constantes.LISTA_RESTAURANTES));
             }
         }
         else {
-            Log.i("ESTADO", "Nuevos datos");
+            //Log.i("ESTADO", "Nuevos datos");
             //TODO: Pedir los datos por defecto (los almacenados en la config inicial en un fichero) en vez de estos
             OpenStreetMap osm = new OpenStreetMap();
             osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
@@ -93,7 +93,7 @@ public class InicioFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.i("ESTADO", "Guardando");
+        //Log.i("ESTADO", "Guardando");
         outState.putParcelableArrayList(Constantes.LISTA_RESTAURANTES, inicioViewModel.getRestaurantes().getValue());
     }
 

@@ -2,14 +2,14 @@ package ucm.appmenus.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
-import ucm.appmenus.utils.Pair;
 import ucm.appmenus.utils.WebScrapping;
 
 public class Restaurante implements Parcelable {
@@ -22,14 +22,13 @@ public class Restaurante implements Parcelable {
     private final String horarios;
     private final double valoracion;
     private final String imagenPrincDir;
-    private final ArrayList<String> filtros;
 
-    private MutableLiveData<ArrayList<String>> liveFiltros;
+    private MutableLiveData<HashSet<String>> filtros;
     //private final ArrayList<Foto> imagenesDir;
 
     public Restaurante(String idRestaurante, String nombre, String url, String direccion,
                        int telefono, String horarios, double valoracion, String imagenPrincDir,
-                       ArrayList<String> filtros, ArrayList<Foto> imagenesDir){
+                       ArrayList<String> filtrosIni, ArrayList<Foto> imagenesDir){
         this.idRestaurante = idRestaurante;
         this.nombre = nombre;
         this.url = url;
@@ -40,17 +39,17 @@ public class Restaurante implements Parcelable {
         this.imagenPrincDir = imagenPrincDir;
 
         //Parsea los filtros, separandolos por ";"
-        this.filtros = new ArrayList<String>();
-        liveFiltros = new MutableLiveData<>();
-        if(filtros != null) {
-            for (String s: filtros) {
-                this.filtros.addAll(Arrays.asList(s.split(";")));
+        HashSet<String> filtrosAux = new HashSet<>();
+        if(filtrosIni != null) {
+            for (String s: filtrosIni) {
+                filtrosAux.addAll(Arrays.asList(s.split(";")));
             }
         }
+        this.filtros = new MutableLiveData<>(filtrosAux);
 
         //Importante que vaya despues de iniciar los filtros
         if(url != null){
-            new WebScrapping().setFiltros(url, liveFiltros);
+            new WebScrapping().setFiltros(url, this.filtros);
         }
 
         //if(imagenesDir == null) this.imagenesDir = new ArrayList<Foto>();
@@ -71,10 +70,8 @@ public class Restaurante implements Parcelable {
     public String getimagenPrincDir() {
         return imagenPrincDir;
     }
-    public ArrayList<String> getFiltros() {
-        return filtros;
-    }
-    public MutableLiveData<ArrayList<String>> getLivedataFiltros(){return liveFiltros;}
+    public HashSet<String> getFiltros() { return filtros.getValue(); }
+    public LiveData<HashSet<String>> getLivedataFiltros() {return this.filtros;}
     //public ArrayList<Foto> getFotos() {return imagenesDir;}
 
     public void setDireccion(String direccion) { this.direccion = direccion; }
@@ -104,7 +101,7 @@ public class Restaurante implements Parcelable {
         dest.writeString(this.horarios);
         dest.writeDouble(this.valoracion);
         dest.writeString(this.imagenPrincDir);
-        dest.writeStringList(this.filtros);
+        dest.writeStringList(new ArrayList<String>(this.filtros.getValue()));
     }
 
     protected Restaurante(Parcel in) {
@@ -116,7 +113,7 @@ public class Restaurante implements Parcelable {
         horarios = in.readString();
         valoracion = in.readDouble();
         imagenPrincDir = in.readString();
-        filtros = in.createStringArrayList();
+        filtros.setValue(new HashSet<String>(in.createStringArrayList()));
     }
 
     public static final Creator<Restaurante> CREATOR = new Creator<Restaurante>() {

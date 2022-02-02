@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
@@ -51,6 +52,14 @@ public class FiltrosFragment extends Fragment {
         });
 
         return root;
+    }
+
+    public static ArrayList<Pair<String, Boolean>> transform(Set<String> filtros, boolean modo){
+        ArrayList<Pair<String, Boolean>> datos = new ArrayList<>();
+        for (String s: filtros) {
+            datos.add(new Pair<String, Boolean>(s, modo));
+        }
+        return datos;
     }
 
     public static ArrayList<Pair<String, Boolean>> transform(List<String> filtros, boolean modo){
