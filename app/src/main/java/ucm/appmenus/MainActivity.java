@@ -16,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
 import ucm.appmenus.utils.Localizacion;
+import ucm.appmenus.utils.WebScrapping;
 
 /**
  * IMPORTANTE: Esta activity ya loguea al usuario desde SharedPreferences
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
 

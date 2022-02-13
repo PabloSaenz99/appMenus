@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+
+    <color name="fondoOscuro">#232323</color>
+
+    <!--COLORES CORPORATIVOS-->
+    <!--http://paletton.com/#uid=30d0u0ktTwAg2O3mVD2vRnrEhe4-->
+    <color name="logoNaranja0">#FF4E11</color>
+    <color name="logoNaranja1">#FFA07F</color>
+    <color name="logoNaranja2">#FF7748</color>
+    <color name="logoNaranja3">#BB3001</color>
+    <color name="logoNaranja4">#701D00</color>
+
+    <color name="logoAzul0">#146CA5</color>
+    <color name="logoAzul1">#73B1DA</color>
+    <color name="logoAzul2">#3D89BA</color>
+    <color name="logoAzul3">#084B77</color>
+    <color name="logoAzul4">#032D48</color>
+
+    <color name="logoVerde0">#78E50F</color>
+    <color name="logoVerde1">#B6F47A</color>
+    <color name="logoVerde2">#95EB43</color>
+    <color name="logoVerde3">#52A801</color>
+    <color name="logoVerde4">#316500</color>
+
 </resources>

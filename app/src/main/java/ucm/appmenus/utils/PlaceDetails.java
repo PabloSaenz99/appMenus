@@ -1,3 +1,4 @@
+/*
 package ucm.appmenus.utils;
 
 import android.content.Context;
@@ -97,7 +98,7 @@ public class PlaceDetails {
                         FindCurrentPlaceResponse response = task.getResult();
                         /**
                          * Devuelve una lista de sitios
-                         * */
+                         * *//*
                         for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
                             Place place = placeLikelihood.getPlace();
                             Log.i(TAG, String.format("Place '%s' has likelihood: %f",
@@ -105,7 +106,7 @@ public class PlaceDetails {
                                     placeLikelihood.getLikelihood()));
                             listaRestaurantes.add(null);/*new Restaurante(place.getId(), place.getName(),
                                     place.getWebsiteUri().toString(), place.getRating(), place.getIconUrl(),
-                                    null, null));*/
+                                    null, null));*//*
                         }
                     } else {
                         Exception exception = task.getException();
@@ -147,3 +148,4 @@ public class PlaceDetails {
         return nuevoId[0];
     }
 }
+*/
