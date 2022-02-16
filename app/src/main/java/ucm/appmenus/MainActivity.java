@@ -16,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
 import ucm.appmenus.utils.Localizacion;
+import ucm.appmenus.utils.WebScrapping;
 
 /**
  * IMPORTANTE: Esta activity ya loguea al usuario desde SharedPreferences
