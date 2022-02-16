@@ -4,31 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/fondoOscuro">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="3"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:context=".login">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="120dp"
-            android:layout_weight="3"
-            android:background="#232323"
-            android:orientation="vertical"
-            android:textAlignment="center">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="casual"
+                android:shadowColor="#000000"
+                android:shadowDx="5"
+                android:shadowDy="10"
+                android:shadowRadius="2.5"
+                android:text="@string/app_name"
+                android:textColor="#E3E3E3"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="match_parent"
+                android:layout_width="196dp"
                 android:layout_height="196dp"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/sinfondo" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView5"
@@ -49,8 +69,8 @@
                     android:id="@+id/imageView3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="2"
                     app:srcCompat="@android:drawable/sym_action_email" />
 
@@ -58,9 +78,9 @@
                     android:id="@+id/textEmailLogin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="15"
                     android:hint="Usuario"
-                    android:layout_gravity="center"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#B6B6B6" />
 
@@ -79,8 +99,8 @@
                     android:id="@+id/imageView4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="2"
                     app:srcCompat="@android:drawable/ic_secure" />
 
@@ -88,9 +108,9 @@
                     android:id="@+id/textPasswordLogin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="15"
                     android:hint="Contraseña"
-                    android:layout_gravity="center"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#B6B6B6" />
 
@@ -126,21 +146,21 @@
                     android:id="@+id/botonRegistro"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    android:backgroundTint="#605F5F"
-                    android:layout_gravity="center_horizontal|center"
                     android:layout_weight="2"
+                    android:backgroundTint="#605F5F"
                     android:text="Registrarse" />
 
                 <Button
                     android:id="@+id/botonInicioSesion"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
                     android:layout_marginTop="20dp"
                     android:layout_weight="2"
                     android:backgroundTint="@color/logoNaranja0"
-                    android:layout_gravity="center_horizontal|center"
                     android:text="Iniciar sesión" />
 
             </LinearLayout>
