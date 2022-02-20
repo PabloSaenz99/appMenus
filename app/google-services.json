@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "786296457112",
+    "project_id": "foodfeeltr",
+    "storage_bucket": "foodfeeltr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786296457112:android:d7a067b73b7155ced58ded",
+        "android_client_info": {
+          "package_name": "ucm.appmenus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786296457112-g1js4qg86mpti1fto1ijqvupqnhth60v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6E3F9Mw1ufEhsRiz-IL4IFUZE6weYQWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786296457112-g1js4qg86mpti1fto1ijqvupqnhth60v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

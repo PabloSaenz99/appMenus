@@ -5,11 +5,11 @@
     <string name="title_perfil">Perfil</string>
     <string name="imageRestaurantRecycler">Foto del restaurante</string>
     <!--Cosas del login-->
-        <!--Fichero que almacena el login del usuario para que no tenga que escribirlo cada vez
+    <!--Fichero que almacena el login del usuario para que no tenga que escribirlo cada vez
             que entre a la app-->
-        <string name="ucm.appmenus.ficherologin">Login</string>
-        <!--Fichero que almacena los restaurantes favoritos del usuario-->
-        <string name="ucm.appmenus.restaurantesFavoritos">RestaurantesFavoritos.json</string>
+    <string name="ucm.appmenus.ficherologin">Login</string>
+    <!--Fichero que almacena los restaurantes favoritos del usuario-->
+    <string name="ucm.appmenus.restaurantesFavoritos">RestaurantesFavoritos.json</string>
     <!--Strings para referenciar las claves usadas en el fichero del login-->
     <string name="email_usuario">Email</string>
     <string name="nombre_usuario">Usuario</string>
