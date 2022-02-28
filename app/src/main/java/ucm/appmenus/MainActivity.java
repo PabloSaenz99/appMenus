@@ -1,10 +1,15 @@
 package ucm.appmenus;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.google.android.gms.common.GooglePlayServicesManifestException;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,13 +20,18 @@ import androidx.navigation.ui.NavigationUI;
 
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
+import ucm.appmenus.login.RegistroActivity;
 import ucm.appmenus.utils.Localizacion;
 import ucm.appmenus.utils.WebScrapping;
 
 /**
  * IMPORTANTE: Esta activity ya loguea al usuario desde SharedPreferences
  * */
+
+
 public class MainActivity extends AppCompatActivity {
+Button btn_login,btn_registrar;
+EditText et_email,et_password;
 
     private Usuario usuario;
     private NavController navController;
@@ -31,10 +41,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loginUsuario();
+        // loginUsuario();
 
         //Importante que esté después del login de usuario o lanzará nullpointer
         setContentView(R.layout.activity_main);
+        //Cosas de firebase
+        et_email=findViewById(R.id.textEmailRegistro);
+        et_password=findViewById(R.id.textPasswordRegistro);
+
+        btn_login= findViewById(R.id.botonIniciarSesion);
+                btn_registrar=findViewById(R.id.botonRegistro);
+
+btn_registrar.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent i= new Intent(MainActivity.this, RegistroActivity.class);
+        startActivity(i);
+    }
+});
+
+
+
+
+
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         //Carga la vista de la barra inferior con las 3 ventanas que contiene
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -44,7 +73,13 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+
+
     }
+
+
+
 
     public void changeFragment(int id, Bundle b){
         Log.d("BUNDLE", b.toString());
@@ -58,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
      * Obtiene el email, nombre e imagen de SharedPreferences
      * TODO: Deberia comprobar en la BD que sea correcto(?)
      * */
+
     private void loginUsuario(){
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
@@ -72,3 +108,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+
