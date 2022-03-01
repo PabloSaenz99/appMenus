@@ -10,15 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--METIDO POR MIRIAM-->
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".login.LoginActivity">
+       <activity android:name=".MainActivity"></activity>
+        <!-- si quiero que se muestre primero la pag de registro -->
+       <activity android:name=".login.RegistroActivity">
+      <!-- <activity android:name=".login.LoginActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.RegistroActivity" />
+       <!-- <activity android:name=".login.RegistroActivity" />-->
        <!-- <activity android:name=".ui.filtros.FiltrosRestauranteActivity" /> -->
 
     </application>

@@ -1,4 +1,4 @@
-package ucm.appmenus.ui.inicio;
+/*package ucm.appmenus.ui.inicio;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -44,8 +44,8 @@ public class InicioFragment extends Fragment {
         this.root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
         //Usado para no hacer la busqueda cada vez que se abre el fragment
-        if(getArguments()/*savedInstanceState*/ != null){
-            if(getArguments()/*savedInstanceState*/.getBoolean(Constantes.ACTUALIZAR_INTENT)) {
+        if(getArguments() != null){
+            if(getArguments().getBoolean(Constantes.ACTUALIZAR_INTENT)) {
                 //Log.i("ESTADO", "Actualizando datos");
                 //Actualizar la localizacion:
                 mainActivity.getUsuario().getLocalizacion().refrescarLocalizacion();
@@ -107,7 +107,7 @@ public class InicioFragment extends Fragment {
                         restaurantes, R.layout.recycler_restaurantes, ViewHolderRestaurantes.class);
         recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
     }
-
+*/
     /**
      * Patron Singleton:
      * Usado para inicializar solo una vez la clase, en aperturas siguientes no será necesario
@@ -127,4 +127,4 @@ public class InicioFragment extends Fragment {
     }
 
      */
-}
+//}

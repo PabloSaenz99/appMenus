@@ -1,4 +1,6 @@
+/*
 package ucm.appmenus.ui.filtros;
+
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -108,7 +110,7 @@ public class FiltrosFragment extends Fragment {
                 }
             }
             //Buscar resultados y abrir activity
-            Bundle b = new Bundle();
+          Bundle b = new Bundle();
             b.putBoolean(Constantes.ACTUALIZAR_INTENT, true);
             b.putStringArrayList(Constantes.TIPOS_LOCAL, tiposLocal);
             b.putStringArrayList(Constantes.TIPOS_COCINA, tiposCocina);
@@ -117,4 +119,4 @@ public class FiltrosFragment extends Fragment {
             main.changeFragment(R.id.navigation_inicio, b);
         }
     }
-}
+}*/

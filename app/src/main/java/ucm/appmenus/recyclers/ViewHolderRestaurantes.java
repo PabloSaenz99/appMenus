@@ -63,7 +63,7 @@ public class RecyclerTest extends AbstractViewHolder<Restaurante>{
         filtrosRecycler.setAdapter(adapterFiltros);
     }
 }
- */
+
 package ucm.appmenus.recyclers;
 
 import android.graphics.Bitmap;
@@ -145,7 +145,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
                 //Recycler filtros
                 filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
                 RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<>(
-                        FiltrosFragment.transform(filtros, false),
+//                        FiltrosFragment.transform(filtros, false),
                         R.layout.recycler_filtros, ViewHolderFiltros.class);
                 filtrosRecycler.setAdapter(adapterFiltros);
             }
@@ -155,4 +155,4 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
 
     @Override
     public Restaurante getDatos() { return datos; }
-}
+}*/

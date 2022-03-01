@@ -1,3 +1,4 @@
+/*
 package ucm.appmenus.ui.perfil;
 
 import android.graphics.BitmapFactory;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+
+
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.recyclers.RecyclerAdapter;
@@ -60,3 +63,4 @@ public class PerfilFragment extends Fragment {
         recyclerViewComentarios.setAdapter(adapterResenias);
     }
 }
+*/
