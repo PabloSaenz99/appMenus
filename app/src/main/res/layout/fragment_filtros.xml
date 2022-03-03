@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondoOscuro"
     android:orientation="vertical"
     tools:context=".ui.filtros.FiltrosFragment">
 
@@ -18,10 +19,13 @@
         android:id="@+id/busquedaFiltros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/logoAzul4"
         android:queryHint="Busca aquí ">
 
     </SearchView>
-    <View style="@style/HorizontalDivider" />
+
+    <View style="@style/HorizontalDivider"
+        android:background="@color/logoAzul4" />
 
     <!--Aqui se incluye de forma estatica el xml de layout_info_filtros-->
     <LinearLayout
@@ -50,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="#FFFFFF"
                 android:checked="false"
                 android:text="1000" />
 
@@ -58,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="#FFFFFF"
                 android:checked="true"
                 android:text="1500" />
 
@@ -65,9 +71,13 @@
                 android:id="@+id/radioButton2000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
                 android:layout_weight="1"
                 android:text="2000" />
         </RadioGroup>
+
+        <View style="@style/HorizontalDivider"
+            android:background="@color/logoAzul4" />
 
         <include
             android:id="@+id/layout_info"
@@ -78,12 +88,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFiltrosLocal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00E91E63">
+            android:layout_height="wrap_content">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <View style="@style/HorizontalDivider" />
+        <View style="@style/HorizontalDivider"
+            android:background="@color/logoAzul4" />
 
         <include
             android:id="@+id/layout_info"
@@ -95,12 +105,12 @@
             android:id="@+id/recyclerFiltrosPais"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="#00FFEB3B"
             android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <View style="@style/HorizontalDivider" />
+        <View style="@style/HorizontalDivider"
+            android:background="@color/logoAzul4"/>
 
         <include
             android:id="@+id/layout_info"
@@ -111,8 +121,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFiltrosComida"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="#00E91E63">
+            android:layout_height="150dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -124,18 +133,20 @@
     (especificado en el codigo de filtrosFragment (para asignarlo
     y en FiltrosRecyclerAdapter (para implementar como carga la info))-->
 
-    <View style="@style/HorizontalDividerTransparent" />
+    <View style="@style/HorizontalDivider"
+        android:background="@color/logoNaranja0"/>
 
     <Button
         android:id="@+id/botonFiltrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-
+        android:layout_marginTop="5dp"
         android:background="@drawable/boton"
         android:drawablePadding="10dp"
         android:includeFontPadding="false"
         android:text="Filtrar"
+        android:textColor="#000000"
         android:textSize="18sp" />
 
     <View style="@style/HorizontalDividerTransparent" />

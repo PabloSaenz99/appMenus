@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/fondoOscuro"
     tools:context=".ui.inicio.InicioFragment">
 
 
@@ -14,6 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Restaurantes cerca de ti"
+        android:textColor="#FFFFFF"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
