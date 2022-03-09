@@ -82,10 +82,10 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         direccion.setText(restaurante.getDireccion());
         //TODO: Hacer algo con la imagen
         //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
-        final Observer<Bitmap> observerImagen = new Observer<Bitmap>() {
+        final Observer<ArrayList<Bitmap>> observerImagen = new Observer<ArrayList<Bitmap>>() {
             @Override
-            public void onChanged(Bitmap img) {
-                imagenPrinc.setImageBitmap(img);
+            public void onChanged(ArrayList<Bitmap> img) {
+                imagenPrinc.setImageBitmap(img.get(0));
             }
         };
         restaurante.getliveDataImagen().observe((LifecycleOwner) view.getContext(), observerImagen);

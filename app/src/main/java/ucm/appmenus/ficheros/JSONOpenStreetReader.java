@@ -47,8 +47,7 @@ public class JSONOpenStreetReader {
                 float valoracion = 0;
                 String imagenPrincDir = "";
 
-                restaurantes.add(new Restaurante(id, nombre, url, dir, telefono, horario,
-                        valoracion, imagenPrincDir, filtros, null));
+                restaurantes.add(new Restaurante(id, nombre, url, dir, telefono, horario, valoracion, filtros));
             }
         }
         catch (JSONException e) {

@@ -4,17 +4,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Base64;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
+import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.WebScrapping;
 
 public class Restaurante implements Parcelable {
@@ -26,14 +28,14 @@ public class Restaurante implements Parcelable {
     private final int telefono;
     private final String horarios;
     private final double valoracion;
-    private final MutableLiveData<Bitmap> imagenPrincDir;
 
-    private MutableLiveData<HashSet<String>> filtros;
-    //private final ArrayList<Foto> imagenesDir;
+    private MutableLiveData<ArrayList<Bitmap>> listaImagenes;
+    private MutableLiveData<HashSet<String>> listaFiltros;
+
+    private WebScrapping ws;
 
     public Restaurante(String idRestaurante, String nombre, String url, String direccion,
-                       int telefono, String horarios, double valoracion, String imagenPrincDir,
-                       ArrayList<String> filtrosIni, ArrayList<Foto> imagenesDir){
+                       int telefono, String horarios, double valoracion, ArrayList<String> filtrosIni){
         this.idRestaurante = idRestaurante;
         this.nombre = nombre;
         this.url = url;
@@ -41,7 +43,7 @@ public class Restaurante implements Parcelable {
         this.telefono = telefono;
         this.horarios = horarios;
         this.valoracion = valoracion;
-        this.imagenPrincDir = new MutableLiveData<>(BitmapFactory.decodeFile(imagenPrincDir));
+        this.listaImagenes = new MutableLiveData<ArrayList<Bitmap>>();
 
         //Parsea los filtros, separandolos por ";"
         HashSet<String> filtrosAux = new HashSet<>();
@@ -50,15 +52,17 @@ public class Restaurante implements Parcelable {
                 filtrosAux.addAll(Arrays.asList(s.split(";")));
             }
         }
-        this.filtros = new MutableLiveData<>(filtrosAux);
+        this.listaFiltros = new MutableLiveData<>(filtrosAux);
 
         //Importante que vaya despues de iniciar los filtros
+        ws = new WebScrapping(url, listaFiltros, listaImagenes);
         if(url != null){
-            new WebScrapping().setFiltros(url, this.filtros, this.imagenPrincDir);
+            ws.setFiltros(Collections.singletonList(Constantes.filtrosPais));
+            ws.setImagenPrincipal();
         }
-
-        //if(imagenesDir == null) this.imagenesDir = new ArrayList<Foto>();
-        //else this.imagenesDir = imagenesDir;
+        else{
+            //TODO: HAcer accion por defecto como poner una imagen vacia o que no hay filtros
+        }
     }
 
     public String getIdRestaurante(){return idRestaurante;}
@@ -72,15 +76,22 @@ public class Restaurante implements Parcelable {
     public double getValoracion() {
         return valoracion;
     }
-    public Bitmap getImagenPrincDir() { return imagenPrincDir.getValue(); }
-    public LiveData<Bitmap> getliveDataImagen() {
-        return imagenPrincDir;
+    public ArrayList<Bitmap> getListaImagenes() { return listaImagenes.getValue(); }
+    public LiveData<ArrayList<Bitmap>> getliveDataImagen() {
+        return listaImagenes;
     }
-    public HashSet<String> getFiltros() { return filtros.getValue(); }
-    public LiveData<HashSet<String>> getLivedataFiltros() {return this.filtros;}
-    //public ArrayList<Foto> getFotos() {return imagenesDir;}
+    public HashSet<String> getListaFiltros() { return listaFiltros.getValue(); }
+    public LiveData<HashSet<String>> getLivedataFiltros() {return this.listaFiltros;}
 
     public void setDireccion(String direccion) { this.direccion = direccion; }
+    public void updateImagenes(){ ws.setImagenes(); }
+    public void updateFiltros(){
+        ArrayList<List<String>> listOfLists = new ArrayList<List<String>>();
+        listOfLists.add(Constantes.filtrosPais);
+        listOfLists.add(Constantes.filtrosLocal);
+        listOfLists.add(Constantes.filtrosPostres);
+        ws.setFiltros(listOfLists);
+    }
 
     @Override
     public String toString(){
@@ -88,7 +99,7 @@ public class Restaurante implements Parcelable {
         s+="Id: " + idRestaurante + "\n";
         s+="Nombre: " + nombre + "\n";
         s+="Valoracion: " + valoracion + "\n";
-        s+="Imagen principal: " + imagenPrincDir + "\n";
+        s+="Imagen principal: " + listaImagenes + "\n";
         return s;
     }
 
@@ -106,8 +117,7 @@ public class Restaurante implements Parcelable {
         dest.writeInt(this.telefono);
         dest.writeString(this.horarios);
         dest.writeDouble(this.valoracion);
-        dest.writeValue(this.imagenPrincDir.getValue());
-        dest.writeStringList(new ArrayList<String>(this.filtros.getValue()));
+        dest.writeStringList(new ArrayList<String>(this.listaFiltros.getValue()));
     }
 
     protected Restaurante(Parcel in) {
@@ -118,8 +128,8 @@ public class Restaurante implements Parcelable {
         telefono = in.readInt();
         horarios = in.readString();
         valoracion = in.readDouble();
-        imagenPrincDir = new MutableLiveData<Bitmap>((Bitmap) in.readParcelable(Bitmap.class.getClassLoader()));
-        filtros.setValue(new HashSet<String>(in.createStringArrayList()));
+        listaImagenes.setValue(new ArrayList<>());
+        listaFiltros.setValue(new HashSet<>(in.createStringArrayList()));
     }
 
     public static final Creator<Restaurante> CREATOR = new Creator<Restaurante>() {
