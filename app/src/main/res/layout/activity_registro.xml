@@ -80,12 +80,13 @@
 
             <!--<com.google.android.material.textfield.TextInputEditText-->
             <EditText
-                android:id="@+id/textNombreRegistro"
+                android:id="@+id/nombreRegistro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="20dp"
                 android:hint="Nombre"
+                android:minHeight="48dp"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#B6B6B6" />
 
@@ -109,12 +110,13 @@
 
                <!-- <com.google.android.material.textfield.TextInputEditText-->
                 <EditText
-                    android:id="@+id/textEmailRegistro"
+                    android:id="@+id/emailRegistro"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="15"
                     android:hint="Correo"
-                    android:layout_gravity="center"
+                    android:inputType="textEmailAddress"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#B6B6B6" />
 
@@ -140,12 +142,13 @@
 
                 <!--<com.google.android.material.textfield.TextInputEditText-->
                 <EditText
-                    android:id="@+id/textPasswordRegistro"
+                    android:id="@+id/passwordRegistro"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="15"
                     android:hint="Contraseña"
-                    android:layout_gravity="center"
+                    android:inputType="textPassword"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#B6B6B6" />
 
@@ -174,7 +177,7 @@
                     android:textColor="#000000" />
 
                 <Button
-                    android:id="@+id/botonInicioSesion"
+                    android:id="@+id/botonIniciarSesion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center"

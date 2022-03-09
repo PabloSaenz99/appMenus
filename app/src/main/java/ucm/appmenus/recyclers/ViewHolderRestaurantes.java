@@ -9,7 +9,6 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -19,23 +18,9 @@ import ucm.appmenus.R;
 import ucm.appmenus.entities.Restaurante;
 
 import android.graphics.Bitmap;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.HashSet;
-
-import ucm.appmenus.R;
-import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.utils.Pair;
 
@@ -59,7 +44,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         url = view.findViewById(R.id.textRestaurantURL);
         favorito = view.findViewById(R.id.toggleButtonFavRestaurantRecycler);
         valoracion = view.findViewById(R.id.ratingRestaurantRecycler);
-        direccion = view.findViewById(R.id.textDireccionRestaurantRecycler);
+        direccion = view.findViewById(R.id.textDireccionRestaurante);
         imagenPrinc = view.findViewById(R.id.imageRestaurantRecycler);
         filtrosRecycler = view.findViewById(R.id.filtrosRestauranteRecycler);
 

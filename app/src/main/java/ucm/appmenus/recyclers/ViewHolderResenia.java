@@ -21,10 +21,10 @@ public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IRecl
 
     public ViewHolderResenia(@NonNull View view) {
         super(view);
-        titulo = (TextView) view.findViewById(R.id.textReseniaTituloRecycler);
-        texto = (TextView) view.findViewById(R.id.textReseniaDescripcionRecycler);
-        valoracion = view.findViewById(R.id.ratingReseniaRecycler);
-        restauranteNombre = view.findViewById(R.id.textReseniaRestauranteRecycler);
+        titulo = (TextView) view.findViewById(R.id.tituloResenia);
+        texto = (TextView) view.findViewById(R.id.descripcionRestauranteResenia);
+        valoracion = view.findViewById(R.id.valoracionRestauranteResenia);
+        restauranteNombre = view.findViewById(R.id.nombreRestauranteResenia);
     }
 
     @Override

@@ -1,26 +1,14 @@
 package ucm.appmenus.login;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-
-import org.jetbrains.annotations.NotNull;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
@@ -40,8 +28,11 @@ public class LoginActivity extends AppCompatActivity {
         //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
         if(email != null){
             //Inicia la main activity
+            /*
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+
+             */
         }
 
         final Button botonRegistro = findViewById(R.id.botonRegistro);
@@ -53,12 +44,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        final Button botonInicioSesion = findViewById(R.id.botonInicioSesion);
+        final Button botonInicioSesion = findViewById(R.id.botonIniciarSesion);
         botonInicioSesion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Buscar resultados
-                TextView emailText = findViewById(R.id.textEmailLogin);
-                TextView passwordText = findViewById(R.id.textPasswordLogin);
+                TextView emailText = findViewById(R.id.emailLogin);
+                TextView passwordText = findViewById(R.id.passwordLogin);
 
                 //TODO: Mirar en la BD que sea correcto
                 //Busca en la BD si es correcto

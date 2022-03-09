@@ -21,7 +21,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -45,9 +44,9 @@ public class RegistroActivity extends AppCompatActivity {
 
         //vars
         firebaseAuth = FirebaseAuth.getInstance();
-        final EditText et_name = findViewById(R.id.textNombreRegistro);
-        final EditText et_email = findViewById(R.id.textEmailRegistro);
-        final EditText et_password = findViewById(R.id.textPasswordRegistro);
+        final EditText et_name = findViewById(R.id.nombreRegistro);
+        final EditText et_email = findViewById(R.id.emailRegistro);
+        final EditText et_password = findViewById(R.id.passwordRegistro);
         final Button botonRegistro = findViewById(R.id.botonRegistro);
 
         //Llamada cuando se pulse al boton registrar (llamada a la BD)
@@ -89,7 +88,7 @@ public class RegistroActivity extends AppCompatActivity {
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
 
-        final Button botonInicioSesion = findViewById(R.id.botonInicioSesion);
+        final Button botonInicioSesion = findViewById(R.id.botonIniciarSesion);
         botonInicioSesion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Abrir activity
@@ -101,9 +100,9 @@ public class RegistroActivity extends AppCompatActivity {
         botonRegistro.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Buscar resultados
-                TextView email = findViewById(R.id.textEmailRegistro);
-                TextView password = findViewById(R.id.textPasswordRegistro);
-                TextView nombre = findViewById(R.id.textNombreRegistro);
+                TextView email = findViewById(R.id.emailRegistro);
+                TextView password = findViewById(R.id.passwordRegistro);
+                TextView nombre = findViewById(R.id.nombreRegistro);
 
                 //TODO: Mirar en la BD que no exista
                 //Busca en la BD si no existe

@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textReseniaTituloRecycler"
+        android:id="@+id/tituloResenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Titulo de la reseña"
@@ -13,18 +13,18 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/textReseniaRestauranteRecycler"
+        android:id="@+id/nombreRestauranteResenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nombre restaurante" />
 
     <RatingBar
-        android:id="@+id/ratingReseniaRecycler"
+        android:id="@+id/valoracionRestauranteResenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/textReseniaDescripcionRecycler"
+        android:id="@+id/descripcionRestauranteResenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Descripcion de la reseña" />

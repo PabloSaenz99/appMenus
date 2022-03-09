@@ -68,7 +68,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textDireccionRestaurantRecycler"
+        android:id="@+id/textDireccionRestaurante"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Direccion"

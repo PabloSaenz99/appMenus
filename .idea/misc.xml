@@ -3,9 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_afterlogin.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/activity_inicio_sesion.xml" value="0.29583333333333334" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="app/src/main/res/layout/activity_mensajeubicacion.xml" value="0.2617753623188406" />
+        <entry key="app/src/main/res/layout/activity_prueba_firebase.xml" value="0.2617753623188406" />
         <entry key="app/src/main/res/layout/activity_registro.xml" value="0.29583333333333334" />
+        <entry key="app/src/main/res/layout/activity_restaurante_detallado.xml" value="0.2791666666666667" />
+        <entry key="app/src/main/res/layout/fragment_filtros.xml" value="0.2617753623188406" />
+        <entry key="app/src/main/res/layout/fragment_inicio.xml" value="0.2617753623188406" />
+        <entry key="app/src/main/res/layout/fragment_perfil.xml" value="0.2617753623188406" />
+        <entry key="app/src/main/res/layout/layout_info_filtros.xml" value="0.2791666666666667" />
+        <entry key="app/src/main/res/layout/recycler_filtros.xml" value="0.2617753623188406" />
+        <entry key="app/src/main/res/layout/recycler_resenias.xml" value="0.2617753623188406" />
+        <entry key="app/src/main/res/layout/recycler_restaurantes.xml" value="0.2617753623188406" />
       </map>
     </option>
   </component>

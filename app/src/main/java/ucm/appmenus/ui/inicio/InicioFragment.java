@@ -27,8 +27,6 @@ import ucm.appmenus.utils.OpenStreetMap;
 
 public class InicioFragment extends Fragment {
 
-    //private static ArrayList<Restaurante> ultimaListaDeRestaurantes = new ArrayList<Restaurante>();
-
     private MainActivity mainActivity;
 
     private InicioViewModel inicioViewModel;
