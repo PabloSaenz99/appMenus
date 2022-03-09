@@ -62,16 +62,15 @@ public class MainActivity extends AppCompatActivity {
     //En principio no hay que hacer nada mas en esta actividad ya que tod0 se hace en los fragments
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // loginUsuario();
+        loginUsuario();
 
         //Importante que esté después del login de usuario o lanzará nullpointer
         setContentView(R.layout.activity_main);
         //Cosas de firebase inputs
-/*
+
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         //Carga la vista de la barra inferior con las 3 ventanas que contiene
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -81,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
 
     public void changeFragment(int id, Bundle b){
         Log.d("BUNDLE", b.toString());
@@ -88,14 +88,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Usuario getUsuario() { return usuario; }
-*/
+
     /**
      * Loguea al usuario
      * Obtiene el email, nombre e imagen de SharedPreferences
      * TODO: Deberia comprobar en la BD que sea correcto(?)
      * */
 
-/*
+    //Funcion de login local
     private void loginUsuario(){
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
@@ -109,59 +109,23 @@ public class MainActivity extends AppCompatActivity {
                 null, jsonRes.readRestaurantesJSON(), null);
 
     }
-*/
-        //  }
-//}
-//Hecho nuevo de un video
-        btn_registrar=findViewById(R.id.botonRegistro);
-        btn_login=findViewById(R.id.botonInicioSesion);
-        email = et_email.getText().toString();
-        password = et_password.getText().toString();
-        //accion del boton de registrar
-        btn_registrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,RegistroActivity.class));
-            }
-        });
-//accion del boton de login
 
-        btn_login.setOnClickListener(new View.OnClickListener() {
+    //Funcion de login con la base de datos de google
+    private void login(String email, String password){
+        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onClick(View view) {
-                name = et_name.getText().toString();
-                email = et_email.getText().toString();
-                password = et_password.getText().toString();
-                firebaseAuth= FirebaseAuth.getInstance();
-                if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
-                    Toast.makeText(MainActivity.this,"All fields required",Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    //en donde dice registro activity tendria que ir el profileActivity
+                    Intent intent= new Intent(MainActivity.this,RegistroActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
                 }else{
-                    login(email,password);
+                    Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
     }
-
-
- private void login(String email, String password){
-firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-    @Override
-    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-        if(task.isSuccessful()){
-            //en donde dice registro activity tendria que ir el profileActivity
-            Intent intent= new Intent(MainActivity.this,RegistroActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        }else{
-            Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-
-        }
-    }
-});
-
-
-
-
- }
 }

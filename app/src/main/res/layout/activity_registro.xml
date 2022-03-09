@@ -21,7 +21,7 @@
             android:layout_marginTop="-40dp">
 
             <Button
-                android:id="@+id/botonInicioSesion"
+                android:id="@+id/botonAtras"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#00000000"
@@ -172,6 +172,14 @@
                     android:gravity="center"
                     android:text="registrarse"
                     android:textColor="#000000" />
+
+                <Button
+                    android:id="@+id/botonInicioSesion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
+                    android:backgroundTint="@color/logoNaranja0"
+                    android:text="Iniciar sesión" />
             </LinearLayout>
 
         </LinearLayout>

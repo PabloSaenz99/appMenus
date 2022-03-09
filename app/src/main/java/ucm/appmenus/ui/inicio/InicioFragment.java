@@ -1,4 +1,4 @@
-/*package ucm.appmenus.ui.inicio;
+package ucm.appmenus.ui.inicio;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -107,7 +107,7 @@ public class InicioFragment extends Fragment {
                         restaurantes, R.layout.recycler_restaurantes, ViewHolderRestaurantes.class);
         recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
     }
-*/
+
     /**
      * Patron Singleton:
      * Usado para inicializar solo una vez la clase, en aperturas siguientes no será necesario
@@ -127,4 +127,4 @@ public class InicioFragment extends Fragment {
     }
 
      */
-//}
+}

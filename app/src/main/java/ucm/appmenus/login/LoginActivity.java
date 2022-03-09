@@ -1,4 +1,4 @@
-/* package ucm.appmenus.login;
+package ucm.appmenus.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,17 +27,11 @@ import ucm.appmenus.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_sesion);
 
-
-
-
-/*
         //Usado para comprobar si el usuario está ya logueado
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
@@ -91,5 +85,3 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 }
-
-*/

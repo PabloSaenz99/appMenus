@@ -1,4 +1,4 @@
-/*
+
 package ucm.appmenus.ui.filtros;
 
 
@@ -119,4 +119,4 @@ public class FiltrosFragment extends Fragment {
             main.changeFragment(R.id.navigation_inicio, b);
         }
     }
-}*/
+}

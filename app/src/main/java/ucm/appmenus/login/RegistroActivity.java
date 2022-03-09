@@ -34,9 +34,6 @@ import java.util.Objects;
 public class RegistroActivity extends AppCompatActivity {
 
     //vars
-    Button btn_registrar;
-    EditText et_name, et_email, et_password;
-
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
@@ -48,14 +45,13 @@ public class RegistroActivity extends AppCompatActivity {
 
         //vars
         firebaseAuth = FirebaseAuth.getInstance();
-        et_name = findViewById(R.id.textNombreRegistro);
-        et_email = findViewById(R.id.textEmailRegistro);
-        et_password = findViewById(R.id.textPasswordRegistro);
-        btn_registrar = findViewById(R.id.botonRegistro);
+        final EditText et_name = findViewById(R.id.textNombreRegistro);
+        final EditText et_email = findViewById(R.id.textEmailRegistro);
+        final EditText et_password = findViewById(R.id.textPasswordRegistro);
+        final Button botonRegistro = findViewById(R.id.botonRegistro);
 
-
-        //Llamada cuando se `pulse al boton registrar
-        btn_registrar.setOnClickListener(new View.OnClickListener() {
+        //Llamada cuando se pulse al boton registrar (llamada a la BD)
+        botonRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String nombre = et_name.getText().toString();
@@ -67,50 +63,8 @@ public class RegistroActivity extends AppCompatActivity {
                 } else {
                     registerUser(nombre, email, password);
                 }
-
-
             }
         });
-    }
-
-    public void registerUser(String nombre, String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    FirebaseUser rUser=firebaseAuth.getCurrentUser();
-                    String userId=rUser.getUid();
-                    databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-               HashMap<String,String> hashMap =new HashMap<>();
-               hashMap.put("userId",userId);
-                    hashMap.put("userName",nombre);
-                    hashMap.put("userEmail",email);
-                    hashMap.put("userPassword",password);
-                    databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-if(task.isSuccessful()){
-    Intent intent =new Intent (RegistroActivity.this,MainActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
-    startActivity(intent);
-}else{
-    Toast.makeText(RegistroActivity.this, Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
-}
-                        }
-                    });
-                }else{
-                    Toast.makeText(RegistroActivity.this, Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-
-    }
-
-}
-
-
-
 
 /*
 
@@ -131,7 +85,7 @@ if(task.isSuccessful()){
     }*/
 //}
 
-/*
+
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
 
@@ -144,7 +98,6 @@ if(task.isSuccessful()){
             }
         });
 
-        final Button botonRegistro = findViewById(R.id.botonRegistro);
         botonRegistro.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Buscar resultados
@@ -165,10 +118,41 @@ if(task.isSuccessful()){
                     editor.commit();
 
                     //Abrir activity
-                   /* Intent intent = new Intent(botonRegistro.getContext(), MainActivity.class);
+                   Intent intent = new Intent(botonRegistro.getContext(), MainActivity.class);
                     startActivity(intent);
                 }
             }
         });
     }
-}*/
+
+    public void registerUser(String nombre, String email, String password) {
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
+            if(task.isSuccessful()){
+                FirebaseUser rUser=firebaseAuth.getCurrentUser();
+                String userId=rUser.getUid();
+                databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                HashMap<String,String> hashMap =new HashMap<>();
+                hashMap.put("userId",userId);
+                hashMap.put("userName",nombre);
+                hashMap.put("userEmail",email);
+                hashMap.put("userPassword",password);
+                databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Intent intent =new Intent (RegistroActivity.this,MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(RegistroActivity.this, Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }else{
+                Toast.makeText(RegistroActivity.this, Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        }});
+    }
+}
