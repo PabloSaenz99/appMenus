@@ -105,36 +105,7 @@ public class InicioFragment extends Fragment {
 
         RecyclerAdapter<ViewHolderRestaurantes, Restaurante> adapterRestaurantes =
                 new RecyclerAdapter<ViewHolderRestaurantes, Restaurante>(
-                        restaurantes, R.layout.recycler_restaurantes, ViewHolderRestaurantes.class,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //Intent intent = new Intent(mainActivity, RestauranteDetalladoActivity.class);
-                                //startActivity(intent);
-
-                                Toast.makeText(mainActivity, "", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        restaurantes, R.layout.recycler_restaurantes, ViewHolderRestaurantes.class);
         recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
     }
-
-    /**
-     * Patron Singleton:
-     * Usado para inicializar solo una vez la clase, en aperturas siguientes no será necesario
-     * */
-    /*
-    private void init(){
-        primeraApertura = false;
-
-        OpenStreetMap osm = new OpenStreetMap();
-        osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
-                new ArrayList<String>(),
-                new ArrayList<String>(),
-                500,
-                mainActivity.getUsuario().getLocalizacion().latitude,
-                mainActivity.getUsuario().getLocalizacion().longitude));
-        ultimaListaDeRestaurantes = inicioViewModel.getRestaurantes().getValue();
-    }
-
-     */
 }
