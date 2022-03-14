@@ -11,7 +11,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
-import ucm.appmenus.entities.Foto;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Restaurante;
 
@@ -71,13 +70,6 @@ public class JSONRestaurante {
                 for (int i = 0; i < jArrayFiltros.length(); i++) {
                     filtros.add(jArrayFiltros.getString(i));
                 }
-                //Fotos
-                ArrayList<Foto> fotos = new ArrayList<Foto>();
-                JSONArray jArrayFotos = jObject.getJSONArray("fotos");
-                for (int i = 0; i < jArrayFotos.length(); i++) {
-                    fotos.add(new Foto(jArrayFotos.getJSONObject(i)));
-                }
-                //restaurantes.add(new Restaurante(id, nombre, url, valoracion, imagenPrincDir, filtros, fotos));
             }
         }
         catch (JSONException e) {

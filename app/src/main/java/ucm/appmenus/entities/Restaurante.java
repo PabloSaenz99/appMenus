@@ -128,8 +128,11 @@ public class Restaurante implements Parcelable {
         telefono = in.readInt();
         horarios = in.readString();
         valoracion = in.readDouble();
-        listaImagenes.setValue(new ArrayList<>());
-        listaFiltros.setValue(new HashSet<>(in.createStringArrayList()));
+        listaImagenes = new MutableLiveData<>(new ArrayList<>());
+        listaFiltros = new MutableLiveData<>(new HashSet<>(in.createStringArrayList()));
+        //listaImagenes.setValue(new ArrayList<>());
+        //listaFiltros.setValue(new HashSet<>(in.createStringArrayList()));
+        ws = new WebScrapping(url, listaFiltros, listaImagenes);
     }
 
     public static final Creator<Restaurante> CREATOR = new Creator<Restaurante>() {

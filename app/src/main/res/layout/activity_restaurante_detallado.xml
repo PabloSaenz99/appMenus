@@ -35,7 +35,7 @@
             android:text="Nombre Restaurante" />
 
         <RatingBar
-            android:id="@+id/valoracion"
+            android:id="@+id/valoracionRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -1,10 +1,12 @@
 package ucm.appmenus.ui.inicio;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.entities.Restaurante;
+import ucm.appmenus.login.RegistroActivity;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.R;
@@ -102,7 +105,16 @@ public class InicioFragment extends Fragment {
 
         RecyclerAdapter<ViewHolderRestaurantes, Restaurante> adapterRestaurantes =
                 new RecyclerAdapter<ViewHolderRestaurantes, Restaurante>(
-                        restaurantes, R.layout.recycler_restaurantes, ViewHolderRestaurantes.class);
+                        restaurantes, R.layout.recycler_restaurantes, ViewHolderRestaurantes.class,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //Intent intent = new Intent(mainActivity, RestauranteDetalladoActivity.class);
+                                //startActivity(intent);
+
+                                Toast.makeText(mainActivity, "", Toast.LENGTH_SHORT).show();
+                            }
+                        });
         recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
     }
 

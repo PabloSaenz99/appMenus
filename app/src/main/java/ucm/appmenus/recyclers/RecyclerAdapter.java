@@ -27,25 +27,39 @@ import ucm.appmenus.utils.Pair;
  *      @see ViewHolderNULL para un ejemplo muy basico
  * IMPORTANTE: Esta clase no debe ser modificada
  * */
-public class RecyclerAdapter<ViewHolder extends
-        RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT>
+public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT>
         extends RecyclerView.Adapter<ViewHolder> {
 
     private int viewID;
     private ArrayList<ELEMENT> listaDatos;
     private ArrayList<ViewHolder> holders;
     private Class<ViewHolder> clase;
+    private View.OnClickListener click;
 
+    /**
+     * @param dataSet : lista con los datos que se quieren mostar en bucle
+     * @param viewID : el id (R.layout...) del elemento a representar en bucle
+     * @param clase : la clase que implementa  RecyclerView.ViewHolder y extiende IReclycerElement
+     * @param click : la accion que realizara el item al ser pulsado
+     * */
+    public RecyclerAdapter(ArrayList<ELEMENT> dataSet, int viewID, Class<ViewHolder> clase,
+                           View.OnClickListener click) {
+        this.listaDatos = dataSet;
+        this.viewID = viewID;
+        this.clase = clase;
+        this.holders = new ArrayList<ViewHolder>();
+        this.click = click;
+    }
     /**
      * @param dataSet : lista con los datos que se quieren mostar en bucle
      * @param viewID : el id (R.layout...) del elemento a representar en bucle
      * @param clase : la clase que implementa  RecyclerView.ViewHolder y extiende IReclycerElement
      * */
     public RecyclerAdapter(ArrayList<ELEMENT> dataSet, int viewID, Class<ViewHolder> clase) {
-        this.listaDatos = dataSet;
-        this.viewID = viewID;
-        this.clase = clase;
-        this.holders = new ArrayList<ViewHolder>();
+        this(dataSet, viewID, clase, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {}
+        });
     }
 
     /*
@@ -72,6 +86,7 @@ public class RecyclerAdapter<ViewHolder extends
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setDatos(listaDatos.get(position));
+        holder.itemView.setOnClickListener(click);
     }
 
     @Override

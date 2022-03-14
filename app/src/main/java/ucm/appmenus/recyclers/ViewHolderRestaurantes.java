@@ -1,9 +1,12 @@
 package ucm.appmenus.recyclers;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -21,10 +24,12 @@ import android.graphics.Bitmap;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import ucm.appmenus.login.RegistroActivity;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
+import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
 import ucm.appmenus.utils.Pair;
 
-public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante>{
+public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante>, View.OnClickListener{
 
     private final View view;
     private Restaurante datos;
@@ -52,13 +57,25 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
             @Override
             public void onClick(View v) {
                 //Aqui se añadiria a los favoritos del usuario
+                Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
+                        Toast.LENGTH_LONG).show();
             }
         });
-
+        imagenPrinc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(view.getContext(), nombre.getText().toString() + "|" + url.getText().toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
+                intent.putExtra("restaurante", datos);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void setDatos(final Restaurante restaurante) {
+        datos = restaurante;
+
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
         favorito.setChecked(false);
@@ -92,6 +109,11 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
 
     @Override
     public Restaurante getDatos() { return datos; }
+
+    @Override
+    public void onClick(View view) {
+
+    }
 
     /*
     public static class RecyclerTest extends AbstractViewHolder<Restaurante>{

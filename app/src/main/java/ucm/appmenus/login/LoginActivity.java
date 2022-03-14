@@ -28,11 +28,8 @@ public class LoginActivity extends AppCompatActivity {
         //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
         if(email != null){
             //Inicia la main activity
-            /*
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-
-             */
         }
 
         final Button botonRegistro = findViewById(R.id.botonRegistro);
