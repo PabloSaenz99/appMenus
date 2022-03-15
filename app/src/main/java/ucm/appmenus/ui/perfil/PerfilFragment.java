@@ -24,7 +24,6 @@ import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderResenia;
-import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 
 public class PerfilFragment extends Fragment {
 

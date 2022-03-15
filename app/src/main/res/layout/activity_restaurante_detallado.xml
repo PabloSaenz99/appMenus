@@ -7,6 +7,7 @@
     tools:context=".ui.inicio.RestauranteDetalladoActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="409dp"
         android:layout_height="729dp"
         android:orientation="vertical"
@@ -68,5 +69,23 @@
             android:layout_height="wrap_content"
             android:text="Horarios" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerReseniaRestaurante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/botonAniadirResenia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="675dp"
+        android:text="Añade una reseña"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,14 @@
 package ucm.appmenus.ui.inicio;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         TextView telefono = findViewById(R.id.telefonoRestaurante);
         TextView horario = findViewById(R.id.horarioRestaurante);
         RecyclerView filtrosRecycler = findViewById(R.id.filtrosRestauranteRecycler);
+        Button botonResenia = findViewById(R.id.botonAniadirResenia);
 
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
@@ -65,5 +67,13 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
             }
         };
         restaurante.getLivedataFiltros().observe(this, observerFiltros);
+
+        botonResenia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ReseniaActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

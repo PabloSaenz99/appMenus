@@ -15,9 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.inicio.RestauranteDetalladoActivity"
+            android:name=".ui.inicio.ReseniaActivity"
             android:exported="false" />
-        <!-- METIDO POR MIRIAM -->
+        <activity
+            android:name=".ui.inicio.RestauranteDetalladoActivity"
+            android:exported="false" /> <!-- METIDO POR MIRIAM -->
         <activity android:name=".MainActivity" />
         <activity android:name=".login.RegistroActivity" />
         <activity android:name=".login.LoginActivity">

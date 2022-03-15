@@ -20,9 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/logoAzul4"
-        android:queryHint="Busca aquí ">
-
-    </SearchView>
+        android:queryHint="Busca aquí "/>
 
     <View style="@style/HorizontalDivider"
         android:background="@color/logoAzul4" />
@@ -36,7 +34,6 @@
         android:scrollbars="vertical">
 
         <include
-            android:id="@+id/layout_info"
             layout="@layout/layout_info_filtros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -80,7 +77,6 @@
             android:background="@color/logoAzul4" />
 
         <include
-            android:id="@+id/layout_info"
             layout="@layout/layout_info_filtros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -96,7 +92,6 @@
             android:background="@color/logoAzul4" />
 
         <include
-            android:id="@+id/layout_info"
             layout="@layout/layout_info_filtros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -113,7 +108,6 @@
             android:background="@color/logoAzul4"/>
 
         <include
-            android:id="@+id/layout_info"
             layout="@layout/layout_info_filtros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
