@@ -26,15 +26,16 @@ public class Restaurante implements Parcelable {
     private final String idRestaurante;
     private final String nombre;
     private final String url;
-    private MutableLiveData<String> direccion;
     private final int telefono;
     private final String horarios;
     private final double valoracion;
 
-    private MutableLiveData<ArrayList<Bitmap>> listaImagenes;
-    private MutableLiveData<HashSet<String>> listaFiltros;
-
-    private WebScrapping ws;
+    //MutableLiveData para poder actualizar en tiempo real sobre la interfaz
+    private final MutableLiveData<String> direccion;
+    private final MutableLiveData<ArrayList<Bitmap>> listaImagenes;
+    private final MutableLiveData<HashSet<String>> listaFiltros;
+    //Utilizado para hacer webscrapping y poder cargar datos extra cuando se accede a la vista con detalles
+    private final WebScrapping ws;
 
     public Restaurante(String idRestaurante, String nombre, String url, String direccion, double lat, double lon,
                        int telefono, String horarios, double valoracion, ArrayList<String> filtrosIni){
@@ -49,11 +50,9 @@ public class Restaurante implements Parcelable {
 
         //Parsea los filtros, separandolos por ";"
         HashSet<String> filtrosAux = new HashSet<>();
-        if(filtrosIni != null) {
-            for (String s: filtrosIni) {
+        if(filtrosIni != null)
+            for (String s: filtrosIni)
                 filtrosAux.addAll(Arrays.asList(s.split(";")));
-            }
-        }
         this.listaFiltros = new MutableLiveData<>(filtrosAux);
 
         //Importante que vaya despues de iniciar los filtros
@@ -65,7 +64,7 @@ public class Restaurante implements Parcelable {
         else{
             //TODO: HAcer accion por defecto como poner una imagen vacia o que no hay filtros
         }
-
+        //Si no hay direccion (", ) entonces la busca mediante las coordenadas
         if (direccion.equals(", ")) {
             new OpenStreetMap().setDireccion(this.direccion, lat, lon);
             Log.i("Busco dir", "buscando");
@@ -76,9 +75,7 @@ public class Restaurante implements Parcelable {
     }
 
     public String getIdRestaurante(){return idRestaurante;}
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
     public String getStringURL() { return url; }
     public MutableLiveData<String> getDireccion() { return direccion; }
     public int getTelefono() { return telefono; }
@@ -108,10 +105,9 @@ public class Restaurante implements Parcelable {
         return s;
     }
 
+    //--------Las funciones siguientes se usan para poder pasar la clase entre Actividades----------
     @Override
-    public int describeContents() {
-        return 0;
-    }
+    public int describeContents() { return 0; }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

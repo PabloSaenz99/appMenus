@@ -22,6 +22,7 @@ public class Resenia implements Parcelable {
     public String getTexto() { return texto; }
     public double getValoracion() { return valoracion; }
 
+    //--------Las funciones siguientes se usan para poder pasar la clase entre Actividades----------
     protected Resenia(Parcel in) {
         restauranteID = in.readString();
         titulo = in.readString();

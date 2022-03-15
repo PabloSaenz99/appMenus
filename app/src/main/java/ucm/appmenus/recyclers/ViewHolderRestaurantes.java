@@ -29,7 +29,7 @@ import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
 import ucm.appmenus.utils.Pair;
 
-public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante>, View.OnClickListener{
+public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante> {
 
     private final View view;
     private Restaurante datos;
@@ -83,6 +83,10 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         valoracion.setClickable(false);
         direccion.setText(restaurante.getDireccion().getValue());
 
+        /**
+         * Observa el TextView que contiene la direccion, cuando se actualiza mediante WebScrapping
+         * se muestra en la vista
+         * */
         final Observer<String> observerDireccion = new Observer<String>() {
             @Override
             public void onChanged(String dir) {
@@ -90,6 +94,11 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
             }
         };
         restaurante.getDireccion().observe((LifecycleOwner) view.getContext(), observerDireccion);
+
+        /**
+         * Observa el ImageView que contiene la imagen, cuando se actualiza mediante WebScrapping
+         * se muestra en la vista
+         * */
         //TODO: Hacer algo con la imagen
         //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
         final Observer<ArrayList<Bitmap>> observerImagen = new Observer<ArrayList<Bitmap>>() {
@@ -100,7 +109,10 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         };
         restaurante.getliveDataImagen().observe((LifecycleOwner) view.getContext(), observerImagen);
 
-        //Actualiza el recycler cuando se reciben los datos
+        /**
+         * Observa el recycler que contiene los filtros, cuando se actualizan mediante WebScrapping
+         * se muestra en la vista
+         * */
         final Observer<HashSet<String>> observerFiltros = new Observer<HashSet<String>>() {
             @Override
             public void onChanged(HashSet<String> filtros) {
@@ -117,11 +129,6 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
 
     @Override
     public Restaurante getDatos() { return datos; }
-
-    @Override
-    public void onClick(View view) {
-
-    }
 
     /*
     public static class RecyclerTest extends AbstractViewHolder<Restaurante>{

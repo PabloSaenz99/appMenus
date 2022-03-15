@@ -110,7 +110,7 @@ public class FiltrosFragment extends Fragment {
                 }
             }
             //Buscar resultados y abrir activity
-          Bundle b = new Bundle();
+            Bundle b = new Bundle();
             b.putBoolean(Constantes.ACTUALIZAR_INTENT, true);
             b.putStringArrayList(Constantes.TIPOS_LOCAL, tiposLocal);
             b.putStringArrayList(Constantes.TIPOS_COCINA, tiposCocina);
