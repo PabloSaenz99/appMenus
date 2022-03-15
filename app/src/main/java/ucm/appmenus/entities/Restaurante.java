@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -17,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import ucm.appmenus.utils.Constantes;
+import ucm.appmenus.utils.OpenStreetMap;
 import ucm.appmenus.utils.WebScrapping;
 
 public class Restaurante implements Parcelable {
@@ -24,7 +26,7 @@ public class Restaurante implements Parcelable {
     private final String idRestaurante;
     private final String nombre;
     private final String url;
-    private String direccion;
+    private MutableLiveData<String> direccion;
     private final int telefono;
     private final String horarios;
     private final double valoracion;
@@ -34,15 +36,15 @@ public class Restaurante implements Parcelable {
 
     private WebScrapping ws;
 
-    public Restaurante(String idRestaurante, String nombre, String url, String direccion,
+    public Restaurante(String idRestaurante, String nombre, String url, String direccion, double lat, double lon,
                        int telefono, String horarios, double valoracion, ArrayList<String> filtrosIni){
         this.idRestaurante = idRestaurante;
         this.nombre = nombre;
         this.url = url;
-        this.direccion = direccion;
         this.telefono = telefono;
         this.horarios = horarios;
         this.valoracion = valoracion;
+        this.direccion = new MutableLiveData<>();
         this.listaImagenes = new MutableLiveData<ArrayList<Bitmap>>();
 
         //Parsea los filtros, separandolos por ";"
@@ -63,6 +65,14 @@ public class Restaurante implements Parcelable {
         else{
             //TODO: HAcer accion por defecto como poner una imagen vacia o que no hay filtros
         }
+
+        if (direccion.equals(", ")) {
+            new OpenStreetMap().setDireccion(this.direccion, lat, lon);
+            Log.i("Busco dir", "buscando");
+        } else {
+            this.direccion.postValue(direccion);
+            Log.i("Busco dir", "no busco");
+        }
     }
 
     public String getIdRestaurante(){return idRestaurante;}
@@ -70,20 +80,15 @@ public class Restaurante implements Parcelable {
         return nombre;
     }
     public String getStringURL() { return url; }
-    public String getDireccion() { return direccion; }
+    public MutableLiveData<String> getDireccion() { return direccion; }
     public int getTelefono() { return telefono; }
     public String getHorarios() { return horarios; }
-    public double getValoracion() {
-        return valoracion;
-    }
+    public double getValoracion() { return valoracion; }
     public ArrayList<Bitmap> getListaImagenes() { return listaImagenes.getValue(); }
-    public LiveData<ArrayList<Bitmap>> getliveDataImagen() {
-        return listaImagenes;
-    }
+    public LiveData<ArrayList<Bitmap>> getliveDataImagen() { return listaImagenes; }
     public HashSet<String> getListaFiltros() { return listaFiltros.getValue(); }
     public LiveData<HashSet<String>> getLivedataFiltros() {return this.listaFiltros;}
 
-    public void setDireccion(String direccion) { this.direccion = direccion; }
     public void updateImagenes(){ ws.setImagenes(); }
     public void updateFiltros(){
         ArrayList<List<String>> listOfLists = new ArrayList<List<String>>();
@@ -113,7 +118,7 @@ public class Restaurante implements Parcelable {
         dest.writeString(this.idRestaurante);
         dest.writeString(this.nombre);
         dest.writeString(this.url);
-        dest.writeString(this.direccion);
+        dest.writeString(this.direccion.getValue());
         dest.writeInt(this.telefono);
         dest.writeString(this.horarios);
         dest.writeDouble(this.valoracion);
@@ -124,7 +129,7 @@ public class Restaurante implements Parcelable {
         idRestaurante = in.readString();
         nombre = in.readString();
         url = in.readString();
-        direccion = in.readString();
+        direccion = new MutableLiveData<>(in.readString());
         telefono = in.readInt();
         horarios = in.readString();
         valoracion = in.readDouble();

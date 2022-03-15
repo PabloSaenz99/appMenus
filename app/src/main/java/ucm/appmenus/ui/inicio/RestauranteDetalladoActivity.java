@@ -48,7 +48,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         //imagen.setImageBitmap(restaurante.getListaImagenes().get(0));
         valoracion.setRating((float )restaurante.getValoracion());
         valoracion.setClickable(false);
-        direccion.setText(restaurante.getDireccion());
+        direccion.setText(restaurante.getDireccion().getValue());
         telefono.setText(restaurante.getTelefono() + "");
         horario.setText(restaurante.getHorarios());
 

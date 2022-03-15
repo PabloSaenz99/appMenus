@@ -1,5 +1,7 @@
 package ucm.appmenus.ficheros;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ucm.appmenus.entities.Restaurante;
+import ucm.appmenus.utils.OpenStreetMap;
 
 public class JSONOpenStreetReader {
 
@@ -20,6 +23,8 @@ public class JSONOpenStreetReader {
             JSONArray jArray = new JSONObject(s).getJSONArray("elements");
             for (int k = 0; k < jArray.length(); k++) {
                 JSONObject jObject = jArray.getJSONObject(k);
+                double lat = getDoubleFor(jObject, "lat");
+                double lon = getDoubleFor(jObject, "lon");
                 JSONObject info = jObject.getJSONObject("tags");
                 //Informacion general
                 String id = getStringFor(jObject, "id");
@@ -27,7 +32,8 @@ public class JSONOpenStreetReader {
                 String nombre = getStringFor(info, "name");
                 String url =  getStringFor(info, websites);
 
-                String dir =  getStringFor(info, "addr:street") +", " + getStringFor(info, "addr:housenumber");
+                String dir = getStringFor(info, "addr:street") + ", " + getStringFor(info, "addr:housenumber");
+
                 int telefono = getIntFor(info,"contact:phone");
                 String horario = getStringFor(info, "opening_hours");
 
@@ -44,13 +50,26 @@ public class JSONOpenStreetReader {
                 float valoracion = 0;
                 String imagenPrincDir = "";
 
-                restaurantes.add(new Restaurante(id, nombre, url, dir, telefono, horario, valoracion, filtros));
+                restaurantes.add(new Restaurante(id, nombre, url, dir, lat, lon,
+                        telefono, horario, valoracion, filtros));
             }
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
         return restaurantes;
+    }
+
+    public String parsearDireccion(final String res){
+        String dir = "";
+        try {
+            JSONObject info = new JSONObject(res).getJSONObject("address");
+            dir = getStringFor(info, "road") + ", " + getStringFor(info, "house_number");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.i("Dir es", dir);
+        return dir;
     }
 
     private String getStringFor(JSONObject jo, ArrayList<String> opciones) {
@@ -74,6 +93,14 @@ public class JSONOpenStreetReader {
     private int getIntFor(JSONObject jo, String s) {
         try {
             return jo.getInt(s);
+        } catch (JSONException e) {
+            return 0;
+        }
+    }
+
+    private double getDoubleFor(JSONObject jo, String s) {
+        try {
+            return jo.getDouble(s);
         } catch (JSONException e) {
             return 0;
         }

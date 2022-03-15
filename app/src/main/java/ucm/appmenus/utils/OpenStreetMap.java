@@ -22,7 +22,7 @@ public class OpenStreetMap {
     //Maximo 10mb de resultado de query y en formato json
     private static final String URL_FIND_PLACES = "https://overpass-api.de/api/interpreter?data=[maxsize:10737418][out:json]";
     private static final String URL_FIND_STREET_BY_ID = "https://nominatim.openstreetmap.org/lookup?format=json&";
-    private static final String URL_FIND_STREET_BY_COORD = "https://nominatim.openstreetmap.org/reverse?format=json&";
+    private static final String URL_FIND_STREET_BY_COORD = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&";
 
     public void setPlaces(final MutableLiveData<ArrayList<Restaurante>> actualizable,
                           OpenStreetAttributes attr) {
@@ -41,21 +41,22 @@ public class OpenStreetMap {
         th.start();
     }
 
-    public void setDireccion(Restaurante r, long id){
-        updateDireccionRestaurante(r, construirQueryDireccionPorID(id));
+    public void setDireccion(MutableLiveData<String> d, long id){
+        updateDireccionRestaurante(d, construirQueryDireccionPorID(id));
     }
 
-    public void setDireccion(Restaurante r, double lat, double lon){
-        updateDireccionRestaurante(r, construirQueryDireccionPorCoord(lat, lon));
+    public void setDireccion(MutableLiveData<String> d, double lat, double lon){
+        updateDireccionRestaurante(d, construirQueryDireccionPorCoord(lat, lon));
     }
 
-    private void updateDireccionRestaurante(final Restaurante r, final String query){
+    private void updateDireccionRestaurante(final MutableLiveData<String> d, final String query){
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     //Obtiene los resultados y los guarda en la cola para que se publiquen en cuanto sea posible
-                    r.setDireccion(getURLData(query));
+                    JSONOpenStreetReader reader = new JSONOpenStreetReader();
+                    d.postValue(reader.parsearDireccion(getURLData(query)));
                 } catch (Exception ignored) {}
             }
         });
@@ -67,6 +68,7 @@ public class OpenStreetMap {
             StringBuilder content = new StringBuilder();
 
             URL url = new URL(query);
+            Log.d("Query", query);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -115,11 +117,11 @@ public class OpenStreetMap {
         return res;
     }
 
-    public String construirQueryDireccionPorID(long id){
+    private String construirQueryDireccionPorID(long id){
         return URL_FIND_STREET_BY_ID + "osm_ids=N" + id;
     }
 
-    public String construirQueryDireccionPorCoord(double lat, double lon){
+    private String construirQueryDireccionPorCoord(double lat, double lon){
         return URL_FIND_STREET_BY_COORD + "lat=" + lat + "&lon=" + lon;
     }
 
