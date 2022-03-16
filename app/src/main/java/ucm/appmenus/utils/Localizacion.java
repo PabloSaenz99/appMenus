@@ -3,13 +3,11 @@ package ucm.appmenus.utils;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Looper;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,8 +19,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import ucm.appmenus.MainActivity;
 
@@ -46,11 +42,11 @@ public class Localizacion {
     public Localizacion(MainActivity mainActivity){
         this.mainActivity = mainActivity;
         this.context = this.mainActivity.getApplicationContext();
-        refrescarLocalizacion();
+        actualizarLocalizacion();
     }
 
     @SuppressLint("MissingPermission")
-    public void refrescarLocalizacion(){
+    public void actualizarLocalizacion(){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
         if (checkPermissions()) {

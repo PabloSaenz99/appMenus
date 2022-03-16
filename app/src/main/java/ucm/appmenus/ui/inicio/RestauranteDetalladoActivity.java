@@ -22,6 +22,9 @@ import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.utils.Pair;
 
+/**
+ * Clase utilizada para mostar los detalles de un restaurante, por ejemplo con mas imagenes, filtros o reseñas
+ */
 public class RestauranteDetalladoActivity extends AppCompatActivity {
 
     private Restaurante restaurante;
@@ -52,6 +55,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         telefono.setText(restaurante.getTelefono() + "");
         horario.setText(restaurante.getHorarios());
 
+        //Actaualiza las imagenes y filtros de los restaurantes para tener mas detalles.
         restaurante.updateImagenes();
         restaurante.updateFiltros();
 
@@ -67,7 +71,9 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
             }
         };
         restaurante.getLivedataFiltros().observe(this, observerFiltros);
+        //TODO: crear un recycler para ver las imagenes y un contenedor con scroll donde se puedan mostrar todas.
 
+        //Boton que abre la activiry para crear una reseña de un restaurante
         botonResenia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -12,6 +12,9 @@ import android.widget.RatingBar;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
 
+/**
+ * Clase utilizada para crear la reseña de un restaurante
+ */
 public class ReseniaActivity extends AppCompatActivity {
 
     @Override

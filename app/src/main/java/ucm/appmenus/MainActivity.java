@@ -43,6 +43,7 @@ import ucm.appmenus.utils.WebScrapping;
 
 public class MainActivity extends AppCompatActivity {
 
+    /*
     //vars para prueba de autenticacion registro
     Button btn_login, btn_registrar;
     EditText et_name, et_email, et_password;
@@ -54,22 +55,23 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressDialog ProgressDialog;
     // DatabaseReference mDatabase;
+    */
 
     //esto estaba de antes
     private Usuario usuario;
     private NavController navController;
 
-    //En principio no hay que hacer nada mas en esta actividad ya que tod0 se hace en los fragments
-
+    /**
+     * En principio no hay que hacer nada mas en esta actividad ya que tod0 se hace en los fragments
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //Loguea al usaurio para poder usar sus datos luego
         loginUsuario();
 
         //Importante que esté después del login de usuario o lanzará nullpointer
         setContentView(R.layout.activity_main);
-        //Cosas de firebase inputs
 
         final BottomNavigationView navView = findViewById(R.id.nav_view);
         //Carga la vista de la barra inferior con las 3 ventanas que contiene
@@ -82,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    /**
+     * Cambia entre 2 fragments
+     * @param id: fragment al que moverse
+     * @param b: datos necesarios para dicho fragment
+     */
     public void changeFragment(int id, Bundle b){
         Log.d("BUNDLE", b.toString());
         navController.navigate(id, b);
@@ -110,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
     //Funcion de login con la base de datos de google
     private void login(String email, String password){
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -128,4 +136,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+     */
 }

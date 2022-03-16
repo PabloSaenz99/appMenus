@@ -39,8 +39,8 @@ public class FiltrosFragment extends Fragment {
         filtrosViewModel = ViewModelProviders.of(this).get(FiltrosViewModel.class);
         root = inflater.inflate(R.layout.fragment_filtros, container, false);
 
+        //Crea los recyclers para los filtros, 3 recyclers para 3 tipos distintos de filtros
         listaRecyclers = new ArrayList<RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>>();
-
         crearRecyclerFiltros(root, Constantes.filtrosLocal, R.id.recyclerFiltrosLocal, 3);
         crearRecyclerFiltros(root, Constantes.filtrosPais, R.id.recyclerFiltrosPais, 3);
         crearRecyclerFiltros(root, Constantes.filtrosComida, R.id.recyclerFiltrosComida, 3);
@@ -86,7 +86,7 @@ public class FiltrosFragment extends Fragment {
     private void realizarBusqueda(){
         MainActivity main = (MainActivity) getActivity();
         if(main != null) {
-            //Obtiene la distancia
+            //Obtiene la distancia de los radioButtons (solo permiten seleccionar uno de los tres)
             RadioGroup rg = root.findViewById(R.id.radioGroupDistancia);
             RadioButton but = root.findViewById(rg.getCheckedRadioButtonId());
             int area = Integer.parseInt(but.getText().toString());
@@ -99,8 +99,9 @@ public class FiltrosFragment extends Fragment {
                     tiposLocal.add(vh.get(i).getDatos().getPrimero());
                 }
             }
-            ArrayList<String> tiposCocina = new ArrayList<String>();
+
             //Luego recorre los demas recyclers que tienen los tipos de comida
+            ArrayList<String> tiposCocina = new ArrayList<String>();
             for (int i = 1; i < listaRecyclers.size(); i++) {
                 RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> aux = listaRecyclers.get(i);
                 for (int j = 0; j < aux.size(); j++) {
@@ -109,7 +110,10 @@ public class FiltrosFragment extends Fragment {
                     }
                 }
             }
-            //Buscar resultados y abrir activity
+            /*
+            Guarda los filtros de la busqueda en un bundle y abre el fragment de inicio en modo
+            busqueda (ahi se realiza la busqueda en OpenStreetMap)
+             */
             Bundle b = new Bundle();
             b.putBoolean(Constantes.ACTUALIZAR_INTENT, true);
             b.putStringArrayList(Constantes.TIPOS_LOCAL, tiposLocal);

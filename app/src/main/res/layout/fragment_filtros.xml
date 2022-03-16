@@ -33,10 +33,15 @@
         android:orientation="vertical"
         android:scrollbars="vertical">
 
-        <include
-            layout="@layout/layout_info_filtros"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="Radio de busqueda"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
 
         <!--TODO: Hacer que el recycler haga un wrap hasta un tam
         maximo, asi ocupara menos si lo necesita pero no mucho si es muy grande-->
@@ -73,53 +78,7 @@
                 android:text="2000" />
         </RadioGroup>
 
-        <View style="@style/HorizontalDivider"
-            android:background="@color/logoAzul4" />
 
-        <include
-            layout="@layout/layout_info_filtros"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFiltrosLocal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <View style="@style/HorizontalDivider"
-            android:background="@color/logoAzul4" />
-
-        <include
-            layout="@layout/layout_info_filtros"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFiltrosPais"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scrollbars="vertical">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <View style="@style/HorizontalDivider"
-            android:background="@color/logoAzul4"/>
-
-        <include
-            layout="@layout/layout_info_filtros"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFiltrosComida"
-            android:layout_width="match_parent"
-            android:layout_height="150dp">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <View style="@style/HorizontalDivider" />
 
     </LinearLayout>
 
@@ -127,8 +86,14 @@
     (especificado en el codigo de filtrosFragment (para asignarlo
     y en FiltrosRecyclerAdapter (para implementar como carga la info))-->
 
-    <View style="@style/HorizontalDivider"
-        android:background="@color/logoNaranja0"/>
+    <include
+        layout="@layout/layout_info_filtros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        style="@style/HorizontalDivider"
+        android:background="@color/logoNaranja0" />
 
     <Button
         android:id="@+id/botonFiltrar"

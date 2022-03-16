@@ -108,11 +108,12 @@ public class WebScrapping {
             @Override
             public void run() {
                 try {
-                    //Log.i("URL", url);
+                    //Busca si existen palabras como "menu" o "carta"
                     Document document = Jsoup.connect(url).get();
                     Element elementoMenu = document.select("a:contains(menu)").first();   //Buscar tambien sin tilde
                     Element elementoCarta = document.select("a:contains(order)").first();  //Buscar tambien por "carta"
 
+                    //Accede a dichos parametros, cargando su enlace (href)
                     if(elementoMenu != null)
                         listaFiltros.getValue().addAll(buscarTags(url, elementoMenu.attr("href"), buscar));
                     if(elementoCarta != null)
@@ -126,10 +127,19 @@ public class WebScrapping {
         th.start();
     }
 
+    /**
+     * Busca en la url todos los filtros del parametro filtros
+     * @param url la direccion de la pagina donde buscar los filtros
+     * @param urlCarta la url de la carta (puede ser distinta de la url general de la pagina)
+     * @param filtros los filtros a buscar en la pagina web
+     * @return un HashSet con todos los filtros encontrados en la web, sin repetidos
+     */
     @NonNull
     private HashSet<String> buscarTags(String url, String urlCarta, List<List<String>> filtros){
         HashSet<String> nuevosFiltros = new HashSet<>();
-        if(urlCarta.startsWith("/")) urlCarta = url + urlCarta;
+        //Genera una url correcta (si por ejemplo la url de la carta no contiene el path completo de la web)
+        if(urlCarta.startsWith("/"))
+            urlCarta = url + urlCarta;
         try {
             String res = Jsoup.connect(urlCarta).get().text().toLowerCase();
             //TODO: Hacer con todos los filtros

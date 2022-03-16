@@ -107,6 +107,11 @@ public class OpenStreetMap {
         }
     }
 
+    /**
+     * Construye la query para buscar los restaurantes en base a los filtros
+     * @param attr filtros que se utilizaran para realizar la query
+     * @return un string con la query final, lista para ser utilizada por OpenStreetMap
+     */
     private String construirQueryRestaurante(OpenStreetAttributes attr){
         String res = URL_FIND_PLACES;
         if(attr.timeout < 10 && attr.timeout > 5){
@@ -149,7 +154,7 @@ public class OpenStreetMap {
     private String construirQueryDireccionPorCoord(double lat, double lon){
         return URL_FIND_STREET_BY_COORD + "lat=" + lat + "&lon=" + lon;
     }
-    
+
     public static class OpenStreetAttributes {
         public final int timeout, area;
         public final ArrayList<String> tiposLocal, tiposCocina;

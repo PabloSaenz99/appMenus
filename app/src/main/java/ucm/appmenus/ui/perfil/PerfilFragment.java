@@ -27,11 +27,11 @@ import ucm.appmenus.recyclers.ViewHolderResenia;
 
 public class PerfilFragment extends Fragment {
 
-    private PerfilViewModel notificationsViewModel;
+    private PerfilViewModel perfilViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
+        perfilViewModel =
                 ViewModelProviders.of(this).get(PerfilViewModel.class);
         View root = inflater.inflate(R.layout.fragment_perfil, container, false);
 
