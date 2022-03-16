@@ -1,6 +1,7 @@
 package ucm.appmenus.ui.inicio;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ public class InicioFragment extends Fragment {
         //inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
         inicioViewModel = new ViewModelProvider(mainActivity).get(InicioViewModel.class);
         this.root = inflater.inflate(R.layout.fragment_inicio, container, false);
+
+        root.findViewById(R.id.progressBarInicio).setVisibility(View.VISIBLE);
 
         //Usado para no hacer la busqueda cada vez que se abre el fragment
         //Si es distinto de null, es que en algun momento se han cargado restaurantes o que hay que cargarlos.
@@ -81,7 +84,7 @@ public class InicioFragment extends Fragment {
         final Observer<ArrayList<Restaurante>> observer = new Observer<ArrayList<Restaurante>>() {
             @Override
             public void onChanged(ArrayList<Restaurante> restaurantes) {
-                root.findViewById(R.id.progressBarInicio).setVisibility(View.GONE);
+                root.findViewById(R.id.progressBarInicio).setVisibility(View.INVISIBLE);
                 crearRecycler(inicioViewModel.getRestaurantes().getValue());
             }
         };

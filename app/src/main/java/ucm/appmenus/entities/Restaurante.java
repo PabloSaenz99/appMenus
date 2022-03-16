@@ -62,15 +62,13 @@ public class Restaurante implements Parcelable {
             ws.setImagenPrincipal();
         }
         else{
-            //TODO: HAcer accion por defecto como poner una imagen vacia o que no hay filtros
+            //TODO: Hacer accion por defecto como poner una imagen vacia o que no hay filtros
         }
         //Si no hay direccion (", ) entonces la busca mediante las coordenadas
         if (direccion.equals(", ")) {
             new OpenStreetMap().setDireccion(this.direccion, lat, lon);
-            Log.i("Busco dir", "buscando");
         } else {
             this.direccion.postValue(direccion);
-            Log.i("Busco dir", "no busco");
         }
     }
 

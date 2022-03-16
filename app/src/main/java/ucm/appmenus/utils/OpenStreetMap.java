@@ -93,14 +93,13 @@ public class OpenStreetMap {
             StringBuilder content = new StringBuilder();
 
             URL url = new URL(query);
-            Log.d("Query", query);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             urlConnection.connect();
 
-            Log.d("Fin", "Fin del hilo de OpenStreetMap");
+            //Log.d("Fin", "Fin del hilo de OpenStreetMap");
             return bufferedReader.lines().collect(Collectors.joining());
         } catch (IOException e) {
             return "";
@@ -121,6 +120,9 @@ public class OpenStreetMap {
             res+="[timeout:" + 7 + "];";
         }
         //Tipos restaurantes
+        //TODO: la query falla cuando hay varios tipos de local porque hay que poner el around para cada uno
+        if(attr.tiposLocal.isEmpty())       //Si no hay, se selecciona restaurante por defecto
+            attr.tiposLocal.add(Constantes.filtrosLocal.get(5));
         for (String local: attr.tiposLocal) {
             res += "(node[%22amenity%22=%22" + local + "%22]";
             //Tipos cocina
@@ -143,7 +145,7 @@ public class OpenStreetMap {
         }
 
         res+=");out+30;";
-        //Log.i("QUERY OSM", res);
+        Log.d("QUERY OSM", res);
         return res;
     }
 

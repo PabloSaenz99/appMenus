@@ -2,6 +2,7 @@ package ucm.appmenus.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -22,6 +23,8 @@ import ucm.appmenus.entities.Restaurante;
 
 //https://www.tutorialspoint.com/web-scrapping-in-android-application
 public class WebScrapping {
+
+    private static int CONTADOR = 0;
 
     private final String url;
     private final MutableLiveData<HashSet<String>> listaFiltros;
@@ -55,6 +58,7 @@ public class WebScrapping {
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
+                int aux0 = ++CONTADOR;
                 try {
                     Document document = Jsoup.connect(url).get();
                     Elements imagenes = document.getElementsByTag("img");
@@ -63,6 +67,7 @@ public class WebScrapping {
                         listaImagenes.postValue(new ArrayList<Bitmap>(){{add(BitmapFactory.decodeStream(is));}});
                     }
                 } catch (Exception ignored) {}
+                Log.d("CONTADOR IMG:", aux0 + ", " + --CONTADOR);
             }
         });
         th.start();
@@ -107,6 +112,7 @@ public class WebScrapping {
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
+                int aux0 = ++CONTADOR;
                 try {
                     //Busca si existen palabras como "menu" o "carta"
                     Document document = Jsoup.connect(url).get();
@@ -122,6 +128,7 @@ public class WebScrapping {
                         listaFiltros.postValue(listaFiltros.getValue());
                     }
                 } catch (Exception ignored) {}
+                Log.d("CONTADOR FIL:", aux0 + ", " + --CONTADOR);
             }
         });
         th.start();
