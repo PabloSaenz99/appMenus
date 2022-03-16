@@ -13,15 +13,13 @@ public class Pair<T1, T2> {
     public void setPrimero(T1 primero) {
         this.primero = primero;
     }
-
-    public T1 getPrimero() {
-        return primero;
-    }
-
     public void setSegundo(T2 segundo) {
         this.segundo = segundo;
     }
 
+    public T1 getPrimero() {
+        return primero;
+    }
     public T2 getSegundo() {
         return segundo;
     }

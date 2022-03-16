@@ -27,6 +27,17 @@ public class WebScrapping {
     private final MutableLiveData<HashSet<String>> listaFiltros;
     private final MutableLiveData<ArrayList<Bitmap>> listaImagenes;
 
+    /**
+     * Clase que realiza una busqueda mediante web scrapping. Todas las busquedas se realiazn en Threads
+     * creados por las propias funciones llamadas.
+     * Preferible crear un objeto por clase que deba realizar web screpping y que mantenga vivo este
+     * objeto durante toda la vida del objeto interesado en realziar la bsuqueda.
+     * @param url: pagina web sobre la que realizar la busqueda
+     * @param listaFiltros: lista de filtros en la que se guardara el resultado de la busqueda.
+     *                    Es un MutableLiveData para poder actualizar la interfaz en tiempo real.
+     * @param listaImagenes: lista de imagenes en la que se guardara el resultado de la busqueda.
+     *                    Es un MutableLiveData para poder actualizar la interfaz en tiempo real.
+     */
     public WebScrapping(String url, MutableLiveData<HashSet<String>> listaFiltros,
                         MutableLiveData<ArrayList<Bitmap>> listaImagenes) {
         this.url= url;
@@ -34,6 +45,12 @@ public class WebScrapping {
         this.listaImagenes = listaImagenes;
     }
 
+    /**
+     * Busca la imagen principal del lugar.
+     * Utilizada para establecer unicamente una imagen y asi no consumir mucho tiempo, debe llamarse
+     *      en la bsuqueda general de restaurantes.
+     * Crea su propio Thread.
+     */
     public void setImagenPrincipal() {
         Thread th = new Thread(new Runnable() {
             @Override
@@ -50,7 +67,12 @@ public class WebScrapping {
         });
         th.start();
     }
-
+    /**
+     * Busca y guarda todas las imagenes del lugar.
+     * Utilizada para establecer todas las imagenes, debe llamarse en la bsuqueda de un lugar
+     *      especifico, no en la general.
+     * Crea su propio Thread.
+     */
     public void setImagenes() {
         Thread th = new Thread(new Runnable() {
             @Override
@@ -75,6 +97,11 @@ public class WebScrapping {
         th.start();
     }
 
+    /**
+     * Establece los filtros del lugar.
+     * @param buscar: lista con todos los filtros a buscar.
+     * Crea su propio Thread.
+     */
     public void setFiltros(final List<List<String>> buscar) {
         //Necesario el thread para no lanzar excepciones y no sobrecargar el hilo principal
         Thread th = new Thread(new Runnable() {

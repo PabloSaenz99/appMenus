@@ -27,7 +27,7 @@ public class ReseniaActivity extends AppCompatActivity {
         crearResenia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* En vez de esto, guardarla en la BD
+                /* TODO: En vez de esto, guardarla en la BD
                 Resenia r = new Resenia("", nombre.getText().toString(),
                         descripcion.getText().toString(), valoracion.getRating());
                 Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);

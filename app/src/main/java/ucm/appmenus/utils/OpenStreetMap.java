@@ -24,6 +24,13 @@ public class OpenStreetMap {
     private static final String URL_FIND_STREET_BY_ID = "https://nominatim.openstreetmap.org/lookup?format=json&";
     private static final String URL_FIND_STREET_BY_COORD = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&";
 
+    /**
+     * Funcion que realiza una busqueda en OpenStreetMap para encontrar restaurantes
+     * @param actualizable: el parametro donde se guardara el resultado de la busqueda.
+     *                    Es un MutableLiveData para poder actualizar la vista en tiempo real.
+     * @param attr: parametros necesarios para realizar la busqueda.
+     *            Dicha busqueda se realiza de forma automatica, solo hay que suministrar los parametros.
+     */
     public void setPlaces(final MutableLiveData<ArrayList<Restaurante>> actualizable,
                           OpenStreetAttributes attr) {
         final String query = construirQueryRestaurante(attr);
@@ -41,12 +48,25 @@ public class OpenStreetMap {
         th.start();
     }
 
-    public void setDireccion(MutableLiveData<String> d, long id){
-        updateDireccionRestaurante(d, construirQueryDireccionPorID(id));
+    /**
+     * Funcion que realiza una busqueda en OpenStreetMap para encontrar la direccion del restaurante
+     * @param actualizable: el parametro donde se guardara el resultado de la busqueda.
+     *                    Es un MutableLiveData para poder actualizar la vista en tiempo real.
+     * @param idRestaurante: el identificador unico del restaurante en OpenStreetMap
+     */
+    public void setDireccion(MutableLiveData<String> actualizable, long idRestaurante){
+        updateDireccionRestaurante(actualizable, construirQueryDireccionPorID(idRestaurante));
     }
 
-    public void setDireccion(MutableLiveData<String> d, double lat, double lon){
-        updateDireccionRestaurante(d, construirQueryDireccionPorCoord(lat, lon));
+    /**
+     * Funcion que realiza una busqueda en OpenStreetMap para encontrar una direccion en base a una
+     * latitud y longitud
+     * @param actualizable: el parametro donde se guardara el resultado de la busqueda.
+     * @param lat: latitud del nodo a buscar
+     * @param lon: longitud del nodo a buscar
+     */
+    public void setDireccion(MutableLiveData<String> actualizable, double lat, double lon){
+        updateDireccionRestaurante(actualizable, construirQueryDireccionPorCoord(lat, lon));
     }
 
     private void updateDireccionRestaurante(final MutableLiveData<String> d, final String query){
@@ -63,6 +83,11 @@ public class OpenStreetMap {
         th.start();
     }
 
+    /**
+     * Funcion que realiza una busqueda en OpenStreetMap. Debe llamarse desde un thread nuevo o lanzará una excepcion.
+     * @param query: la query a realizar
+     * @return: el resultado de la query
+     */
     private String getURLData(String query){
         try{
             StringBuilder content = new StringBuilder();
@@ -124,12 +149,21 @@ public class OpenStreetMap {
     private String construirQueryDireccionPorCoord(double lat, double lon){
         return URL_FIND_STREET_BY_COORD + "lat=" + lat + "&lon=" + lon;
     }
-
+    
     public static class OpenStreetAttributes {
         public final int timeout, area;
         public final ArrayList<String> tiposLocal, tiposCocina;
         public double latitud, longitud;
 
+        /**
+         * Clase interna que contiene los atributos necesarios para la query.
+         * @param timeout: tiempo maximo que tardara la query.
+         * @param tiposLocal: lista con los tipos de local (restaurante, bar...)
+         * @param tiposCocina: lista con los tipos de comida (italiana, española, hamburguesa, pasta...)
+         * @param area: radio maximo en el cual buscar.
+         * @param latitud: latitud desde la que se realiza la busqueda (con un radio establecido por {@link #area})
+         * @param longitud: longitud desde la que se realiza la busqueda (con un radio establecido por {@link #area})
+         */
         public OpenStreetAttributes(int timeout, ArrayList<String> tiposLocal,  ArrayList<String> tiposCocina,
                                     int area, double latitud, double longitud){
             this.timeout = timeout;
