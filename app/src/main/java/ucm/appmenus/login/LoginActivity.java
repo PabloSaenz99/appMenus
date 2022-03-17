@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.ui.filtros.MapActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -49,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
                 TextView passwordText = findViewById(R.id.passwordLogin);
 
                 //TODO: Mirar en la BD que sea correcto
-                //Busca en la BD si es correcto
                 String emailUsuario = "AQUI BUSCO EN LA BD";
                 String passwordUsuario = "AQUI BUSCO EN LA BD";
                 String nombreUsuario = "AQUI BUSCO EN LA BD";
@@ -66,10 +66,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     //Abrir activity
                     Intent intent = new Intent(botonInicioSesion.getContext(), MainActivity.class);
+                    //Intent intent = new Intent(botonInicioSesion.getContext(), MapActivity.class);
                     startActivity(intent);
                 }
             }
         });
-
     }
 }

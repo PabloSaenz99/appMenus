@@ -3,9 +3,11 @@ package ucm.appmenus.ui.inicio;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,12 +15,15 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderFiltros;
+import ucm.appmenus.recyclers.ViewHolderImagenes;
+import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.utils.Pair;
 
@@ -36,7 +41,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
 
         restaurante = getIntent().getParcelableExtra("restaurante");
 
-        ImageView imagen = findViewById(R.id.imagenPrincipalRestaurante);
+        RecyclerView imagenes = findViewById(R.id.recyclerImagenesRestaurante);
         TextView nombre = findViewById(R.id.nombreRestaurante);
         RatingBar valoracion = findViewById(R.id.valoracionRestaurante);
         TextView url = findViewById(R.id.webRestaurante);
@@ -72,6 +77,14 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         };
         restaurante.getLivedataFiltros().observe(this, observerFiltros);
         //TODO: crear un recycler para ver las imagenes y un contenedor con scroll donde se puedan mostrar todas.
+        final Observer<ArrayList<Bitmap>> observerImagenes = new Observer<ArrayList<Bitmap>>() {
+            @Override
+            public void onChanged(ArrayList<Bitmap> img) {
+                //Recycler filtros
+                crearRecycler(img);
+            }
+        };
+        restaurante.getliveDataImagen().observe(this, observerImagenes);
 
         //Boton que abre la activiry para crear una reseña de un restaurante
         botonResenia.setOnClickListener(new View.OnClickListener() {
@@ -81,5 +94,17 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+
+    private void crearRecycler(ArrayList<Bitmap> imagenes){
+        RecyclerView recyclerViewImagenes = findViewById(R.id.recyclerImagenesRestaurante);
+        recyclerViewImagenes.setLayoutManager(new LinearLayoutManager(
+                this, LinearLayoutManager.HORIZONTAL, false));
+
+        RecyclerAdapter<ViewHolderImagenes, Bitmap> adapterImagenes =
+                new RecyclerAdapter<ViewHolderImagenes, Bitmap>(
+                        imagenes, R.layout.recycler_imagenes, ViewHolderImagenes.class);
+        recyclerViewImagenes.setAdapter(adapterImagenes);
     }
 }
