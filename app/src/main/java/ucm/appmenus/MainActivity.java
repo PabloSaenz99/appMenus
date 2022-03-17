@@ -1,40 +1,32 @@
 package ucm.appmenus;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesManifestException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
 
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
 //import ucm.appmenus.login.LoginActivity;
-import ucm.appmenus.login.RegistroActivity;
+import ucm.appmenus.recyclers.IReclycerElement;
+import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.utils.Localizacion;
-import ucm.appmenus.utils.WebScrapping;
 
 /**
  * IMPORTANTE: Esta activity ya loguea al usuario desde SharedPreferences
@@ -115,6 +107,55 @@ public class MainActivity extends AppCompatActivity {
         this.usuario = new Usuario(email, nombre, new Localizacion(this), imagen,
                 null, jsonRes.readRestaurantesJSON(), null);
 
+    }
+
+    /**
+     * Clase estatica que crea y devuelve un recycler lineal (creada para no repetir codigo)
+     * @param elementos lista con los elementos a mostrar en el recycler
+     * @param viewHolder clase encargada de soportar los datos del recycler
+     * @param idRecycler identificador del recycler en la vista donde se llama a esta funcion
+     * @param idLayout identificador del layout donde se llama a esta funcion
+     * @param v vista de la clase donde se llama a esta funcion
+     * @param orientacion orientacion del layout, vertical u horizontal
+     * @param <T> ViewHolder encargado de gestionar los datos proporcionados
+     * @param <ELEMENT> tipo de dato proporcionado
+     * @return
+     */
+    public static <T extends RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT> RecyclerView crearRecyclerLineal(
+            ArrayList<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View v,
+            @RecyclerView.Orientation int orientacion){
+        RecyclerView recyclerView = v.findViewById(idRecycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(
+                v.getContext(), orientacion, false));
+
+        RecyclerAdapter<T, ELEMENT> adapterRestaurantes =
+                new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
+        recyclerView.setAdapter(adapterRestaurantes);
+        return recyclerView;
+    }
+
+    /**
+     * Clase estatica que crea y devuelve un recycler lineal (creada para no repetir codigo)
+     * @param elementos lista con los elementos a mostrar en el recycler
+     * @param viewHolder clase encargada de soportar los datos del recycler
+     * @param idRecycler identificador del recycler en la vista donde se llama a esta funcion
+     * @param idLayout identificador del layout donde se llama a esta funcion
+     * @param view vista de la clase donde se llama a esta funcion
+     * @param nColums numero de columnas que tendrá el layout
+     * @param <T> ViewHolder encargado de gestionar los datos proporcionados
+     * @param <ELEMENT> tipo de dato proporcionado
+     * @return
+     */
+    public static <T extends RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT> RecyclerView crearRecyclerGrid(
+            ArrayList<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View view,
+            int nColums){
+        RecyclerView recyclerView = view.findViewById(idRecycler);
+        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), nColums));
+
+        RecyclerAdapter<T, ELEMENT> adapterRestaurantes =
+                new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
+        recyclerView.setAdapter(adapterRestaurantes);
+        return recyclerView;
     }
 
     /*

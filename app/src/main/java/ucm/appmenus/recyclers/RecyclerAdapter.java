@@ -17,7 +17,7 @@ import ucm.appmenus.R;
 import ucm.appmenus.utils.Pair;
 
 /**
- * Clase usada para mostrar un bucle de datos, usada para generar vistas en tiempo de ejecucion.
+ * Clase usada para mostrar un conjunto de datos, usada para generar vistas en tiempo de ejecucion.
  * @param <ELEMENT> Los datos que se van a almacenar y mostar en bucle
  *      @see IReclycerElement
  * @param <ViewHolder> La clase que almacena los datos de ELEMENT, debe extender
