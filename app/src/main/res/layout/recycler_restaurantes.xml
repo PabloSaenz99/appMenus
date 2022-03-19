@@ -65,7 +65,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:numStars="5"
-                android:theme="@style/RatingBar" />
+                android:stepSize="1"
+                android:isIndicator="true"
+                android:theme="@style/RatingBarLong" />
 
         </LinearLayout>
     </LinearLayout>

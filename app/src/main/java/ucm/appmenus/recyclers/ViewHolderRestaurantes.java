@@ -118,7 +118,6 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
             @Override
             public void onChanged(HashSet<String> filtros) {
                 //Recycler filtros
-                filtrosRecycler.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
                 RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<>(
                         FiltrosFragment.transform(filtros, false),

@@ -7,19 +7,20 @@
 
     <EditText
         android:id="@+id/tituloResenia"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Titulo de la reseña"
-        android:textColorHint="#D5D4D4"
+        android:layout_gravity="center"
+        android:textColorHint="#8E8E8E"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
+        android:textStyle="bold"
         android:layout_marginLeft="12dp"/>
 
     <RatingBar
         android:id="@+id/valoracionResenia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"
         android:stepSize="1"
         android:layout_gravity="center"
         android:theme="@style/RatingBarLong"/>
@@ -29,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Descripcion de la reseña"
-        android:textColorHint="#D5D4D4"
+        android:textColorHint="#8E8E8E"
         android:textColor="#FFFFFF"
         android:layout_marginLeft="12dp"/>
 
