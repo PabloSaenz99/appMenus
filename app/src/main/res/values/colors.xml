@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="fondoOscuro">#232323</color>
+    <color name="fondoOscuro">#121212</color>
+    <color name="bottomNav">#232323</color>
+    <color name="bottomNavItems">#B6B6B6</color>
 
     <!--COLORES CORPORATIVOS-->
     <!--http://paletton.com/#uid=30d0u0ktTwAg2O3mVD2vRnrEhe4-->
@@ -22,5 +24,10 @@
     <color name="logoVerde2">#95EB43</color>
     <color name="logoVerde3">#52A801</color>
     <color name="logoVerde4">#316500</color>
+
+
+    <color name="oroValoracion">#FFC922</color>
+    <color name="vacioValoracion">#787878</color>
+
 
 </resources>

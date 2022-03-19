@@ -36,8 +36,12 @@
 
         <RatingBar
             android:id="@+id/valoracionRestaurante"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
+            android:layout_gravity="center"
+            android:theme="@style/RatingBarLong"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filtrosRestauranteRecycler"

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/fondoOscuro"
     android:orientation="vertical">
 
     <EditText
@@ -9,18 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Titulo de la reseña"
-        android:textColor="#000000"
-        android:textSize="18sp"/>
+        android:textColorHint="#D5D4D4"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_marginLeft="12dp"/>
 
     <RatingBar
         android:id="@+id/valoracionResenia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:layout_gravity="center"
+        android:theme="@style/RatingBarLong"/>
 
     <EditText
         android:id="@+id/descripcionResenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descripcion de la reseña"/>
+        android:hint="Descripcion de la reseña"
+        android:textColorHint="#D5D4D4"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="12dp"/>
 
 </LinearLayout>

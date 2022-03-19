@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
-import ucm.appmenus.ui.filtros.MapActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
