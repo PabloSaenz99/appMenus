@@ -85,7 +85,9 @@ public class InicioFragment extends Fragment {
             @Override
             public void onChanged(ArrayList<Restaurante> restaurantes) {
                 root.findViewById(R.id.progressBarInicio).setVisibility(View.INVISIBLE);
-                crearRecycler(inicioViewModel.getRestaurantes().getValue());
+                //crearRecycler(inicioViewModel.getRestaurantes().getValue());
+                RecyclerAdapter.crearRecyclerLineal(restaurantes, ViewHolderRestaurantes.class, R.id.recyclerRestauranteInicio,
+                        R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);
             }
         };
         inicioViewModel.getRestaurantes().observe(getActivity(), observer);
@@ -102,16 +104,5 @@ public class InicioFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(Constantes.LISTA_RESTAURANTES, inicioViewModel.getRestaurantes().getValue());
-    }
-
-    private void crearRecycler(ArrayList<Restaurante> restaurantes){
-        RecyclerView recyclerViewRestaurantes = root.findViewById(R.id.recyclerRestauranteInicio);
-        recyclerViewRestaurantes.setLayoutManager(new LinearLayoutManager(
-                this.getContext(), LinearLayoutManager.VERTICAL, false));
-
-        RecyclerAdapter<ViewHolderRestaurantes, Restaurante> adapterRestaurantes =
-                new RecyclerAdapter<ViewHolderRestaurantes, Restaurante>(
-                        restaurantes, R.layout.recycler_restaurantes, ViewHolderRestaurantes.class);
-        recyclerViewRestaurantes.setAdapter(adapterRestaurantes);
     }
 }

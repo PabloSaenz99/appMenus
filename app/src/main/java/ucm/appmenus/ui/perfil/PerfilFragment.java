@@ -23,7 +23,9 @@ import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.recyclers.RecyclerAdapter;
+import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.recyclers.ViewHolderResenia;
+import ucm.appmenus.ui.filtros.FiltrosFragment;
 
 public class PerfilFragment extends Fragment {
 
@@ -51,6 +53,9 @@ public class PerfilFragment extends Fragment {
     }
 
     private void crearRecycler(ArrayList<Resenia> resenias, View root){
+        RecyclerAdapter.crearRecyclerLineal(resenias, ViewHolderResenia.class,
+                R.id.recyclerReseniasPerfilFragment, R.layout.recycler_resenias, root, LinearLayoutManager.VERTICAL);
+        /*En teoria no hace falta
         RecyclerView recyclerViewComentarios = root.findViewById(R.id.recyclerReseniasPerfilFragment);
         recyclerViewComentarios.setLayoutManager(new LinearLayoutManager(
                 this.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -59,5 +64,6 @@ public class PerfilFragment extends Fragment {
                 new RecyclerAdapter<ViewHolderResenia, Resenia>(
                         resenias, R.layout.recycler_resenias, ViewHolderResenia.class);
         recyclerViewComentarios.setAdapter(adapterResenias);
+         */
     }
 }
