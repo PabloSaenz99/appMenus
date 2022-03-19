@@ -69,7 +69,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
             @Override
             public void onChanged(HashSet<String> filtros) {
                 //Recycler filtros
-                MainActivity.crearRecyclerGrid(FiltrosFragment.transform(filtros, false), ViewHolderFiltros.class,
+                RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false), ViewHolderFiltros.class,
                         R.id.filtrosRestauranteRecycler, R.layout.recycler_filtros, v, 3);
             }
         };
@@ -79,7 +79,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
             @Override
             public void onChanged(ArrayList<Bitmap> img) {
                 //Recycler imagenes
-                MainActivity.crearRecyclerLineal(img, ViewHolderImagenes.class, R.id.recyclerImagenesRestaurante,
+                RecyclerAdapter.crearRecyclerLineal(img, ViewHolderImagenes.class, R.id.recyclerImagenesRestaurante,
                         R.layout.recycler_imagenes, v, LinearLayoutManager.HORIZONTAL);
             }
         };

@@ -109,55 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Clase estatica que crea y devuelve un recycler lineal (creada para no repetir codigo)
-     * @param elementos lista con los elementos a mostrar en el recycler
-     * @param viewHolder clase encargada de soportar los datos del recycler
-     * @param idRecycler identificador del recycler en la vista donde se llama a esta funcion
-     * @param idLayout identificador del layout donde se llama a esta funcion
-     * @param v vista de la clase donde se llama a esta funcion
-     * @param orientacion orientacion del layout, vertical u horizontal
-     * @param <T> ViewHolder encargado de gestionar los datos proporcionados
-     * @param <ELEMENT> tipo de dato proporcionado
-     * @return
-     */
-    public static <T extends RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT> RecyclerView crearRecyclerLineal(
-            ArrayList<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View v,
-            @RecyclerView.Orientation int orientacion){
-        RecyclerView recyclerView = v.findViewById(idRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(
-                v.getContext(), orientacion, false));
-
-        RecyclerAdapter<T, ELEMENT> adapterRestaurantes =
-                new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
-        recyclerView.setAdapter(adapterRestaurantes);
-        return recyclerView;
-    }
-
-    /**
-     * Clase estatica que crea y devuelve un recycler lineal (creada para no repetir codigo)
-     * @param elementos lista con los elementos a mostrar en el recycler
-     * @param viewHolder clase encargada de soportar los datos del recycler
-     * @param idRecycler identificador del recycler en la vista donde se llama a esta funcion
-     * @param idLayout identificador del layout donde se llama a esta funcion
-     * @param view vista de la clase donde se llama a esta funcion
-     * @param nColums numero de columnas que tendrá el layout
-     * @param <T> ViewHolder encargado de gestionar los datos proporcionados
-     * @param <ELEMENT> tipo de dato proporcionado
-     * @return
-     */
-    public static <T extends RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT> RecyclerView crearRecyclerGrid(
-            ArrayList<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View view,
-            int nColums){
-        RecyclerView recyclerView = view.findViewById(idRecycler);
-        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), nColums));
-
-        RecyclerAdapter<T, ELEMENT> adapterRestaurantes =
-                new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
-        recyclerView.setAdapter(adapterRestaurantes);
-        return recyclerView;
-    }
-
     /*
     //Funcion de login con la base de datos de google
     private void login(String email, String password){

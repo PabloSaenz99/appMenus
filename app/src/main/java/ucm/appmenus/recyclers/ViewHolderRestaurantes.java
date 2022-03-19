@@ -13,6 +13,7 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
     private final RatingBar valoracion;
     private final TextView direccion;
     private final ImageView imagenPrinc;
-    private final RecyclerView filtrosRecycler;
+    private RecyclerView filtrosRecycler;
 
     public ViewHolderRestaurantes(@NonNull View view) {
         super(view);
@@ -52,7 +53,6 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         valoracion = view.findViewById(R.id.ratingRestaurantRecycler);
         direccion = view.findViewById(R.id.textDireccionRestaurante);
         imagenPrinc = view.findViewById(R.id.imageRestaurantRecycler);
-        filtrosRecycler = view.findViewById(R.id.filtrosRestauranteRecycler);
 
         favorito.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,11 +118,20 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
             @Override
             public void onChanged(HashSet<String> filtros) {
                 //Recycler filtros
+                filtrosRecycler = RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false),
+                        ViewHolderFiltros.class, R.id.filtrosRestauranteRecycler,
+                        R.layout.recycler_filtros, view, 3);
+
+
                 filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
+
+                /*En teoria esto ya no hace falta
                 RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<>(
                         FiltrosFragment.transform(filtros, false),
                         R.layout.recycler_filtros, ViewHolderFiltros.class);
                 filtrosRecycler.setAdapter(adapterFiltros);
+
+                 */
             }
         };
         restaurante.getLivedataFiltros().observe((LifecycleOwner) view.getContext(), observerFiltros);
