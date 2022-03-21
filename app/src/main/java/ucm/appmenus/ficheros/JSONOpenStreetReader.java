@@ -44,13 +44,8 @@ public class JSONOpenStreetReader {
                 String cuisineAux = getStringFor(info, "cuisine");
                 if(!cuisineAux.equals(""))
                     filtros.add(cuisineAux);
-
-                //TODO: Datos que no existen en OpenStreet, ver como obtenerlos
-                //float valoracion = jObject.getLong("valoracion");
-                //String imagenPrincDir = jObject.getString("imagenPrincDir");
+                //TODO: buscar en la BD esto
                 float valoracion = 0;
-                String imagenPrincDir = "";
-
                 restaurantes.add(new Restaurante(id, nombre, url, dir, lat, lon,
                         Localizacion.distanciaEnMetros(lat, lon, latUsuario, lonUsuario),
                         telefono, horario, valoracion, filtros));

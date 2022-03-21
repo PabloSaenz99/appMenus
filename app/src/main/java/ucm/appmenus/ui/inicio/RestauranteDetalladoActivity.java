@@ -21,10 +21,12 @@ import java.util.HashSet;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.recyclers.ViewHolderImagenes;
+import ucm.appmenus.recyclers.ViewHolderResenia;
 import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.utils.Pair;
@@ -68,25 +70,35 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         restaurante.updateFiltros();
 
         View v = getWindow().getDecorView().getRootView();
+        //Recycler filtros
         final Observer<HashSet<String>> observerFiltros = new Observer<HashSet<String>>() {
             @Override
             public void onChanged(HashSet<String> filtros) {
-                //Recycler filtros
                 RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false), ViewHolderFiltros.class,
                         R.id.filtrosRestauranteRecycler, R.layout.recycler_filtros, v, 3);
             }
         };
         restaurante.getLivedataFiltros().observe(this, observerFiltros);
 
+        //Recycler imagenes
         final Observer<ArrayList<Bitmap>> observerImagenes = new Observer<ArrayList<Bitmap>>() {
             @Override
             public void onChanged(ArrayList<Bitmap> img) {
-                //Recycler imagenes
                 RecyclerAdapter.crearRecyclerLineal(img, ViewHolderImagenes.class, R.id.recyclerImagenesRestaurante,
                         R.layout.recycler_imagenes, v, LinearLayoutManager.HORIZONTAL);
             }
         };
         restaurante.getliveDataImagen().observe(this, observerImagenes);
+
+        //Recycler reseñas
+        final Observer<ArrayList<Resenia>> observerResenias = new Observer<ArrayList<Resenia>>() {
+            @Override
+            public void onChanged(ArrayList<Resenia> res) {
+                RecyclerAdapter.crearRecyclerLineal(res, ViewHolderResenia.class, R.id.recyclerReseniaRestaurante,
+                        R.layout.recycler_resenias, v, LinearLayoutManager.VERTICAL);
+            }
+        };
+        restaurante.getLiveDataResenia().observe(this, observerResenias);
 
         //Boton que abre la activiry para crear una reseña de un restaurante
         botonResenia.setOnClickListener(new View.OnClickListener() {

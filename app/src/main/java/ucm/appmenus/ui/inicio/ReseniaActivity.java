@@ -22,16 +22,17 @@ public class ReseniaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resenia);
 
-        EditText nombre = findViewById(R.id.tituloResenia);
+        EditText titulo = findViewById(R.id.tituloResenia);
         EditText descripcion = findViewById(R.id.descripcionResenia);
         RatingBar valoracion = findViewById(R.id.valoracionResenia);
+        findViewById(R.id.usuarioResenia).setVisibility(View.INVISIBLE);
 
         Button crearResenia = findViewById(R.id.botonCrearResenia);
         crearResenia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* TODO: En vez de esto, guardarla en la BD
-                Resenia r = new Resenia("", nombre.getText().toString(),
+                /* //TODO: En vez de esto, guardarla en la BD y en vez de poner USUARIO poner el nombre del usuario
+                Resenia r = new Resenia("", "USUARIO",titulo.getText().toString(),
                         descripcion.getText().toString(), valoracion.getRating());
                 Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
                 intent.putExtra("resenia", r);

@@ -35,6 +35,7 @@ public class Restaurante implements Parcelable {
     private final MutableLiveData<String> direccion;
     private final MutableLiveData<ArrayList<Bitmap>> listaImagenes;
     private final MutableLiveData<HashSet<String>> listaFiltros;
+    private final MutableLiveData<ArrayList<Resenia>> listaResenias;
     //Utilizado para hacer webscrapping y poder cargar datos extra cuando se accede a la vista con detalles
     private final WebScrapping ws;
 
@@ -47,7 +48,8 @@ public class Restaurante implements Parcelable {
         this.horarios = horarios;
         this.valoracion = valoracion;
         this.direccion = new MutableLiveData<>(" [" + distanciaEnMetros + "m]");
-        this.listaImagenes = new MutableLiveData<ArrayList<Bitmap>>();
+        this.listaImagenes = new MutableLiveData<>();
+        this.listaResenias = new MutableLiveData<>();
 
         //Parsea los filtros, separandolos por ";"
         HashSet<String> filtrosAux = new HashSet<>();
@@ -81,6 +83,7 @@ public class Restaurante implements Parcelable {
     public LiveData<ArrayList<Bitmap>> getliveDataImagen() { return listaImagenes; }
     public HashSet<String> getListaFiltros() { return listaFiltros.getValue(); }
     public LiveData<HashSet<String>> getLivedataFiltros() {return this.listaFiltros;}
+    public MutableLiveData<ArrayList<Resenia>> getLiveDataResenia() { return this.listaResenias;};
 
     public void updateImagenes(){ ws.setImagenes(); }
     public void updateFiltros(){
@@ -126,9 +129,8 @@ public class Restaurante implements Parcelable {
         horarios = in.readString();
         valoracion = in.readDouble();
         listaImagenes = new MutableLiveData<>(new ArrayList<>());
+        listaResenias = new MutableLiveData<>();
         listaFiltros = new MutableLiveData<>(new HashSet<>(in.createStringArrayList()));
-        //listaImagenes.setValue(new ArrayList<>());
-        //listaFiltros.setValue(new HashSet<>(in.createStringArrayList()));
         ws = new WebScrapping(url, listaFiltros, listaImagenes);
     }
 

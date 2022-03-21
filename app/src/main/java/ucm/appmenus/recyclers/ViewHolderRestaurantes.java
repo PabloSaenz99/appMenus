@@ -100,8 +100,6 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
          * Observa el ImageView que contiene la imagen, cuando se actualiza mediante WebScrapping
          * se muestra en la vista
          * */
-        //TODO: Hacer algo con la imagen
-        //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
         final Observer<ArrayList<Bitmap>> observerImagen = new Observer<ArrayList<Bitmap>>() {
             @Override
             public void onChanged(ArrayList<Bitmap> img) {
@@ -178,7 +176,6 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
             favorito.setChecked(false);
             valoracion.setRating((float )restaurante.getValoracion());
             valoracion.setClickable(false);
-            //TODO: Hacer algo con la imagen
             //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
             //Recycler filtros
             filtrosRecycler.setLayoutManager(new LinearLayoutManager(
