@@ -68,7 +68,6 @@ public class Restaurante implements Parcelable {
         } else {
             this.direccion.postValue(direccion + this.direccion.getValue());
         }
-
     }
 
     public String getIdRestaurante(){return idRestaurante;}

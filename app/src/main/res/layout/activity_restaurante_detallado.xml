@@ -59,7 +59,8 @@
             android:id="@+id/webRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Página Web" />
+            android:text="Página Web"
+            android:autoLink="web"/>
 
         <TextView
             android:id="@+id/direccionRestaurante"

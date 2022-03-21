@@ -50,7 +50,7 @@ public class WebScrapping {
     }
 
     /**
-     * Busca la imagen principal del lugar. En caso de no haber, deja la de por defecto.
+     * Busca la imagen principal del lugar. En caso de no haber, no modifica la de por defecto.
      * Utilizada para establecer unicamente una imagen y asi no consumir mucho tiempo, debe llamarse
      *      en la bsuqueda general de restaurantes.
      * Crea su propio Thread.
@@ -64,8 +64,19 @@ public class WebScrapping {
                     Document document = Jsoup.connect(url).get();
                     Elements imagenes = document.getElementsByTag("img");
                     if(imagenes != null){
-                        InputStream is = new URL(imagenes.get(0).attr("src")).openStream();
-                        listaImagenes.postValue(new ArrayList<Bitmap>(){{add(BitmapFactory.decodeStream(is));}});
+                        //Distintos tipos de busqueda de imagenes
+                        InputStream is;
+                        if(!imagenes.get(0).attr("src").startsWith("http")) {
+                            try {
+                                is = new URL(url + imagenes.get(0).attr("src")).openStream();
+                            }catch (IOException e){
+                                is = new URL(imagenes.get(1).attr("src")).openStream();
+                            }
+                        }
+                        else
+                            is = new URL(imagenes.get(0).attr("src")).openStream();
+                        InputStream finalIs = is;
+                        listaImagenes.postValue(new ArrayList<Bitmap>(){{add(BitmapFactory.decodeStream(finalIs));}});
                     }
                 } catch (Exception ignored) {}
                 Log.d("CONTADOR IMG:", aux0 + ", " + --CONTADOR);
@@ -89,8 +100,10 @@ public class WebScrapping {
                     if(imagenes != null){
                         ArrayList<Bitmap> imagenesAux = new ArrayList<>();
                         for (Element element : imagenes) {
-                            InputStream is = new URL(element.attr("src")).openStream();
-                            imagenesAux.add(BitmapFactory.decodeStream(is));
+                            try {
+                                InputStream is = new URL(element.attr("src")).openStream();
+                                imagenesAux.add(BitmapFactory.decodeStream(is));
+                            } catch (IOException ignored){}
                         }
                         listaImagenes.postValue(imagenesAux);
                     }

@@ -86,11 +86,10 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
         return adapter;
     }
 
-    private int viewID;
-    private ArrayList<ELEMENT> listaDatos;
-    private ArrayList<ViewHolder> holders;
-    private Class<ViewHolder> clase;
-    private View.OnClickListener click;
+    private final int viewID;
+    private final ArrayList<ELEMENT> listaDatos;
+    private final ArrayList<ViewHolder> holders;
+    private final Class<ViewHolder> clase;
 
     /**
      * @param dataSet : lista con los datos que se quieren mostar en bucle
@@ -128,7 +127,6 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.setDatos(listaDatos.get(position));
-        holder.itemView.setOnClickListener(click);
     }
 
     @Override

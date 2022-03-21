@@ -57,7 +57,10 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         valoracion.setRating((float )restaurante.getValoracion());
         valoracion.setClickable(false);
         direccion.setText(restaurante.getDireccion().getValue());
-        telefono.setText(restaurante.getTelefono() + "");
+        if(restaurante.getTelefono() == 0)
+            telefono.setText("No phone number");
+        else
+            telefono.setText(restaurante.getTelefono() + "");
         horario.setText(restaurante.getHorarios());
 
         //Actaualiza las imagenes y filtros de los restaurantes para tener mas detalles.
