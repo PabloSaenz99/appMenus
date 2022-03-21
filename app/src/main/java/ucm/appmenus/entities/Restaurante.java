@@ -87,7 +87,7 @@ public class Restaurante implements Parcelable {
 
     public void updateImagenes(){ ws.setImagenes(); }
     public void updateFiltros(){
-        ArrayList<List<String>> listOfLists = new ArrayList<List<String>>();
+        ArrayList<List<String>> listOfLists = new ArrayList<>();
         listOfLists.add(Constantes.filtrosPais);
         listOfLists.add(Constantes.filtrosLocal);
         listOfLists.add(Constantes.filtrosPostres);

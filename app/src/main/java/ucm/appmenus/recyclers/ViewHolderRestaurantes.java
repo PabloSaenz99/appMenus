@@ -57,15 +57,19 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         favorito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Aqui se añadiria a los favoritos del usuario
-                Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
+                //TODO Aqui se añadiria a los favoritos del usuario
+                if(favorito.isChecked())
+                    Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
                         Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(view.getContext(), nombre.getText().toString() + " eliminado de favoritos",
+                            Toast.LENGTH_LONG).show();
             }
         });
         imagenPrinc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(view.getContext(), nombre.getText().toString() + "|" + url.getText().toString(), Toast.LENGTH_SHORT).show();
+                //TODO (quiza) hacer que en vez de pulsando la imagen, añadiendo un boton
                 Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
                 intent.putExtra("restaurante", datos);
                 view.getContext().startActivity(intent);
@@ -115,22 +119,9 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         final Observer<HashSet<String>> observerFiltros = new Observer<HashSet<String>>() {
             @Override
             public void onChanged(HashSet<String> filtros) {
-                //Recycler filtros
-                //filtrosRecycler =
                 RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false),
                         ViewHolderFiltros.class, R.id.filtrosRestauranteRecycler,
                         R.layout.recycler_filtros, view, 3);
-
-
-                //filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
-
-                /*En teoria esto ya no hace falta
-                RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<>(
-                        FiltrosFragment.transform(filtros, false),
-                        R.layout.recycler_filtros, ViewHolderFiltros.class);
-                filtrosRecycler.setAdapter(adapterFiltros);
-
-                 */
             }
         };
         restaurante.getLivedataFiltros().observe((LifecycleOwner) view.getContext(), observerFiltros);
@@ -138,55 +129,4 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
 
     @Override
     public Restaurante getDatos() { return datos; }
-
-    /*
-    public static class RecyclerTest extends AbstractViewHolder<Restaurante>{
-
-        private View view;
-
-        private final TextView nombre;
-        private final TextView url;
-        private final ToggleButton favorito;
-        private final RatingBar valoracion;
-        private final ImageView imagenPrincDir;
-        private final RecyclerView filtrosRecycler;
-
-        public RecyclerTest(@NonNull View view) {
-            super(view);
-            this.view = view;
-            nombre = view.findViewById(R.id.textRestarurantNameRecycler);
-            url = view.findViewById(R.id.textRestaurantURL);
-            favorito = view.findViewById(R.id.toggleButtonFavRestaurantRecycler);
-            valoracion = view.findViewById(R.id.ratingRestaurantRecycler);
-            imagenPrincDir = view.findViewById(R.id.imageRestaurantRecycler);
-            filtrosRecycler = view.findViewById(R.id.filtrosRestauranteRecycler);
-
-            favorito.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Aqui se añadiria a los favoritos del usuario
-                }
-            });
-        }
-
-        @Override
-        public void setDatos(Restaurante restaurante) {
-            nombre.setText(restaurante.getNombre());
-            url.setText(restaurante.getStringURL());
-            favorito.setChecked(false);
-            valoracion.setRating((float )restaurante.getValoracion());
-            valoracion.setClickable(false);
-            //imagenPrincDir.setImageBitmap(BitmapFactory.decodeFile(restaurante.getimagenPrincDir()));
-            //Recycler filtros
-            filtrosRecycler.setLayoutManager(new LinearLayoutManager(
-                    view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-            //Create adapter
-            FiltrosRecyclerAdapter adapterFiltros = new FiltrosRecyclerAdapter(
-                    restaurante.getFiltros().toArray(new String[0]), true);
-            //Set the adapter
-            filtrosRecycler.setAdapter(adapterFiltros);
-        }
-    }
-
-     */
 }

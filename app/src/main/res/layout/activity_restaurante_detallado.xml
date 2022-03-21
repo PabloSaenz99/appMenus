@@ -8,25 +8,20 @@
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:scrollbars="vertical"
+        android:verticalScrollbarPosition="right"
+        app:layout_constraintBottom_toTopOf="@+id/botonAniadirResenia"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerImagenesRestaurante"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerImagenesRestaurante"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-        </LinearLayout>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/nombreRestaurante"
@@ -34,14 +29,23 @@
             android:layout_height="wrap_content"
             android:text="Nombre Restaurante" />
 
+        <!--TODO hacer bien este boton de favorito
+        <ToggleButton
+            android:id="@+id/botonAniadirFavorito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@android:drawable/btn_star"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
+            -->
+
         <RatingBar
             android:id="@+id/valoracionRestaurante"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5"
-            android:stepSize="1"
             android:layout_gravity="center"
-            android:theme="@style/RatingBarLong"/>
+            android:theme="@style/RatingBarLong" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filtrosRestauranteRecycler"
@@ -59,8 +63,8 @@
             android:id="@+id/webRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Página Web"
-            android:autoLink="web"/>
+            android:autoLink="web"
+            android:text="Página Web" />
 
         <TextView
             android:id="@+id/direccionRestaurante"
@@ -87,10 +91,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="675dp"
         android:text="Añade una reseña"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout4" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

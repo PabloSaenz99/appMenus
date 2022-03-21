@@ -36,7 +36,7 @@
     <style name="RatingBarLong" parent="@style/Base.Widget.AppCompat.RatingBar">
         <item name="colorControlActivated">@color/oroValoracion</item>
         <item name="colorControlNormal">@color/vacioValoracion</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1</item>
     </style>
-
-
 </resources>
