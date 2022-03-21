@@ -118,12 +118,13 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
             @Override
             public void onChanged(HashSet<String> filtros) {
                 //Recycler filtros
-                filtrosRecycler = RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false),
+                //filtrosRecycler =
+                RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false),
                         ViewHolderFiltros.class, R.id.filtrosRestauranteRecycler,
                         R.layout.recycler_filtros, view, 3);
 
 
-                filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
+                //filtrosRecycler.setLayoutManager(new GridLayoutManager(view.getContext(), 3));
 
                 /*En teoria esto ya no hace falta
                 RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros = new RecyclerAdapter<>(

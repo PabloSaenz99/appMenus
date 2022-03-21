@@ -41,7 +41,7 @@ public class FiltrosFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_filtros, container, false);
 
         //Crea los recyclers para los filtros, 3 recyclers para 3 tipos distintos de filtros
-        listaRecyclers = new ArrayList<RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>>();
+        listaRecyclers = new ArrayList<>();
         crearRecyclerFiltros(root, Constantes.filtrosLocal, R.id.recyclerFiltrosLocal, 3);
         crearRecyclerFiltros(root, Constantes.filtrosPais, R.id.recyclerFiltrosPais, 3);
         crearRecyclerFiltros(root, Constantes.filtrosComida, R.id.recyclerFiltrosComida, 3);
@@ -74,9 +74,10 @@ public class FiltrosFragment extends Fragment {
     }
 
     private void crearRecyclerFiltros(final View root, List<String> filtros, int id, int nColums){
-        /*listaRecyclers.add(RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false),
-                ViewHolderFiltros.class, id, R.layout.recycler_filtros, root, nColums));*/
+        listaRecyclers.add(RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, true),
+                ViewHolderFiltros.class, id, R.layout.recycler_filtros, root, nColums));
 
+        /*
         RecyclerView recyclerViewRestaurantes = root.findViewById(id);
         recyclerViewRestaurantes.setLayoutManager(new GridLayoutManager(root.getContext(), nColums));
 
@@ -86,6 +87,8 @@ public class FiltrosFragment extends Fragment {
         recyclerViewRestaurantes.setAdapter(adapterFiltros);
 
         listaRecyclers.add(adapterFiltros);
+
+         */
     }
 
     private void realizarBusqueda(){
