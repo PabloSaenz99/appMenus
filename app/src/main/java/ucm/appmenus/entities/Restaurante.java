@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import ucm.appmenus.MainActivity;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.OpenStreetMap;
 import ucm.appmenus.utils.WebScrapping;
@@ -38,14 +39,14 @@ public class Restaurante implements Parcelable {
     private final WebScrapping ws;
 
     public Restaurante(String idRestaurante, String nombre, String url, String direccion, double lat, double lon,
-                       int telefono, String horarios, double valoracion, ArrayList<String> filtrosIni){
+                       int distanciaEnMetros, int telefono, String horarios, double valoracion, ArrayList<String> filtrosIni){
         this.idRestaurante = idRestaurante;
         this.nombre = nombre;
         this.url = url;
         this.telefono = telefono;
         this.horarios = horarios;
         this.valoracion = valoracion;
-        this.direccion = new MutableLiveData<>();
+        this.direccion = new MutableLiveData<>(" [" + distanciaEnMetros + "m]");
         this.listaImagenes = new MutableLiveData<ArrayList<Bitmap>>();
 
         //Parsea los filtros, separandolos por ";"
@@ -68,8 +69,9 @@ public class Restaurante implements Parcelable {
         if (direccion.equals(", ")) {
             new OpenStreetMap().setDireccion(this.direccion, lat, lon);
         } else {
-            this.direccion.postValue(direccion);
+            this.direccion.postValue(direccion + this.direccion.getValue());
         }
+
     }
 
     public String getIdRestaurante(){return idRestaurante;}

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ucm.appmenus.entities.Restaurante;
+import ucm.appmenus.utils.Localizacion;
 import ucm.appmenus.utils.OpenStreetMap;
 
 public class JSONOpenStreetReader {
@@ -17,7 +18,7 @@ public class JSONOpenStreetReader {
         {add("website"); add("contact:website"); add("contact:facebook");}
     };
 
-    public ArrayList<Restaurante> parsearResultado(final String s){
+    public ArrayList<Restaurante> parsearResultado(final String s, final double latUsuario, final double lonUsuario){
         ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
         try {
             JSONArray jArray = new JSONObject(s).getJSONArray("elements");
@@ -51,6 +52,7 @@ public class JSONOpenStreetReader {
                 String imagenPrincDir = "";
 
                 restaurantes.add(new Restaurante(id, nombre, url, dir, lat, lon,
+                        Localizacion.distanciaEnMetros(lat, lon, latUsuario, lonUsuario),
                         telefono, horario, valoracion, filtros));
             }
         }

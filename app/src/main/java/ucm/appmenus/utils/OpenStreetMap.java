@@ -41,7 +41,7 @@ public class OpenStreetMap {
                 try {
                     //Obtiene los resultados y los guarda en la cola para que se publiquen en cuanto sea posible
                     JSONOpenStreetReader reader = new JSONOpenStreetReader();
-                    actualizable.postValue(reader.parsearResultado(getURLData(query)));
+                    actualizable.postValue(reader.parsearResultado(getURLData(query), attr.latitud, attr.longitud));
                 } catch (Exception ignored) {}
             }
         });
@@ -76,7 +76,7 @@ public class OpenStreetMap {
                 try {
                     //Obtiene los resultados y los guarda en la cola para que se publiquen en cuanto sea posible
                     JSONOpenStreetReader reader = new JSONOpenStreetReader();
-                    d.postValue(reader.parsearDireccion(getURLData(query)));
+                    d.postValue(reader.parsearDireccion(getURLData(query)) + d.getValue());
                 } catch (Exception ignored) {}
             }
         });
@@ -160,7 +160,7 @@ public class OpenStreetMap {
     public static class OpenStreetAttributes {
         public final int timeout, area;
         public final ArrayList<String> tiposLocal, tiposCocina;
-        public double latitud, longitud;
+        public final double latitud, longitud;
 
         /**
          * Clase interna que contiene los atributos necesarios para la query.

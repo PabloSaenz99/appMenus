@@ -124,6 +124,26 @@ public class Localizacion {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
+
+    /**
+     * Calcula la distancia en metros entre 2 coordenadas.
+     * @param lat1 latitud de la primera coordenada.
+     * @param lon1 longitud de la primera coordenada.
+     * @param lat2 latitud de la segunda coordenada.
+     * @param lon2 longitud de la segunda coordenada.
+     * @return la distancia en metros entre ambas coordenadas.
+     */
+    public static int distanciaEnMetros(double lat1, double lon1, double lat2, double lon2){
+        double dlat = (Math.toRadians(lat2) - Math.toRadians(lat1));
+        double dlon = (Math.toRadians(lon2) - Math.toRadians(lon1));
+        double sinlat = Math.sin(dlat / 2);
+        double sinlon = Math.sin(dlon / 2);
+
+        double a = (sinlat * sinlat) + Math.cos(lat1)*Math.cos(lat2)*(sinlon*sinlon);
+        double c = 2 * Math.asin (Math.min(1.0, Math.sqrt(a)));
+
+        return (int) (6371 * c * 1000);
+    }
     /*
     private void init(){
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
