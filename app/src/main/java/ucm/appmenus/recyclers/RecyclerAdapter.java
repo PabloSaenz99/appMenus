@@ -56,6 +56,7 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
         RecyclerAdapter<T, ELEMENT> adapterRestaurantes =
                 new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
         recyclerView.setAdapter(adapterRestaurantes);
+        
         return recyclerView;
     }
 

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import ucm.appmenus.R;
 import ucm.appmenus.entities.Restaurante;
 
 //https://www.tutorialspoint.com/web-scrapping-in-android-application
@@ -49,7 +50,7 @@ public class WebScrapping {
     }
 
     /**
-     * Busca la imagen principal del lugar.
+     * Busca la imagen principal del lugar. En caso de no haber, deja la de por defecto.
      * Utilizada para establecer unicamente una imagen y asi no consumir mucho tiempo, debe llamarse
      *      en la bsuqueda general de restaurantes.
      * Crea su propio Thread.
@@ -73,7 +74,7 @@ public class WebScrapping {
         th.start();
     }
     /**
-     * Busca y guarda todas las imagenes del lugar.
+     * Busca y guarda todas las imagenes del lugar. En caso de no haber, deja la de por defecto.
      * Utilizada para establecer todas las imagenes, debe llamarse en la bsuqueda de un lugar
      *      especifico, no en la general.
      * Crea su propio Thread.
@@ -88,12 +89,9 @@ public class WebScrapping {
                     if(imagenes != null){
                         ArrayList<Bitmap> imagenesAux = new ArrayList<>();
                         for (Element element : imagenes) {
-                            //Log.i("src: ", element.attr("src"));
                             InputStream is = new URL(element.attr("src")).openStream();
                             imagenesAux.add(BitmapFactory.decodeStream(is));
                         }
-                        //InputStream is = new URL(imagenes.get(0).attr("src")).openStream();
-                        //listaImagenes.postValue(BitmapFactory.decodeStream(is));
                         listaImagenes.postValue(imagenesAux);
                     }
                 } catch (Exception ignored) {}

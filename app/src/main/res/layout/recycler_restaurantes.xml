@@ -17,7 +17,8 @@
             android:layout_width="150dp"
             android:layout_height="130dp"
             android:contentDescription="@string/imageRestaurantRecycler"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/no_image"
+            tools:srcCompat="@drawable/no_image" />
 
         <LinearLayout
             android:layout_width="match_parent"
