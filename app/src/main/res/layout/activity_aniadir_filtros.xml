@@ -6,36 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.inicio.AniadirFiltrosActivity">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Selecciona un filtro para añadirlo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#000000"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold|italic" />
-
-    <include
-        android:id="@+id/include"
-        layout="@layout/layout_info_filtros"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="ucm.appmenus.ui.filtros.FiltrosFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/botonEditarFiltros"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <Button
-        android:id="@+id/botonEditarFiltros"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Añadir filtros"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

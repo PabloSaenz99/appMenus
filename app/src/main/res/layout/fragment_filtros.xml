@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,19 +17,23 @@
 
     <!--Aqui se incluye de forma estatica el xml de layout_info_filtros-->
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textInfoFiltros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
             android:text="Radio de busqueda"
             android:textAlignment="center"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold|italic" />
 
@@ -46,28 +50,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#FFFFFF"
                 android:checked="false"
-                android:text="1000" />
+                android:text="1000"
+                android:textColor="#FFFFFF" />
 
             <RadioButton
                 android:id="@+id/radioButton1500"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#FFFFFF"
                 android:checked="true"
-                android:text="1500" />
+                android:text="1500"
+                android:textColor="#FFFFFF" />
 
             <RadioButton
                 android:id="@+id/radioButton2000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
                 android:layout_weight="1"
-                android:text="2000" />
+                android:text="2000"
+                android:textColor="#FFFFFF" />
         </RadioGroup>
-
 
 
     </LinearLayout>
@@ -77,27 +80,27 @@
     y en FiltrosRecyclerAdapter (para implementar como carga la info))-->
 
     <include
+        android:id="@+id/include2"
         layout="@layout/layout_info_filtros"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <View
-        style="@style/HorizontalDivider"
-        android:background="@color/logoNaranja0" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/botonFiltrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Button
         android:id="@+id/botonFiltrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/boton"
         android:drawablePadding="10dp"
         android:includeFontPadding="false"
         android:text="Filtrar"
         android:textColor="#000000"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <View style="@style/HorizontalDividerTransparent" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
