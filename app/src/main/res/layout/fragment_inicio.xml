@@ -11,13 +11,13 @@
 
 
     <TextView
-        android:id="@+id/textoDescripcionFiltrosAplicados"
+        android:id="@+id/descripcionFiltrosAplicados"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Restaurantes cerca de ti"
         android:textColor="#FFFFFF"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textoDescripcionFiltrosAplicados" />
+        app:layout_constraintTop_toBottomOf="@+id/descripcionFiltrosAplicados" />
 
     <ProgressBar
         android:id="@+id/progressBarInicio"

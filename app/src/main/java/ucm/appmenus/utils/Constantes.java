@@ -11,6 +11,7 @@ public class Constantes {
     public static final String TIPOS_COCINA = "Tipos de cocina";
     public static final String AREA = "Area de busqueda";
     public static final String LISTA_RESTAURANTES = "Lista de restaurantes";
+    public static final String FILTROS_BUSQUEDA = "Filtros aplicados: ";
 
     /**
      * Filtros

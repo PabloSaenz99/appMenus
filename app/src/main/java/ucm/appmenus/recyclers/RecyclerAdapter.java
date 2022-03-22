@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import ucm.appmenus.R;
@@ -44,7 +45,7 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
      * @param orientacion orientacion del layout, vertical u horizontal
      * @param <T> ViewHolder encargado de gestionar los datos proporcionados
      * @param <ELEMENT> tipo de dato proporcionado
-     * @return
+     * @return el recycler creado
      */
     public static <T extends RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT> RecyclerAdapter<T, ELEMENT> crearRecyclerLineal(
             ArrayList<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View v,
@@ -71,7 +72,7 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
      * @param nColums numero de columnas que tendrá el layout
      * @param <T> ViewHolder encargado de gestionar los datos proporcionados
      * @param <ELEMENT> tipo de dato proporcionado
-     * @return
+     * @return el recycler creado
      */
     public static <T extends RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT> RecyclerAdapter<T, ELEMENT> crearRecyclerGrid(
             ArrayList<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View view,
@@ -84,6 +85,10 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
         recyclerView.setAdapter(adapter);
         //return recyclerView;
         return adapter;
+    }
+
+    public static <T> ArrayList<T> transformar(HashSet<T> elementos){
+        return new ArrayList<T>(elementos);
     }
 
     private final int viewID;

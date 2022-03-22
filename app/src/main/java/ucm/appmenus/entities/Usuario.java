@@ -1,6 +1,9 @@
 package ucm.appmenus.entities;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import ucm.appmenus.utils.Localizacion;
 import ucm.appmenus.utils.Pair;
@@ -8,69 +11,79 @@ import ucm.appmenus.utils.Pair;
 public class Usuario {
 
     public static final int MAX_FAV = 5;
+    private static Usuario instance = null;
 
     private final String email;
     private String nombre;
-    private Localizacion localizacion;
+    private final Localizacion localizacion;
     private String imagenDir;
-    private ArrayList<Resenia> resenias;
-    private ArrayList<Restaurante> restaurantesFavoritos;
+    private HashSet<Resenia> resenias;
+    private HashSet<Restaurante> restaurantesFavoritos;
     private ArrayList<String> preferencias;
 
-    public Usuario(String email, String nombre, Localizacion localizacion,
-                   String imagenDir, ArrayList<Resenia> resenias,
-                   ArrayList<Restaurante> restaurantesFavoritos, ArrayList<String> preferencias) {
+    /**
+     * Devuelve el usuario de la aplicación. Debe haberse creado anteriormente con
+     * {@link #crearUsuario(String, String, Localizacion)} o devolverá null.
+     * @return el usuario o null si no se creó.
+     */
+    public static Usuario getUsuario() {
+        return instance;
+    }
+
+    /**
+     * Crea el usaurio solo si no se ha creado y si los credenciales son correctos.
+     * @param email correo del usuario.
+     * @param password contraseña del usuario.
+     * @param loc la localizacion del usuario actual.
+     * @return el usuario creado en caso de no existir previamente, el usuario creado previamente
+     * en caso de existir ya o null en caso de que los credenciales (password y email) sean incorrectos.
+     */
+    public static Usuario crearUsuario(String email, String password, Localizacion loc) {
+        Log.i("email", email);
+        if(instance == null){
+            //TODO: buscar en la bd
+            String passwordBD = "";
+            if(password.contentEquals(passwordBD)){
+                //TODO: buscar en la bd
+                String nombre = "Pablito";
+                String imagen = "";
+                HashSet<Restaurante> favoritos = new HashSet<>();
+                HashSet<Resenia> resenias = new HashSet<>();
+                ArrayList<String> preferencias = new ArrayList<>();
+                instance = new Usuario(email, nombre, loc, imagen, favoritos, resenias, preferencias);
+            }
+            else
+                return null;
+        }
+        return instance;
+    }
+
+    private Usuario(String email, String nombre, Localizacion localizacion,
+                    String imagenDir, HashSet<Restaurante> favoritos,
+                    HashSet<Resenia> resenias, ArrayList<String> preferencias) {
         this.email = email;
         this.nombre = nombre;
         this.localizacion = localizacion;
         this.imagenDir = imagenDir;
         this.resenias = resenias;
-        this.setRestaurantesFavoritos(restaurantesFavoritos);
+        this.restaurantesFavoritos = favoritos;
         this.preferencias = preferencias;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
+    public String getEmail() { return email; }
+    public String getNombre() { return nombre; }
     public Localizacion getLocalizacion() { return localizacion; }
-    public String getImagenDir() {
-        return imagenDir;
-    }
-    public ArrayList<Resenia> getResenias() { return resenias; }
-    public ArrayList<Restaurante> getRestaurantesFavoritos() {
-        return restaurantesFavoritos;
-    }
-    public ArrayList<String> getPreferencias() {
-        return preferencias;
-    }
+    public String getImagenDir() { return imagenDir; }
+    public HashSet<Resenia> getResenias() { return resenias; }
+    public HashSet<Restaurante> getRestaurantesFavoritos() { return restaurantesFavoritos; }
+    public ArrayList<String> getPreferencias() { return preferencias; }
 
     public void setNombre(String nombre) { this.nombre = nombre; }
-    public void setLocalizacion(Localizacion localizacion) { this.localizacion = localizacion; }
-    public void setImagenDir(String imagenDir) { this.imagenDir = imagenDir; }
-    public void setResenias(ArrayList<Resenia> resenias) { this.resenias = resenias; }
-    public void setRestaurantesFavoritos(ArrayList<Restaurante> restaurantesFavoritos) {
-        if(restaurantesFavoritos.size() < MAX_FAV)
-            this.restaurantesFavoritos = restaurantesFavoritos; }
     public void setPreferencias(ArrayList<String> preferencias) { this.preferencias = preferencias; }
-
     public void addRestauranteFavorito(Restaurante r){
         if(restaurantesFavoritos.size() < MAX_FAV)
             restaurantesFavoritos.add(r);
     }
 
-    public void removeRestauranteFavorito(Restaurante r){
-        int i = 0;
-        boolean encontrado = false;
-        while(i < restaurantesFavoritos.size() && !encontrado) {
-            if(restaurantesFavoritos.get(i).equals(r)) {
-                restaurantesFavoritos.remove(i);
-                encontrado = true;
-            }
-            i++;
-        }
-    }
+    public void removeRestauranteFavorito(Restaurante r){ this.restaurantesFavoritos.remove(r); }
 }

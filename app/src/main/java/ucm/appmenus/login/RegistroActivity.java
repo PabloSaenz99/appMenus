@@ -112,12 +112,11 @@ public class RegistroActivity extends AppCompatActivity {
                     //Guarda el login en SharedPreferences
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString(getString(R.string.email_usuario), email.getText().toString());
-                    editor.putString(getString(R.string.nombre_usuario), nombre.getText().toString());
-                    //editor.putString(getString(R.string.imagen_usuario), imagenUsuario);
+                    editor.putString(getString(R.string.password_usuario), password.getText().toString());
                     editor.commit();
 
                     //Abrir activity
-                   Intent intent = new Intent(botonRegistro.getContext(), MainActivity.class);
+                    Intent intent = new Intent(botonRegistro.getContext(), MainActivity.class);
                     startActivity(intent);
                 }
             }

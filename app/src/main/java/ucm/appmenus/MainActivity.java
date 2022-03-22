@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
         navController.navigate(id, b);
     }
 
-    public Usuario getUsuario() { return usuario; }
-
     /**
      * Loguea al usuario
      * Obtiene el email, nombre e imagen de SharedPreferences
@@ -100,15 +98,9 @@ public class MainActivity extends AppCompatActivity {
     private void loginUsuario(){
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
-        String email = sp.getString(getString(R.string.email_usuario), null);
-        String nombre = sp.getString(getString(R.string.nombre_usuario), null);
-        String imagen = sp.getString(getString(R.string.imagen_usuario), null);
-        JSONRestaurante jsonRes = new JSONRestaurante(getApplicationContext(),
-                getString(R.string.ucm_appmenus_restaurantesFavoritos),
-                getString(R.string.ucm_appmenus_restaurantesFavoritos));
-        this.usuario = new Usuario(email, nombre, new Localizacion(this), imagen,
-                null, jsonRes.readRestaurantesJSON(), null);
-
+        String email = sp.getString(getString(R.string.email_usuario), "");
+        String password = sp.getString(getString(R.string.password_usuario), "");
+        this.usuario = Usuario.crearUsuario(email, password, new Localizacion(this));
     }
 
     /*

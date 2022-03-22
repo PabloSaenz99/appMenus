@@ -11,6 +11,7 @@ import android.widget.RatingBar;
 
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
+import ucm.appmenus.entities.Usuario;
 
 /**
  * Clase utilizada para crear la reseña de un restaurante
@@ -31,9 +32,9 @@ public class ReseniaActivity extends AppCompatActivity {
         crearResenia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* //TODO: En vez de esto, guardarla en la BD y en vez de poner USUARIO poner el nombre del usuario
-                Resenia r = new Resenia("", "USUARIO",titulo.getText().toString(),
-                        descripcion.getText().toString(), valoracion.getRating());
+                /*//TODO: En vez de esto, guardarla en la BD y en vez de poner USUARIO poner el nombre del usuario
+                Resenia r = new Resenia("", Usuario.getInstance().getEmail(), Usuario.getInstance().getNombre(),
+                        titulo.getText().toString(), descripcion.getText().toString(), valoracion.getRating());
                 Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
                 intent.putExtra("resenia", r);
                  */

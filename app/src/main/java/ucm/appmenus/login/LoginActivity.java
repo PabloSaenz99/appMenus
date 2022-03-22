@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         //Usado para comprobar si el usuario está ya logueado
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
-        String email = sp.getString(getString(R.string.nombre_usuario), null);
+        String email = sp.getString(getString(R.string.email_usuario), null);
 
         //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
         if(email != null){
@@ -51,16 +51,13 @@ public class LoginActivity extends AppCompatActivity {
                 //TODO: Mirar en la BD que sea correcto
                 String emailUsuario = "AQUI BUSCO EN LA BD";
                 String passwordUsuario = "AQUI BUSCO EN LA BD";
-                String nombreUsuario = "AQUI BUSCO EN LA BD";
-                String imagenUsuario = "AQUI BUSCO EN LA BD";
 
                 if(emailText.getText().toString().equals(emailUsuario) &&
                         passwordText.getText().toString().equals(passwordUsuario)) {
                     //Guarda el login en SharedPreferences
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString(getString(R.string.email_usuario), emailUsuario);
-                    editor.putString(getString(R.string.nombre_usuario), nombreUsuario);
-                    editor.putString(getString(R.string.imagen_usuario), imagenUsuario);
+                    editor.putString(getString(R.string.password_usuario), passwordUsuario);
                     editor.commit();
 
                     //Abrir activity

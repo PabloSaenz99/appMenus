@@ -109,7 +109,7 @@ public class FiltrosFragment extends Fragment {
             }
 
             //Luego recorre los demas recyclers que tienen los tipos de comida
-            ArrayList<String> tiposCocina = new ArrayList<String>();
+            ArrayList<String> tiposCocina = new ArrayList<>();
             for (int i = 1; i < listaRecyclers.size(); i++) {
                 RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> aux = listaRecyclers.get(i);
                 for (int j = 0; j < aux.size(); j++) {
@@ -127,6 +127,7 @@ public class FiltrosFragment extends Fragment {
             b.putStringArrayList(Constantes.TIPOS_LOCAL, tiposLocal);
             b.putStringArrayList(Constantes.TIPOS_COCINA, tiposCocina);
             b.putInt(Constantes.AREA, area);
+            b.putString(Constantes.FILTROS_BUSQUEDA, tiposLocal + tiposCocina.toString() + "<" + area + ">");
 
             main.changeFragment(R.id.navigation_inicio, b);
         }

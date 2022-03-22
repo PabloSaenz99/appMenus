@@ -31,7 +31,7 @@ public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IRecl
     public void setDatos(Resenia res) {
         this.resenia = res;
         titulo.setText(res.getTexto());
-        creador.setText(res.getUsuarioID());
+        creador.setText(res.getUsuarioNombre());
         texto.setText(res.getTitulo());
         valoracion.setRating((float) res.getValoracion());
         valoracion.setClickable(false);
