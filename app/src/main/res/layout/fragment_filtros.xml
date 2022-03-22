@@ -15,16 +15,6 @@
         Si es muy complejo o poco util, no hace falta implementarlo
     -->
 
-    <SearchView
-        android:id="@+id/busquedaFiltros"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/logoAzul4"
-        android:queryHint="Busca aquí "/>
-
-    <View style="@style/HorizontalDivider"
-        android:background="@color/logoAzul4" />
-
     <!--Aqui se incluye de forma estatica el xml de layout_info_filtros-->
     <LinearLayout
         android:layout_width="match_parent"

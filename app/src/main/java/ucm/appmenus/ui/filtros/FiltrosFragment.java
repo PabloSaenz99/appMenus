@@ -76,19 +76,6 @@ public class FiltrosFragment extends Fragment {
     private void crearRecyclerFiltros(final View root, List<String> filtros, int id, int nColums){
         listaRecyclers.add(RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, true),
                 ViewHolderFiltros.class, id, R.layout.recycler_filtros, root, nColums));
-
-        /*
-        RecyclerView recyclerViewRestaurantes = root.findViewById(id);
-        recyclerViewRestaurantes.setLayoutManager(new GridLayoutManager(root.getContext(), nColums));
-
-        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros =
-                new RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>(
-                        transform(filtros, true), R.layout.recycler_filtros, ViewHolderFiltros.class);
-        recyclerViewRestaurantes.setAdapter(adapterFiltros);
-
-        listaRecyclers.add(adapterFiltros);
-
-         */
     }
 
     private void realizarBusqueda(){

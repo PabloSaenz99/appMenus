@@ -52,6 +52,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         TextView telefono = findViewById(R.id.telefonoRestaurante);
         TextView horario = findViewById(R.id.horarioRestaurante);
         Button botonResenia = findViewById(R.id.botonAniadirResenia);
+        Button botonFiltros = findViewById(R.id.botonAniadirFiltros);
 
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
@@ -104,8 +105,14 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         botonResenia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ReseniaActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), ReseniaActivity.class));
+            }
+        });
+
+        botonFiltros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), AniadirFiltrosActivity.class));
             }
         });
     }

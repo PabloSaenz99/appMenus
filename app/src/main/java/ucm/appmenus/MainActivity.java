@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Loguea al usuario
-     * Obtiene el email, nombre e imagen de SharedPreferences
+     * Obtiene el email y contraseña de SharedPreferences
      * TODO: Deberia comprobar en la BD que sea correcto(?)
      * */
 
