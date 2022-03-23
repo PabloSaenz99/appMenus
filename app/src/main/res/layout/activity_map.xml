@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.filtros.MapActivity">-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mainView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -13,7 +14,11 @@
     <org.mapsforge.map.android.rotation.RotateView
         android:id="@+id/rotateView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <org.mapsforge.map.android.view.MapView
             android:id="@+id/mapView"
@@ -28,7 +33,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
-        android:src="@android:drawable/editbox_background" />
+        android:src="@android:drawable/editbox_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/zoomInButton" />
 
     <ImageButton
         android:id="@+id/zoomInButton"
@@ -37,7 +44,9 @@
         android:layout_above="@id/zoomOutButton"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rotateButton" />
 
     <Button
         android:id="@+id/rotateButton"
@@ -45,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/zoomOutButton"
-        android:text="rotar" />
+        android:text="rotar"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

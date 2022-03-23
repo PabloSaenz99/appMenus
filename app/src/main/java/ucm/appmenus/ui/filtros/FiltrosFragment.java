@@ -63,7 +63,7 @@ public class FiltrosFragment extends Fragment {
             TextView info = root.findViewById(R.id.textInfoFiltros);
             info.setText("Selecciona un filtro para añadirlo");
             botonFiltrar.setText("Añadir filtros");
-            root.findViewById(R.id.radioGroupDistancia).setVisibility(View.INVISIBLE);
+            root.findViewById(R.id.radioGroupDistancia).setVisibility(View.GONE);
         }
 
         return root;

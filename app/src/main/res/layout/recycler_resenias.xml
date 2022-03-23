@@ -40,8 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Descripcion de la reseña"
-        android:textColorHint="#8E8E8E"
         android:textColor="#FFFFFF"
-        android:layout_marginLeft="12dp"/>
+        android:textColorHint="#8E8E8E" />
 
 </LinearLayout>

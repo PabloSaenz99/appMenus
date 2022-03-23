@@ -17,6 +17,7 @@
         <activity
             android:name=".ui.inicio.AniadirFiltrosActivity"
             android:exported="false" />
+        <!--<activity android:name=".login.LoginActivity"/>-->
         <activity
             android:name=".ui.filtros.MapActivity"
             android:exported="false" />
@@ -29,6 +30,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".login.RegistroActivity" />
         <activity android:name=".login.LoginActivity">
+        <!--<activity android:name=".ui.filtros.MapActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -11,7 +11,7 @@
             android:id="@+id/checkBoxRecyclerFiltros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"/>
+            android:layout_marginTop="1dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
