@@ -94,11 +94,9 @@ public class RegistroActivity extends AppCompatActivity {
                     });
                 } else {
                     Toast.makeText(RegistroActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
-
     }
 }
 

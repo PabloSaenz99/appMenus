@@ -5,13 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.widget.Toast;
 
+import org.mapsforge.core.graphics.Bitmap;
 import org.mapsforge.core.model.LatLong;
+import org.mapsforge.core.model.Point;
 import org.mapsforge.map.android.graphics.AndroidGraphicFactory;
 import org.mapsforge.map.android.util.AndroidUtil;
 import org.mapsforge.map.android.view.MapView;
 import org.mapsforge.map.datastore.MapDataStore;
 import org.mapsforge.map.layer.cache.TileCache;
+import org.mapsforge.map.layer.overlay.Marker;
 import org.mapsforge.map.layer.renderer.TileRendererLayer;
 import org.mapsforge.map.reader.MapFile;
 
@@ -21,15 +26,21 @@ import java.io.InputStream;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Usuario;
 
+//https://github.com/mapsforge/mapsforge/blob/master/docs/Mapsforge-Maps.md mapas??
 public class MapActivity extends AppCompatActivity {
 
     private MapView mapView;
     private static final String MAP_FILE = "world.map";
 
+    private double lat, lon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_map);
+        //TODO activar esto
+        lat = 52.517037;    //Usuario.getUsuario().getLocalizacion().latitude;
+        lon = 13.38886;     //Usuario.getUsuario().getLocalizacion().longitude;
 
         AndroidGraphicFactory.createInstance(getApplication());
 
@@ -51,6 +62,22 @@ public class MapActivity extends AppCompatActivity {
             mapView.setClickable(true);
             mapView.getMapScaleBar().setVisible(true);
             mapView.setBuiltInZoomControls(true);
+            mapView.setZoomLevelMax((byte) 15);
+            mapView.setZoomLevelMin((byte) 6);
+
+            //Para poner un marcador en la posicion actual del usuario      //https://stackoverflow.com/questions/50445633/why-not-display-any-marker-in-android-mapsforge-map
+            Bitmap bitmap = AndroidGraphicFactory.convertToBitmap(getResources().getDrawable(R.drawable.logo));
+            bitmap.incrementRefCount();
+            Marker marker = new Marker(new LatLong(lat, lon), bitmap, 0, -bitmap.getHeight() / 2) {
+                @Override public boolean onTap(LatLong geoPoint, Point viewPosition, Point tapPoint) {
+                    if (contains(viewPosition, tapPoint)) {
+                        Toast.makeText(MapActivity.this, "Urmia, payamasli", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                    return false;
+                }
+            };
+            mapView.getLayerManager().getLayers().add(marker);
 
             /*
              * To avoid redrawing all the tiles all the time, we need to set up a tile cache with an
@@ -83,9 +110,7 @@ public class MapActivity extends AppCompatActivity {
              * The map also needs to know which area to display and at what zoom level.
              * Note: this map position is specific to Berlin area.
              */
-            //TODO: activar esto
-            //mapView.setCenter(new LatLong(Usuario.getUsuario().getLocalizacion().latitude, Usuario.getUsuario().getLocalizacion().longitude));
-            mapView.setCenter(new LatLong(52.517037, 13.38886));
+            mapView.setCenter(new LatLong(lat, lon));
             mapView.setZoomLevel((byte) 12);
         } catch (Exception e) {
             /*

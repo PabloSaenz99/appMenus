@@ -70,6 +70,18 @@
                 android:layout_weight="1"
                 android:text="2000"
                 android:textColor="#FFFFFF" />
+
+            <RadioButton
+                android:id="@+id/radioButtonMapa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/botonVerMapa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ver en mapa" />
         </RadioGroup>
 
 

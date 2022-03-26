@@ -29,6 +29,7 @@ import java.util.Objects;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.utils.Constantes;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,20 +52,15 @@ public class LoginActivity extends AppCompatActivity {
         et_password = findViewById(R.id.passwordLogin);
         firebaseAuth = FirebaseAuth.getInstance();
 
-
         //accion en los botones
-
         btn_registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                   startActivity(new Intent(LoginActivity.this, RegistroActivity.class));
             }
-
-
         });
 
         //btn login
-
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,32 +75,28 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
-
-        //metodo login
-        private void login (String text_email, String text_password){
-            firebaseAuth.signInWithEmailAndPassword(text_email, text_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+    //metodo login
+    private void login (String text_email, String text_password){
+        firebaseAuth.signInWithEmailAndPassword(text_email, text_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //TODO: get usaurio nombre
+                    Bundle b = new Bundle();
+                    b.putString(Constantes.EMAIL_USUARIO, text_email);
+                    b.putString(Constantes.NOMBRE_USUARIO, "Usuario");
+                    intent.putExtras(b);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
-
-
-
-
-
-
-
+            }
+        });
     }
+}
 
 
 

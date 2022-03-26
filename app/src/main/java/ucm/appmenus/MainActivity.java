@@ -28,6 +28,7 @@ import ucm.appmenus.ficheros.JSONRestaurante;
 import ucm.appmenus.login.LoginActivity;
 import ucm.appmenus.recyclers.IReclycerElement;
 import ucm.appmenus.recyclers.RecyclerAdapter;
+import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Localizacion;
 
 /**
@@ -48,17 +49,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Loguea al usaurio para poder usar sus datos luego
-        // loginUsuario();
+        Bundle loginInfo = getIntent().getExtras();
+        loginUsuario(loginInfo.getString(Constantes.EMAIL_USUARIO, "Error"),
+                loginInfo.getString(Constantes.NOMBRE_USUARIO, "Error"));
 
         //Importante que esté después del login de usuario o lanzará nullpointer
-
         setContentView(R.layout.activity_afterlogin);
-        //Cosas de firebase inputs
+        setContentView(R.layout.activity_main);
 
-        //  setContentView(R.layout.activity_main);
-
-    }
-       /* final BottomNavigationView navView = findViewById(R.id.nav_view);
+        final BottomNavigationView navView = findViewById(R.id.nav_view);
         //Carga la vista de la barra inferior con las 3 ventanas que contiene
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_inicio, R.id.navigation_filtros, R.id.navigation_perfil)
@@ -68,13 +67,12 @@ public class MainActivity extends AppCompatActivity {
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
-*/
-    /*
+
+    /**
      * Cambia entre 2 fragments
      * @param id: fragment al que moverse
      * @param b: datos necesarios para dicho fragment
     */
-
     public void changeFragment(int id, Bundle b){
         Log.d("BUNDLE", b.toString());
         navController.navigate(id, b);
@@ -84,25 +82,17 @@ public class MainActivity extends AppCompatActivity {
      * Loguea al usuario
      * Obtiene el email y contraseña de SharedPreferences
      * TODO: Deberia comprobar en la BD que sea correcto(?)
-     * */
-
+     *
+     * @param o
+     * @param o1*/
     //Funcion de login local
-    /*
-    private void loginUsuario(){
-        final SharedPreferences sp = this.getSharedPreferences(
+    private void loginUsuario(String email, String nombre){
+        /*final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
         String email = sp.getString(getString(R.string.email_usuario), "");
-        String password = sp.getString(getString(R.string.password_usuario), "");
-        this.usuario = Usuario.crearUsuario(email, password, new Localizacion(this));
+        String password = sp.getString(getString(R.string.password_usuario), "");*/
+        this.usuario = Usuario.crearUsuario(email, nombre, new Localizacion(this));
     }
-
-*/
-        //  }
-//}
-
-
-
-
  }
 
 

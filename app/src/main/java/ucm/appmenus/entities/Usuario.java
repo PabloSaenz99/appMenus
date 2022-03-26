@@ -31,29 +31,21 @@ public class Usuario {
     }
 
     /**
-     * Crea el usaurio solo si no se ha creado y si los credenciales son correctos.
+     * Crea el usaurio solo si no se ha creado (TODO: los credenciales se comprueban en el login).
      * @param email correo del usuario.
-     * @param password contraseña del usuario.
+     * @param nombre nombre del usuario.
      * @param loc la localizacion del usuario actual.
-     * @return el usuario creado en caso de no existir previamente, el usuario creado previamente
-     * en caso de existir ya o null en caso de que los credenciales (password y email) sean incorrectos.
+     * @return el usuario creado en caso de no existir previamente o el usuario creado previamente
+     * en caso de existir ya.
      */
-    public static Usuario crearUsuario(String email, String password, Localizacion loc) {
-        Log.i("email", email);
+    public static Usuario crearUsuario(String email, String nombre, Localizacion loc) {
+        //Log.i("email", email);
         if(instance == null){
-            //TODO: buscar en la bd
-            String passwordBD = "";
-            if(password.contentEquals(passwordBD)){
-                //TODO: buscar en la bd
-                String nombre = "Pablito";
-                String imagen = "";
-                HashSet<Restaurante> favoritos = new HashSet<>();
-                HashSet<Resenia> resenias = new HashSet<>();
-                ArrayList<String> preferencias = new ArrayList<>();
-                instance = new Usuario(email, nombre, loc, imagen, favoritos, resenias, preferencias);
-            }
-            else
-                return null;
+            String imagen = "";
+            HashSet<Restaurante> favoritos = new HashSet<>();
+            HashSet<Resenia> resenias = new HashSet<>();
+            ArrayList<String> preferencias = new ArrayList<>();
+            instance = new Usuario(email, nombre, loc, imagen, favoritos, resenias, preferencias);
         }
         return instance;
     }

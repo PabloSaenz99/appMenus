@@ -3,6 +3,7 @@ package ucm.appmenus.ui.filtros;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,6 +59,16 @@ public class FiltrosFragment extends Fragment {
             }
         });
 
+        Button botonAbrirMapa = root.findViewById(R.id.botonVerMapa);
+        botonAbrirMapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RadioButton rb = root.findViewById(R.id.radioButtonMapa);
+                rb.setChecked(true);
+                startActivity(new Intent(view.getContext(), MapActivity.class));
+            }
+        });
+
         //Si la clase que contiene este fragment es las clasde de AñadirFiltros, entonces se cambian algunas vistas
         if(getActivity() instanceof AniadirFiltrosActivity){
             TextView info = root.findViewById(R.id.textInfoFiltros);
@@ -94,7 +105,13 @@ public class FiltrosFragment extends Fragment {
         //Obtiene la distancia de los radioButtons (solo permiten seleccionar uno de los tres)
         RadioGroup rg = root.findViewById(R.id.radioGroupDistancia);
         RadioButton but = root.findViewById(rg.getCheckedRadioButtonId());
-        int area = Integer.parseInt(but.getText().toString());
+        int area = 1500;
+        if(but.getId() == R.id.radioButtonMapa){
+            //TODO: coger los datos del mapa
+        }
+        else {
+            area = Integer.parseInt(but.getText().toString());
+        }
 
         //Primero busca los tipos de local
         ArrayList<String> tiposLocal = new ArrayList<String>();
@@ -130,6 +147,10 @@ public class FiltrosFragment extends Fragment {
             //TODO: coger los arrays (tiposLocal y tiposCocina y hacer que se guarden en la BD
             Toast.makeText(act, "Filtros añadidos", Toast.LENGTH_SHORT).show();
             act.finish();
+        }
+        //TODO: hacer para si se llama desde el login
+        else{
+
         }
     }
 }

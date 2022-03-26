@@ -12,6 +12,8 @@ public class Constantes {
     public static final String AREA = "Area de busqueda";
     public static final String LISTA_RESTAURANTES = "Lista de restaurantes";
     public static final String FILTROS_BUSQUEDA = "Filtros aplicados: ";
+    public static final String EMAIL_USUARIO = "Email usuario";
+    public static final String NOMBRE_USUARIO = "Nombre usuario";
 
     /**
      * Filtros
