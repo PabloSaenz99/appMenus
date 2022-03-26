@@ -143,20 +143,13 @@
                <!-- <com.google.android.material.textfield.TextInputEditText-->
                 <EditText
 
-                    android:id="@+id/textPasswordRegistro"
-                    android:layout_width="1dp"
-
                     android:id="@+id/passwordRegistro"
                     android:layout_width="0dp"
-
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="15"
                     android:hint="Contraseña"
                     android:inputType="textPassword"
-
                     android:layout_gravity="center"
-
                     android:textColor="#FFFFFF"
                     android:textColorHint="#B6B6B6" />
                 <!--  app:endIconMode="password_toggle"-->

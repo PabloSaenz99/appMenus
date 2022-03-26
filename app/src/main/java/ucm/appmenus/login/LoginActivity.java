@@ -1,5 +1,6 @@
 package ucm.appmenus.login;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -7,6 +8,7 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
@@ -65,9 +67,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         btn_registrar = findViewById(R.id.botonRegistro);
-        btn_login = findViewById(R.id.botonInicioSesion);
-        et_email = findViewById(R.id.textEmailLogin);
-        et_password = findViewById(R.id.textPasswordLogin);
+        btn_login = findViewById(R.id.botonIniciarSesion);
+        et_email = findViewById(R.id.emailLogin);
+        et_password = findViewById(R.id.passwordLogin);
         firebaseAuth = FirebaseAuth.getInstance();
 
 
@@ -181,5 +183,5 @@ public class LoginActivity extends AppCompatActivity {
 }*/
 
 
-}
+
 

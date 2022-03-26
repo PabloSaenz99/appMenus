@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Loguea al usaurio para poder usar sus datos luego
-        loginUsuario();
+       // loginUsuario();
 
         //Importante que esté después del login de usuario o lanzará nullpointer
 
@@ -108,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
 
  }
+
+
 
     /*
     //Funcion de login con la base de datos de google

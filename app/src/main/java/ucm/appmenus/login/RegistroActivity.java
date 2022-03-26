@@ -100,35 +100,14 @@ public class RegistroActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
-
-
 }
 
 
+
+
+
+
 /*
-
-                firebaseAuth.createUserWithEmailAndPassword(nombre, email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(RegistroActivity.this, "usuario creado con exito", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            String errorCode = ((FirebaseAuthException) task.getException()).getErrorCode();
-                        }
-                    }
-                });
-            }
-
-        });
-    }*/
-//}
-
-
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
 
@@ -165,36 +144,5 @@ public class RegistroActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 
-    public void registerUser(String nombre, String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-        @Override
-        public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
-            if(task.isSuccessful()){
-                FirebaseUser rUser=firebaseAuth.getCurrentUser();
-                String userId=rUser.getUid();
-                databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-                HashMap<String,String> hashMap =new HashMap<>();
-                hashMap.put("userId",userId);
-                hashMap.put("userName",nombre);
-                hashMap.put("userEmail",email);
-                hashMap.put("userPassword",password);
-                databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Intent intent =new Intent (RegistroActivity.this,MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        }else{
-                            Toast.makeText(RegistroActivity.this, Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }else{
-                Toast.makeText(RegistroActivity.this, Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        }});
-    }
-}
