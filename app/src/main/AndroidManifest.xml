@@ -14,12 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_foodfeeltr_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".login.StartActivity" /> <!-- METIDO POR MIRIAM -->
+
         <!-- <activity android:name=".MainActivity"></activity> -->
         <!-- si quiero que se muestre primero la pag de registro -->
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".login.RegistroActivity"></activity>
-        <activity android:name=".login.LoginActivity">
+
 
         <activity
             android:name=".ui.inicio.AniadirFiltrosActivity"
@@ -33,10 +31,11 @@
             android:exported="false" />
         <activity
             android:name=".ui.inicio.RestauranteDetalladoActivity"
-            android:exported="false" /> <!-- METIDO POR MIRIAM -->
-        <activity android:name=".MainActivity" />
-        <activity android:name=".login.RegistroActivity" />
-        <activity android:name=".login.LoginActivity">
+            android:exported="false" />
+        <!-- METIDO POR MIRIAM -->
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".login.RegistroActivity"></activity>
+    <activity android:name=".login.LoginActivity">
         <!--<activity android:name=".ui.filtros.MapActivity">-->
 
             <intent-filter>

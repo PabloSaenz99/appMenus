@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
-//import ucm.appmenus.login.LoginActivity;
+import ucm.appmenus.login.LoginActivity;
 import ucm.appmenus.recyclers.IReclycerElement;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.utils.Localizacion;
@@ -36,9 +36,6 @@ import ucm.appmenus.utils.Localizacion;
 
 
 public class MainActivity extends AppCompatActivity {
-
-
- 
 
     //esto estaba de antes
     private Usuario usuario;
@@ -51,18 +48,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Loguea al usaurio para poder usar sus datos luego
-       // loginUsuario();
+        // loginUsuario();
 
         //Importante que esté después del login de usuario o lanzará nullpointer
 
         setContentView(R.layout.activity_afterlogin);
         //Cosas de firebase inputs
-/*
 
-        setContentView(R.layout.activity_main);
+        //  setContentView(R.layout.activity_main);
 
-
-        final BottomNavigationView navView = findViewById(R.id.nav_view);
+    }
+       /* final BottomNavigationView navView = findViewById(R.id.nav_view);
         //Carga la vista de la barra inferior con las 3 ventanas que contiene
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_inicio, R.id.navigation_filtros, R.id.navigation_perfil)
@@ -72,18 +68,18 @@ public class MainActivity extends AppCompatActivity {
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
-
-    /**
+*/
+    /*
      * Cambia entre 2 fragments
      * @param id: fragment al que moverse
      * @param b: datos necesarios para dicho fragment
-     */
-    /*
+    */
+
     public void changeFragment(int id, Bundle b){
         Log.d("BUNDLE", b.toString());
         navController.navigate(id, b);
     }
-*/
+
     /**
      * Loguea al usuario
      * Obtiene el email y contraseña de SharedPreferences
@@ -111,26 +107,5 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    /*
-    //Funcion de login con la base de datos de google
-    private void login(String email, String password){
-        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    //en donde dice registro activity tendria que ir el profileActivity
-                    Intent intent= new Intent(MainActivity.this,RegistroActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
 
-                }
-            }
-        });
-    }
 
-     */
-
-}

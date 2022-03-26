@@ -42,29 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_sesion);//debo poner la vista de login y me abra directamente el login
 
-/*
-        final Button botonRegistro = findViewById(R.id.botonRegistro);
-        botonRegistro.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Abrir activity
-                Intent intent = new Intent(botonRegistro.getContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        final Button botonInicioSesion = findViewById(R.id.botonInicioSesion);
-        botonInicioSesion.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Abrir activity
-                Intent intent = new Intent(botonInicioSesion.getContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-*/
 
         //hACER LOGIN
-
-
 
         btn_registrar = findViewById(R.id.botonRegistro);
         btn_login = findViewById(R.id.botonIniciarSesion);
