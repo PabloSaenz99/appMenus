@@ -2,11 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ucm.appmenus">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_foodfeeltr"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_foodfeeltr_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".login.StartActivity" /> <!-- METIDO POR MIRIAM -->
@@ -15,6 +20,25 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".login.RegistroActivity"></activity>
         <activity android:name=".login.LoginActivity">
+
+        <activity
+            android:name=".ui.inicio.AniadirFiltrosActivity"
+            android:exported="false" />
+        <!--<activity android:name=".login.LoginActivity"/>-->
+        <activity
+            android:name=".ui.filtros.MapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.inicio.ReseniaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.inicio.RestauranteDetalladoActivity"
+            android:exported="false" /> <!-- METIDO POR MIRIAM -->
+        <activity android:name=".MainActivity" />
+        <activity android:name=".login.RegistroActivity" />
+        <activity android:name=".login.LoginActivity">
+        <!--<activity android:name=".ui.filtros.MapActivity">-->
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,10 +46,12 @@
             </intent-filter>
         </activity>
     </application>
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
 </manifest>

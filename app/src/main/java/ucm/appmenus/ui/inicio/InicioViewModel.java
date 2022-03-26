@@ -13,6 +13,10 @@ import ucm.appmenus.BuildConfig;
 import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.utils.Constantes;
 
+/**
+ * Clase que gaurda la informacion de los restaurantes buscados rpeviamente, para no tener que realizar
+ * una busqueda cada vez que se cambia de fragment (por ejemplo al hacer swipe)
+ * */
 public class InicioViewModel extends ViewModel {
 
     private static MutableLiveData<ArrayList<Restaurante>> restaurantes;

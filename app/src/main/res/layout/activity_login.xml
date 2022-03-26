@@ -74,7 +74,7 @@
                     android:textColor="#FFFFFF" />
 
                 <Button
-                    android:id="@+id/botonIniciarSesion"
+                    android:id="@+id/botonInicioSesionGoogle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
@@ -85,7 +85,7 @@
                     android:text="iniciar sesion con google" />
 
                 <Button
-                    android:id="@+id/botonInicioSesion"
+                    android:id="@+id/botonIniciarSesion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"

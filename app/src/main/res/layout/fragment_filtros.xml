@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondoOscuro"
     android:orientation="vertical"
     tools:context=".ui.filtros.FiltrosFragment">
 
@@ -14,28 +15,27 @@
         Si es muy complejo o poco util, no hace falta implementarlo
     -->
 
-    <SearchView
-        android:id="@+id/busquedaFiltros"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:queryHint="Busca aquí ">
-
-    </SearchView>
-    <View style="@style/HorizontalDivider" />
-
     <!--Aqui se incluye de forma estatica el xml de layout_info_filtros-->
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <include
-            android:id="@+id/layout_info"
-            layout="@layout/layout_info_filtros"
+        <TextView
+            android:id="@+id/textInfoFiltros"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Radio de busqueda"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
 
         <!--TODO: Hacer que el recycler haga un wrap hasta un tam
         maximo, asi ocupara menos si lo necesita pero no mucho si es muy grande-->
@@ -51,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="false"
-                android:text="1000" />
+                android:text="1000"
+                android:textColor="#FFFFFF" />
 
             <RadioButton
                 android:id="@+id/radioButton1500"
@@ -59,64 +60,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="1500" />
+                android:text="1500"
+                android:textColor="#FFFFFF" />
 
             <RadioButton
                 android:id="@+id/radioButton2000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="2000" />
+                android:text="2000"
+                android:textColor="#FFFFFF" />
         </RadioGroup>
 
-        <include
-            android:id="@+id/layout_info"
-            layout="@layout/layout_info_filtros"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFiltrosLocal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00E91E63">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <View style="@style/HorizontalDivider" />
-
-        <include
-            android:id="@+id/layout_info"
-            layout="@layout/layout_info_filtros"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFiltrosPais"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="#00FFEB3B"
-            android:scrollbars="vertical">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <View style="@style/HorizontalDivider" />
-
-        <include
-            android:id="@+id/layout_info"
-            layout="@layout/layout_info_filtros"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFiltrosComida"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="#00E91E63">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <View style="@style/HorizontalDivider" />
 
     </LinearLayout>
 
@@ -124,20 +79,28 @@
     (especificado en el codigo de filtrosFragment (para asignarlo
     y en FiltrosRecyclerAdapter (para implementar como carga la info))-->
 
-    <View style="@style/HorizontalDividerTransparent" />
+    <include
+        android:id="@+id/include2"
+        layout="@layout/layout_info_filtros"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/botonFiltrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Button
         android:id="@+id/botonFiltrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-
-        android:background="@drawable/boton"
         android:drawablePadding="10dp"
         android:includeFontPadding="false"
         android:text="Filtrar"
-        android:textSize="18sp" />
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <View style="@style/HorizontalDividerTransparent" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

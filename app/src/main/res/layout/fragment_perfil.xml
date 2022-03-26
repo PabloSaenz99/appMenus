@@ -7,10 +7,10 @@
     tools:context=".ui.perfil.PerfilFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -38,28 +38,20 @@
             android:text="Email"
             android:textSize="18sp"
             android:textStyle="bold|italic" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comentarios" />
+            android:text="Comentarios"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold|italic" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerReseniasPerfilFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

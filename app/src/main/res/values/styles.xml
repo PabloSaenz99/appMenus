@@ -1,10 +1,15 @@
 <resources>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>
+
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/logoNaranja0</item>
-        <item name="colorPrimaryDark">@color/logoAzul0</item>
-        <item name="colorAccent">@color/logoVerde0</item>
+        <item name="colorPrimary">@color/logoAzul0</item>
+        <item name="colorOnPrimary">@color/logoAzul1</item>
+        <item name="colorPrimaryDark">@color/logoAzul3</item>
+        <item name="colorAccent">@color/logoAzul2</item>
+        
     </style>
 
     <style name="HorizontalDivider">
@@ -24,8 +29,14 @@
     </style>
 
     <style name="RatingBar" parent="@style/Base.Widget.AppCompat.RatingBar.Small">
-        <item name="colorControlActivated">#C5B846</item>
-        <item name="colorControlNormal">#787878</item>
+        <item name="colorControlActivated">@color/oroValoracion</item>
+        <item name="colorControlNormal">@color/vacioValoracion</item>
     </style>
 
+    <style name="RatingBarLong" parent="@style/Base.Widget.AppCompat.RatingBar">
+        <item name="colorControlActivated">@color/oroValoracion</item>
+        <item name="colorControlNormal">@color/vacioValoracion</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1</item>
+    </style>
 </resources>

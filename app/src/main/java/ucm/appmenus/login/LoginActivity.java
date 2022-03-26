@@ -1,13 +1,15 @@
 package ucm.appmenus.login;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.content.Context;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,15 +20,20 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
+import android.widget.TextView;
+
+
 import java.util.Objects;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
 
 public class LoginActivity extends AppCompatActivity {
+
     Button btn_registrar, btn_login;
     EditText et_name, et_email, et_password;
     FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         et_email = findViewById(R.id.textEmailLogin);
         et_password = findViewById(R.id.textPasswordLogin);
         firebaseAuth = FirebaseAuth.getInstance();
+
 
         //accion en los botones
 
@@ -120,10 +128,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
 /*
+
         //Usado para comprobar si el usuario está ya logueado
         final SharedPreferences sp = this.getSharedPreferences(
                 getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
-        String email = sp.getString(getString(R.string.nombre_usuario), null);
+        String email = sp.getString(getString(R.string.email_usuario), null);
 
         //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
         if(email != null){
@@ -141,36 +150,36 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        final Button botonInicioSesion = findViewById(R.id.botonInicioSesion);
+        final Button botonInicioSesion = findViewById(R.id.botonIniciarSesion);
         botonInicioSesion.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Buscar resultados
-                TextView emailText = findViewById(R.id.textEmailLogin);
-                TextView passwordText = findViewById(R.id.textPasswordLogin);
+                TextView emailText = findViewById(R.id.emailLogin);
+                TextView passwordText = findViewById(R.id.passwordLogin);
 
                 //TODO: Mirar en la BD que sea correcto
-                //Busca en la BD si es correcto
                 String emailUsuario = "AQUI BUSCO EN LA BD";
                 String passwordUsuario = "AQUI BUSCO EN LA BD";
-                String nombreUsuario = "AQUI BUSCO EN LA BD";
-                String imagenUsuario = "AQUI BUSCO EN LA BD";
 
                 if(emailText.getText().toString().equals(emailUsuario) &&
                         passwordText.getText().toString().equals(passwordUsuario)) {
                     //Guarda el login en SharedPreferences
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString(getString(R.string.email_usuario), emailUsuario);
-                    editor.putString(getString(R.string.nombre_usuario), nombreUsuario);
-                    editor.putString(getString(R.string.imagen_usuario), imagenUsuario);
+                    editor.putString(getString(R.string.password_usuario), passwordUsuario);
                     editor.commit();
 
                     //Abrir activity
                     Intent intent = new Intent(botonInicioSesion.getContext(), MainActivity.class);
+                    //Intent intent = new Intent(botonInicioSesion.getContext(), MapActivity.class);
                     startActivity(intent);
                 }
             }
         });
-
     }
+
 }*/
+
+
+}
 

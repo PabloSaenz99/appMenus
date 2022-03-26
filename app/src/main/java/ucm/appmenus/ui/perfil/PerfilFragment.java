@@ -1,8 +1,8 @@
-/*
 package ucm.appmenus.ui.perfil;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,43 +24,33 @@ import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.recyclers.RecyclerAdapter;
+import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.recyclers.ViewHolderResenia;
-import ucm.appmenus.recyclers.ViewHolderRestaurantes;
+import ucm.appmenus.ui.filtros.FiltrosFragment;
 
 public class PerfilFragment extends Fragment {
 
-    private PerfilViewModel notificationsViewModel;
+    private PerfilViewModel perfilViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
+        perfilViewModel =
                 ViewModelProviders.of(this).get(PerfilViewModel.class);
         View root = inflater.inflate(R.layout.fragment_perfil, container, false);
 
-        MainActivity mainActivity = (MainActivity) getActivity();
-        Usuario usuario = mainActivity.getUsuario();
+        Usuario usuario = Usuario.getUsuario();
 
         ImageView imagen = root.findViewById(R.id.imagenUsuarioPerfilFragment);
         TextView email = root.findViewById(R.id.emailUsuarioPerfilFragment);
         TextView nombre = root.findViewById(R.id.nombreUsuarioPerfilFragment);
+        Log.i("mail", usuario.getEmail());
 
         imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
         email.setText(usuario.getEmail());
         nombre.setText(usuario.getNombre());
 
-        crearRecycler(new ArrayList<Resenia>(), root);
+        RecyclerAdapter.crearRecyclerLineal(new ArrayList<>(usuario.getResenias()), ViewHolderResenia.class,
+                R.id.recyclerReseniasPerfilFragment, R.layout.recycler_resenias, root, LinearLayoutManager.VERTICAL);
         return root;
     }
-
-    private void crearRecycler(ArrayList<Resenia> resenias, View root){
-        RecyclerView recyclerViewComentarios = root.findViewById(R.id.recyclerReseniasPerfilFragment);
-        recyclerViewComentarios.setLayoutManager(new LinearLayoutManager(
-                this.getContext(), LinearLayoutManager.VERTICAL, false));
-
-        RecyclerAdapter<ViewHolderResenia, Resenia> adapterResenias =
-                new RecyclerAdapter<ViewHolderResenia, Resenia>(
-                        resenias, R.layout.recycler_resenias, ViewHolderResenia.class);
-        recyclerViewComentarios.setAdapter(adapterResenias);
-    }
 }
-*/

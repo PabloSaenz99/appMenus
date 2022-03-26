@@ -3,13 +3,11 @@ package ucm.appmenus.utils;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Looper;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,8 +19,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import ucm.appmenus.MainActivity;
 
@@ -46,11 +42,11 @@ public class Localizacion {
     public Localizacion(MainActivity mainActivity){
         this.mainActivity = mainActivity;
         this.context = this.mainActivity.getApplicationContext();
-        refrescarLocalizacion();
+        actualizarLocalizacion();
     }
 
     @SuppressLint("MissingPermission")
-    public void refrescarLocalizacion(){
+    public void actualizarLocalizacion(){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
         if (checkPermissions()) {
@@ -127,6 +123,26 @@ public class Localizacion {
         // setting LocationRequest on FusedLocationClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+    }
+
+    /**
+     * Calcula la distancia en metros entre 2 coordenadas.
+     * @param lat1 latitud de la primera coordenada.
+     * @param lon1 longitud de la primera coordenada.
+     * @param lat2 latitud de la segunda coordenada.
+     * @param lon2 longitud de la segunda coordenada.
+     * @return la distancia en metros entre ambas coordenadas.
+     */
+    public static int distanciaEnMetros(double lat1, double lon1, double lat2, double lon2){
+        double dlat = (Math.toRadians(lat2) - Math.toRadians(lat1));
+        double dlon = (Math.toRadians(lon2) - Math.toRadians(lon1));
+        double sinlat = Math.sin(dlat / 2);
+        double sinlon = Math.sin(dlon / 2);
+
+        double a = (sinlat * sinlat) + Math.cos(lat1)*Math.cos(lat2)*(sinlon*sinlon);
+        double c = 2 * Math.asin (Math.min(1.0, Math.sqrt(a)));
+
+        return (int) (6371 * c * 1000);
     }
     /*
     private void init(){

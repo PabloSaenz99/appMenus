@@ -1,32 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/fondoOscuro"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textReseniaTituloRecycler"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/tituloResenia"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Titulo de la reseña"
-        android:textColor="#000000"
-        android:textSize="18sp" />
+        android:hint="Titulo de la reseña"
+        android:layout_gravity="center"
+        android:textColorHint="#8E8E8E"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="12dp"/>
 
     <TextView
-        android:id="@+id/textReseniaRestauranteRecycler"
-        android:layout_width="match_parent"
+        android:id="@+id/usuarioResenia"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre restaurante" />
+        android:layout_gravity="center"
+        android:textColorHint="#8E8E8E"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:text="usuario" />
 
     <RatingBar
-        android:id="@+id/ratingReseniaRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:id="@+id/valoracionResenia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stepSize="1"
+        android:layout_gravity="center"
+        android:theme="@style/RatingBarLong"/>
 
-    <TextView
-        android:id="@+id/textReseniaDescripcionRecycler"
+    <EditText
+        android:id="@+id/descripcionResenia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Descripcion de la reseña" />
+        android:hint="Descripcion de la reseña"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#8E8E8E" />
 
 </LinearLayout>

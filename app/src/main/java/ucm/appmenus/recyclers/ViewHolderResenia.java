@@ -15,26 +15,26 @@ public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IRecl
     private Resenia resenia;
 
     private final TextView titulo;
+    private final TextView creador;
     private final TextView texto;
     private final RatingBar valoracion;
-    private final TextView restauranteNombre;
 
     public ViewHolderResenia(@NonNull View view) {
         super(view);
-        titulo = (TextView) view.findViewById(R.id.textReseniaTituloRecycler);
-        texto = (TextView) view.findViewById(R.id.textReseniaDescripcionRecycler);
-        valoracion = view.findViewById(R.id.ratingReseniaRecycler);
-        restauranteNombre = view.findViewById(R.id.textReseniaRestauranteRecycler);
+        titulo = view.findViewById(R.id.tituloResenia);
+        creador = view.findViewById(R.id.usuarioResenia);
+        texto = view.findViewById(R.id.descripcionResenia);
+        valoracion = view.findViewById(R.id.valoracionResenia);
     }
 
     @Override
     public void setDatos(Resenia res) {
         this.resenia = res;
         titulo.setText(res.getTexto());
+        creador.setText(res.getUsuarioNombre());
         texto.setText(res.getTitulo());
         valoracion.setRating((float) res.getValoracion());
         valoracion.setClickable(false);
-        restauranteNombre.setText(res.getRestaurante().getNombre());
     }
 
     @Override

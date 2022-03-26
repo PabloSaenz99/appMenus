@@ -1,14 +1,18 @@
-/*
+
 package ucm.appmenus.ui.filtros;
 
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,6 +28,7 @@ import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderFiltros;
+import ucm.appmenus.ui.inicio.AniadirFiltrosActivity;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Pair;
 
@@ -39,8 +44,8 @@ public class FiltrosFragment extends Fragment {
         filtrosViewModel = ViewModelProviders.of(this).get(FiltrosViewModel.class);
         root = inflater.inflate(R.layout.fragment_filtros, container, false);
 
-        listaRecyclers = new ArrayList<RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>>();
-
+        //Crea los recyclers para los filtros, 3 recyclers para 3 tipos distintos de filtros
+        listaRecyclers = new ArrayList<>();
         crearRecyclerFiltros(root, Constantes.filtrosLocal, R.id.recyclerFiltrosLocal, 3);
         crearRecyclerFiltros(root, Constantes.filtrosPais, R.id.recyclerFiltrosPais, 3);
         crearRecyclerFiltros(root, Constantes.filtrosComida, R.id.recyclerFiltrosComida, 3);
@@ -52,6 +57,14 @@ public class FiltrosFragment extends Fragment {
                 realizarBusqueda();
             }
         });
+
+        //Si la clase que contiene este fragment es las clasde de AñadirFiltros, entonces se cambian algunas vistas
+        if(getActivity() instanceof AniadirFiltrosActivity){
+            TextView info = root.findViewById(R.id.textInfoFiltros);
+            info.setText("Selecciona un filtro para añadirlo");
+            botonFiltrar.setText("Añadir filtros");
+            root.findViewById(R.id.radioGroupDistancia).setVisibility(View.GONE);
+        }
 
         return root;
     }
@@ -73,50 +86,50 @@ public class FiltrosFragment extends Fragment {
     }
 
     private void crearRecyclerFiltros(final View root, List<String> filtros, int id, int nColums){
-        RecyclerView recyclerViewRestaurantes = root.findViewById(id);
-        recyclerViewRestaurantes.setLayoutManager(new GridLayoutManager(root.getContext(), nColums));
-
-        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> adapterFiltros =
-                new RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>>(
-                        transform(filtros, true), R.layout.recycler_filtros, ViewHolderFiltros.class);
-        recyclerViewRestaurantes.setAdapter(adapterFiltros);
-        listaRecyclers.add(adapterFiltros);
+        listaRecyclers.add(RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, true),
+                ViewHolderFiltros.class, id, R.layout.recycler_filtros, root, nColums));
     }
 
     private void realizarBusqueda(){
-        MainActivity main = (MainActivity) getActivity();
-        if(main != null) {
-            //Obtiene la distancia
-            RadioGroup rg = root.findViewById(R.id.radioGroupDistancia);
-            RadioButton but = root.findViewById(rg.getCheckedRadioButtonId());
-            int area = Integer.parseInt(but.getText().toString());
+        //Obtiene la distancia de los radioButtons (solo permiten seleccionar uno de los tres)
+        RadioGroup rg = root.findViewById(R.id.radioGroupDistancia);
+        RadioButton but = root.findViewById(rg.getCheckedRadioButtonId());
+        int area = Integer.parseInt(but.getText().toString());
 
-            //Primero busca los tipos de local
-            ArrayList<String> tiposLocal = new ArrayList<String>();
-            RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> vh = listaRecyclers.get(0);
-            for (int i = 0; i < vh.size(); i++) {
-                if (vh.get(i).getDatos().getSegundo()) {
-                    tiposLocal.add(vh.get(i).getDatos().getPrimero());
+        //Primero busca los tipos de local
+        ArrayList<String> tiposLocal = new ArrayList<String>();
+        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> vh = listaRecyclers.get(0);
+        for (int i = 0; i < vh.size(); i++) {
+            if (vh.get(i).getDatos().getSegundo()) {
+                tiposLocal.add(vh.get(i).getDatos().getPrimero());
+            }
+        }
+
+        //Luego recorre los demas recyclers que tienen los tipos de comida
+        ArrayList<String> tiposCocina = new ArrayList<>();
+        for (int i = 1; i < listaRecyclers.size(); i++) {
+            RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> aux = listaRecyclers.get(i);
+            for (int j = 0; j < aux.size(); j++) {
+                if (aux.get(j).getDatos().getSegundo()) {
+                    tiposCocina.add(aux.get(j).getDatos().getPrimero());
                 }
             }
-            ArrayList<String> tiposCocina = new ArrayList<String>();
-            //Luego recorre los demas recyclers que tienen los tipos de comida
-            for (int i = 1; i < listaRecyclers.size(); i++) {
-                RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> aux = listaRecyclers.get(i);
-                for (int j = 0; j < aux.size(); j++) {
-                    if (aux.get(j).getDatos().getSegundo()) {
-                        tiposCocina.add(aux.get(j).getDatos().getPrimero());
-                    }
-                }
-            }
-            //Buscar resultados y abrir activity
-          Bundle b = new Bundle();
-            b.putBoolean(Constantes.ACTUALIZAR_INTENT, true);
+        }
+
+        Activity act = getActivity();
+        if(act instanceof MainActivity) { //abre el fragment de inicio en modo busqueda (ahi se realiza la busqueda en OpenStreetMap)
+            //Guarda los filtros de la busqueda en un bundle
+            Bundle b = new Bundle();
             b.putStringArrayList(Constantes.TIPOS_LOCAL, tiposLocal);
             b.putStringArrayList(Constantes.TIPOS_COCINA, tiposCocina);
+            b.putBoolean(Constantes.ACTUALIZAR_INTENT, true);
             b.putInt(Constantes.AREA, area);
-
-            main.changeFragment(R.id.navigation_inicio, b);
+            b.putString(Constantes.FILTROS_BUSQUEDA, tiposLocal + tiposCocina.toString() + "<" + area + ">");
+            ((MainActivity) act).changeFragment(R.id.navigation_inicio, b);
+        } else if(act instanceof AniadirFiltrosActivity) {
+            //TODO: coger los arrays (tiposLocal y tiposCocina y hacer que se guarden en la BD
+            Toast.makeText(act, "Filtros añadidos", Toast.LENGTH_SHORT).show();
+            act.finish();
         }
     }
-}*/
+}

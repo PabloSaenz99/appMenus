@@ -2,36 +2,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/logoNaranja1"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tipo filtro 1"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold|italic" />
+    <View style="@style/HorizontalDivider"
+        android:background="@color/logoAzul4" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="Descripcion del filtro 1"
+        android:textColor="#000000"
+        android:text="Tipo de local"
         android:textAlignment="center"
-        android:textSize="14sp" />
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
 
-    <!--
-    TODO: esto se usara en un futuro junto con la parte mencionada en fragment_filtros
-    Es el recycler que conntendra todos los recyclers con sus tipos de comida. Ej:
-        En la pos 1 irá el recycler con los filtros por tipo de local
-        En la pos 2 irá el recycler con los filtros por tipo de pais...
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerFiltros"
+        android:id="@+id/recyclerFiltrosLocal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical" />
-    -->
+        android:scrollbars="vertical">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <View style="@style/HorizontalDivider"
+        android:background="@color/logoAzul4" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="Tipo de gastronomia"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFiltrosPais"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scrollbars="vertical">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <View style="@style/HorizontalDivider"
+        android:background="@color/logoAzul4"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="Tipo de alimentos"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFiltrosComida"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scrollbars="vertical">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <View style="@style/HorizontalDivider" />
 
 </LinearLayout>

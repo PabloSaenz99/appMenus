@@ -8,9 +8,11 @@ public class FiltrosViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
+    /**
+     * Esto no hace nada, podria guardar los filtros de la biquefa realizada previamente, pero no es util de momento
+     */
     public FiltrosViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
     }
 
     public LiveData<String> getText() {
