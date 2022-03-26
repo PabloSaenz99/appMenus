@@ -17,8 +17,6 @@
 
         <!-- <activity android:name=".MainActivity"></activity> -->
         <!-- si quiero que se muestre primero la pag de registro -->
-
-
         <activity
             android:name=".ui.inicio.AniadirFiltrosActivity"
             android:exported="false" />
@@ -33,11 +31,10 @@
             android:name=".ui.inicio.RestauranteDetalladoActivity"
             android:exported="false" />
         <!-- METIDO POR MIRIAM -->
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".login.RegistroActivity"></activity>
-    <activity android:name=".login.LoginActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".login.RegistroActivity" />
+        <activity android:name=".login.LoginActivity">
         <!--<activity android:name=".ui.filtros.MapActivity">-->
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,12 +42,4 @@
             </intent-filter>
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-
 </manifest>
