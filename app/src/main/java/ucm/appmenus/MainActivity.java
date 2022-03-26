@@ -43,17 +43,6 @@ import ucm.appmenus.utils.WebScrapping;
 
 public class MainActivity extends AppCompatActivity {
 
-    //vars para prueba de autenticacion registro
-    Button btn_login, btn_registrar;
-    EditText et_name, et_email, et_password;
-
-    //variable dodne guardaremos la info de lo que metamos en el input
-    private String name = "";
-    private String email = "";
-    private String password = "";
-    private FirebaseAuth firebaseAuth;
-    private ProgressDialog ProgressDialog;
-    // DatabaseReference mDatabase;
 
     //esto estaba de antes
     private Usuario usuario;
@@ -69,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         // loginUsuario();
 
         //Importante que esté después del login de usuario o lanzará nullpointer
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_afterlogin);
         //Cosas de firebase inputs
 /*
         final BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -112,53 +101,6 @@ public class MainActivity extends AppCompatActivity {
 */
         //  }
 //}
-//Hecho nuevo de un video
-        btn_registrar=findViewById(R.id.botonRegistro);
-        btn_login=findViewById(R.id.botonInicioSesion);
-        email = et_email.getText().toString();
-        password = et_password.getText().toString();
-        //accion del boton de registrar
-        btn_registrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,RegistroActivity.class));
-            }
-        });
-//accion del boton de login
-
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name = et_name.getText().toString();
-                email = et_email.getText().toString();
-                password = et_password.getText().toString();
-                firebaseAuth= FirebaseAuth.getInstance();
-                if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
-                    Toast.makeText(MainActivity.this,"All fields required",Toast.LENGTH_SHORT).show();
-                }else{
-                    login(email,password);
-                }
-            }
-        });
-    }
-
-
- private void login(String email, String password){
-firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-    @Override
-    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-        if(task.isSuccessful()){
-            //en donde dice registro activity tendria que ir el profileActivity
-            Intent intent= new Intent(MainActivity.this,RegistroActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        }else{
-            Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-
-        }
-    }
-});
 
 
 

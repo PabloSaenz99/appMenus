@@ -24,11 +24,12 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/username"
+
                 android:layout_width="wrap_content"
                 android:layout_height="166dp"
                 android:layout_weight="1"
-                android:text="Bienvenido a FeelTr!!!"
+                android:text="Bienvenido a FeelTr Username!!!"
                 android:textColor="#FF5722"
                 android:textSize="48sp"
                 android:textStyle="bold" />

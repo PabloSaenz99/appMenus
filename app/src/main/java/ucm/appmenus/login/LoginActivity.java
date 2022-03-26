@@ -1,18 +1,14 @@
-/* package ucm.appmenus.login;
+package ucm.appmenus.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,18 +18,104 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
 
 public class LoginActivity extends AppCompatActivity {
-
-
+    Button btn_registrar, btn_login;
+    EditText et_name, et_email, et_password;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicio_sesion);
+        setContentView(R.layout.activity_inicio_sesion);//debo poner la vista de login y me abra directamente el login
 
+/*
+        final Button botonRegistro = findViewById(R.id.botonRegistro);
+        botonRegistro.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Abrir activity
+                Intent intent = new Intent(botonRegistro.getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        final Button botonInicioSesion = findViewById(R.id.botonInicioSesion);
+        botonInicioSesion.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Abrir activity
+                Intent intent = new Intent(botonInicioSesion.getContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+*/
+
+        //hACER LOGIN
+
+
+
+        btn_registrar = findViewById(R.id.botonRegistro);
+        btn_login = findViewById(R.id.botonInicioSesion);
+        et_email = findViewById(R.id.textEmailLogin);
+        et_password = findViewById(R.id.textPasswordLogin);
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        //accion en los botones
+
+        btn_registrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                  startActivity(new Intent(LoginActivity.this, RegistroActivity.class));
+            }
+
+
+        });
+
+        //btn login
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text_email = et_email.getText().toString();
+                String text_password = et_password.getText().toString();
+                if (TextUtils.isEmpty(text_email) || TextUtils.isEmpty(text_password)) {
+                    Toast.makeText(LoginActivity.this, "All fields required", Toast.LENGTH_SHORT).show();
+                } else {
+                    login(text_email, text_password);
+                }
+            }
+        });
+    }
+
+
+
+        //metodo login
+        private void login (String text_email, String text_password){
+            firebaseAuth.signInWithEmailAndPassword(text_email, text_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+
+    }
 
 
 
@@ -90,6 +172,5 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-}
+}*/
 
-*/
