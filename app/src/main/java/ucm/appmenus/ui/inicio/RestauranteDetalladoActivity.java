@@ -29,6 +29,7 @@ import ucm.appmenus.recyclers.ViewHolderImagenes;
 import ucm.appmenus.recyclers.ViewHolderResenia;
 import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
+import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Pair;
 
 /**
@@ -105,7 +106,11 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         botonResenia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ReseniaActivity.class));
+                Intent intent = new Intent(getApplicationContext(), ReseniaActivity.class);
+                Bundle b = new Bundle();
+                b.putString(Constantes.RESTAURANTE_ID, restaurante.getIdRestaurante());
+                intent.putExtras(b);
+                startActivity(intent);
             }
         });
 

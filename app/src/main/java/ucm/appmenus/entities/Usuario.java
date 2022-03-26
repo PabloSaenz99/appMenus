@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import ucm.appmenus.utils.Localizacion;
 import ucm.appmenus.utils.Pair;
@@ -67,6 +68,12 @@ public class Usuario {
     public Localizacion getLocalizacion() { return localizacion; }
     public String getImagenDir() { return imagenDir; }
     public HashSet<Resenia> getResenias() { return resenias; }
+    public List<String> getReseniasId() {
+        List<String> reseniasLista = new ArrayList<>();
+        for (Resenia r:this.resenias)
+            reseniasLista.add(r.getReseniaID());
+        return reseniasLista;
+    }
     public HashSet<Restaurante> getRestaurantesFavoritos() { return restaurantesFavoritos; }
     public ArrayList<String> getPreferencias() { return preferencias; }
 

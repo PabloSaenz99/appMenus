@@ -68,10 +68,6 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        /*TODO: hacer que funcione y luego borrar
-        BaseDatos.getInstance().addResenia(new Resenia("idRes", usuario.getEmail(),
-                usuario.getNombre(), "titulo", "buena comida", 4.5));
-         */
     }
 
     /**

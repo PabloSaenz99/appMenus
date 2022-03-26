@@ -82,7 +82,7 @@ public class RegistroActivity extends AppCompatActivity {
                     String userId = rUser.getUid();
                     databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
                     HashMap<String, String> hashMap = new HashMap<>();
-                    hashMap.put("userId", userId);
+                    //hashMap.put("userId", userId);
                     hashMap.put("userName", nombre);
                     hashMap.put("userEmail", email);
                     hashMap.put("userPassword", password);

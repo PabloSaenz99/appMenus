@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 public class Resenia implements Parcelable {
 
+    //TODO: guardar bien
+    private final String reseniaID;
     private final String restauranteID;
     private final String usuarioEmail;
     private final String usuarioNombre;
@@ -13,6 +15,7 @@ public class Resenia implements Parcelable {
     private final double valoracion;
 
     public Resenia(String restauranteID, String usuarioEmail, String usuarioNombre, String titulo, String texto, double valoracion){
+        this.reseniaID = "ID DE LA RESEÑA";
         this.restauranteID = restauranteID;
         this.usuarioEmail = usuarioEmail;
         this.usuarioNombre = usuarioNombre;
@@ -21,6 +24,7 @@ public class Resenia implements Parcelable {
         this.valoracion = valoracion;
     }
 
+    public String getReseniaID() { return reseniaID; }
     public String getRestauranteID() { return restauranteID; }
     public String getUsuarioEmail() { return usuarioEmail; }
     public String getUsuarioNombre() { return usuarioNombre; }
@@ -30,6 +34,7 @@ public class Resenia implements Parcelable {
 
     //--------Las funciones siguientes se usan para poder pasar la clase entre Actividades----------
     protected Resenia(Parcel in) {
+        reseniaID = in.readString();
         restauranteID = in.readString();
         usuarioEmail = in.readString();
         usuarioNombre = in.readString();
@@ -57,6 +62,7 @@ public class Resenia implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(reseniaID);
         parcel.writeString(restauranteID);
         parcel.writeString(usuarioEmail);
         parcel.writeString(usuarioNombre);

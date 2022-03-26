@@ -18,13 +18,14 @@ import java.util.List;
 
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Restaurante;
+import ucm.appmenus.entities.Usuario;
 
 //https://firebase.google.com/docs/database/android/read-and-write#java_5
 public class BaseDatos {
 
     private static BaseDatos instance;
     private final FirebaseAuth firebaseAuth;
-    private final DatabaseReference databaseReference;
+    private final DatabaseReference databaseUsuarios, databaseResenias, databaseRestaurantes;
     private String userId;
 
     public static BaseDatos getInstance(){
@@ -37,16 +38,27 @@ public class BaseDatos {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser rUser = firebaseAuth.getCurrentUser();
         String userId = rUser.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        databaseUsuarios = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        databaseResenias = FirebaseDatabase.getInstance().getReference("Resenias").child(userId);
+        databaseRestaurantes = FirebaseDatabase.getInstance().getReference("Restaurantes").child(userId);
     }
 
+    /**
+     * Añade una reseña a la Base de Datos. Se añade una nueva entrada en Reseñas y se añade su id en el
+     * restaurante al cual pertenece y en el usaurio que la creó.
+     * @param resenia la reseña a añadir
+     */
     public void addResenia(Resenia resenia){
-        databaseReference.child("Resenias").setValue(resenia);
+        List<String> reseniasusuario = Usuario.getUsuario().getReseniasId();
+        reseniasusuario.add(resenia.getReseniaID());
+        databaseResenias.push().setValue(resenia);
+        databaseRestaurantes.child("resenias").setValue("eedfdsfs");
+        databaseUsuarios.child("resenias").setValue(reseniasusuario);
     }
 
     public List<Resenia> getResenias(String restauranteID){
         List<Resenia> resenias = new ArrayList<>();
-        databaseReference.child("restaurantes").child(restauranteID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseRestaurantes.child(restauranteID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
@@ -58,15 +70,15 @@ public class BaseDatos {
     }
 
     public void addFiltrosRestaurante(String restauranteID, List<String> filtros){
-        databaseReference.child("restaurantes").child(restauranteID).setValue(filtros);
+        databaseRestaurantes.child(restauranteID).setValue(filtros);
     }
 
     public void addFavoritosUsuario(List<String> restaurantes){
-        databaseReference.child("users").child(userId).child("favoritos").setValue(restaurantes);
+        databaseUsuarios.child("favoritos").setValue(restaurantes);
     }
 
     public void getDatosusuario(){
-        databaseReference.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseUsuarios.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
