@@ -23,11 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONRestaurante;
 import ucm.appmenus.login.LoginActivity;
 import ucm.appmenus.recyclers.IReclycerElement;
 import ucm.appmenus.recyclers.RecyclerAdapter;
+import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Localizacion;
 
@@ -66,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        /*TODO: hacer que funcione y luego borrar
+        BaseDatos.getInstance().addResenia(new Resenia("idRes", usuario.getEmail(),
+                usuario.getNombre(), "titulo", "buena comida", 4.5));
+         */
     }
 
     /**

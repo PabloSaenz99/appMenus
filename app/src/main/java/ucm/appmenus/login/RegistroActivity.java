@@ -67,7 +67,13 @@ public class RegistroActivity extends AppCompatActivity {
 
     }
 
-    public void registerUser(String nombre, String email, String password) {
+    /**
+     * Registra al usuario en la BD
+     * @param nombre nombre del usaurio
+     * @param email email del usaurio
+     * @param password contraseña del usuario
+     */
+    private void registerUser(String nombre, String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {

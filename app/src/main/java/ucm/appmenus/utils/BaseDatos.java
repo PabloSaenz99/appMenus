@@ -1,94 +1,81 @@
 package ucm.appmenus.utils;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
+import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Restaurante;
 
+//https://firebase.google.com/docs/database/android/read-and-write#java_5
 public class BaseDatos {
 
-    private static BaseDatos bd = new BaseDatos();
-    private static final HashSet<String> arrayOperadores = new HashSet<String>(){
-        {add("=");add(">");add("<");add(">=");add("<=");add("<>");add("!=");
-            add("AND");add("OR");add("NOT");
-            //Tambien valen pero no las usamos
-            //add("BETWEEN");add("LIKE");add("IN");
-        }};
-    private static final HashSet<String> arrayFiltros = new HashSet<String>(){
-        {add("precio");add("valoracion");add("vegana");}};
-    private static final HashSet<String> arrayOrden = new HashSet<String>(){
-        {add("ASC");add("DESC");}};
-
-    private String query;
-    private boolean queryCorrecta;
+    private static BaseDatos instance;
+    private final FirebaseAuth firebaseAuth;
+    private final DatabaseReference databaseReference;
+    private String userId;
 
     public static BaseDatos getInstance(){
-        return bd;
+        if(instance == null)
+            instance = new BaseDatos();
+        return instance;
     }
 
     private BaseDatos(){
-        query = "";
-        queryCorrecta = false;
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser rUser = firebaseAuth.getCurrentUser();
+        String userId = rUser.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
     }
 
-    public void parsearFiltros(ArrayList<String> camposTabla, String nombreTabla, ArrayList<String> filtros,
-                               ArrayList<String> operadores, ArrayList<String> ordenacion){
-        //Comprueba que los campos de la tabla son correctos
-        String campoTabla = "";
-        if(camposTabla != null &&
-                //O tiene por unico parametro "*" o todos los parametros estan en la lista de filtros
-                ((camposTabla.size() == 1 && camposTabla.get(0).equalsIgnoreCase("*")) ||
-                arrayFiltros.containsAll(filtros))){
-            for (String c: camposTabla) {
-                campoTabla += c + ", ";
-            }
-            //Es posible que falte quitar la "," del final
-        }
-        else{
-            return;
-        }
-        //Comprueba que el nombre de la tabla sea correcto
-        if(!arrayFiltros.contains(nombreTabla)){
-            return;
-        }
-
-        //Comprueba que los filtros son correctos
-        String filtro = "null";
-        if(filtros != null && arrayFiltros.containsAll(filtros)){
-            filtro = " WHERE ";
-            for (String f: filtros) {
-                filtro += f + ", ";
-            }
-        }
-        //Comprueba que el orden sea valido
-        String orden = "null";
-        if(ordenacion != null && arrayOrden.containsAll(ordenacion)){
-            orden = " ORDER BY ";
-            for (String o: ordenacion) {
-                orden = " ORDER BY " + o;
-            }
-        }
-
-        queryCorrecta = true;
-        query = "SELECT " + campoTabla + " FROM " + nombreTabla + filtro + orden;
+    public void addResenia(Resenia resenia){
+        databaseReference.child("Resenias").setValue(resenia);
     }
 
-    /**
-     * Devuelve una lista con los restaurantes
-     * IMPORTANTE: antes hay que llamar a parsearFiltros o devolverá una lista vacia
-     * */
-    public ArrayList<Restaurante> cargarRestaurantes(){
-        ArrayList<Restaurante> restaurantes = new ArrayList<Restaurante>();
-        if(queryCorrecta) {
-            /*
-            TODO: Tiene que llamar a placedetails y cargar la info del restaurante
-            (puede guardar en la bd la informacion de los tipos de comida del restaurante junto con
-            el id de maps del restaurante (seria clave primaria))
-            */
-        }
-        else {
-            //TODO: Aqui habria que devolver un error, mientras devuelvo datos de pruueba
-        }
-        return restaurantes;
+    public List<Resenia> getResenias(String restauranteID){
+        List<Resenia> resenias = new ArrayList<>();
+        databaseReference.child("restaurantes").child(restauranteID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    //TODO: obtener las reseñas idk
+                }
+            }
+        });
+        return resenias;
+    }
+
+    public void addFiltrosRestaurante(String restauranteID, List<String> filtros){
+        databaseReference.child("restaurantes").child(restauranteID).setValue(filtros);
+    }
+
+    public void addFavoritosUsuario(List<String> restaurantes){
+        databaseReference.child("users").child(userId).child("favoritos").setValue(restaurantes);
+    }
+
+    public void getDatosusuario(){
+        databaseReference.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                }
+            }
+        });
     }
 }
