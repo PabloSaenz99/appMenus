@@ -17,9 +17,9 @@ public class Resenia implements Parcelable {
     private final String texto;
     private final double valoracion;
 
-    public Resenia(String restauranteID, String usuarioEmail, String usuarioNombre, String titulo, String texto, double valoracion){
-        this.idRestaurante = restauranteID;
-        this.idUsuario = usuarioEmail;
+    public Resenia(String idRestaurante, String idUsuario, String usuarioNombre, String titulo, String texto, double valoracion){
+        this.idRestaurante = idRestaurante;
+        this.idUsuario = idUsuario;
         this.usuarioNombre = usuarioNombre;
         this.titulo = titulo;
         this.texto = texto;

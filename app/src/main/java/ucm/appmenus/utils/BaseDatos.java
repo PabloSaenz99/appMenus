@@ -13,6 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import ucm.appmenus.entities.Resenia;
@@ -55,12 +57,10 @@ public class BaseDatos {
      * @param resenia la reseña a añadir
      */
     public void addResenia(Resenia resenia){
-        //TODO: obtener datos de la bd de los arrays del restaurante y del usuario.
-
-        //Añadir los datos a la BD
         databaseResenias.child(resenia.getIdResenia()).setValue(resenia);
-        databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).setValue(resenia.getIdResenia());//Poner el array obtenido de la BD
-        databaseUsuarios.child(RESENIAS).setValue(resenia.getIdResenia());//Poner el array obtenido de la bd
+        databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).push().setValue(resenia.getIdResenia());
+        databaseUsuarios.child(RESENIAS).push().setValue(resenia.getIdResenia());
+        getReseniasRestaurante(resenia.getIdRestaurante());
     }
 
     /**
@@ -85,14 +85,23 @@ public class BaseDatos {
 
     public List<Resenia> getReseniasRestaurante(String idRestaurante){
         List<Resenia> resenias = new ArrayList<>();
-        //getDatabaseRestaurantes(restauranteID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-        databaseRestaurantes.child(idRestaurante).child(RESENIAS).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    //TODO: obtener las reseñas
+        databaseRestaurantes.child(idRestaurante).child(RESENIAS).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Log.i("res", "entro");
+                for (DataSnapshot d: task.getResult().getChildren()) {
+                    databaseResenias.child(String.valueOf(d.getValue())).get().addOnCompleteListener(task1 -> {
+                        DataSnapshot res = task1.getResult();
+                        resenias.add(new Resenia(String.valueOf(res.child("idRestaurante").getValue()),
+                                String.valueOf(res.child("idUsuario").getValue()),
+                                String.valueOf(res.child("usuarioNombre").getValue()),
+                                String.valueOf(res.child("titulo").getValue()),
+                                String.valueOf(res.child("texto").getValue()),
+                                Double.valueOf(String.valueOf(res.child("valoracion").getValue()))));
+                    });
                 }
             }
+            else
+                Log.i("res","error");
         });
         return resenias;
     }
