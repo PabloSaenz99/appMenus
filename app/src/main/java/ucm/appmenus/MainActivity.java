@@ -52,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //Loguea al usaurio para poder usar sus datos luego
         Bundle loginInfo = getIntent().getExtras();
-        loginUsuario(loginInfo.getString(Constantes.EMAIL_USUARIO, "Error"),
-                loginInfo.getString(Constantes.NOMBRE_USUARIO, "Error"));
+        this.usuario = Usuario.crearUsuario(
+                loginInfo.getString(Constantes.ID_USUARIO, "error"),
+                loginInfo.getString(Constantes.EMAIL_USUARIO, "Error"),
+                loginInfo.getString(Constantes.NOMBRE_USUARIO, "Error"), new Localizacion(this));
 
         //Importante que esté después del login de usuario o lanzará nullpointer
         setContentView(R.layout.activity_afterlogin);
@@ -78,22 +80,6 @@ public class MainActivity extends AppCompatActivity {
     public void changeFragment(int id, Bundle b){
         Log.d("BUNDLE", b.toString());
         navController.navigate(id, b);
-    }
-
-    /**
-     * Loguea al usuario
-     * Obtiene el email y contraseña de SharedPreferences
-     * TODO: Deberia comprobar en la BD que sea correcto(?)
-     *
-     * @param o
-     * @param o1*/
-    //Funcion de login local
-    private void loginUsuario(String email, String nombre){
-        /*final SharedPreferences sp = this.getSharedPreferences(
-                getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
-        String email = sp.getString(getString(R.string.email_usuario), "");
-        String password = sp.getString(getString(R.string.password_usuario), "");*/
-        this.usuario = Usuario.crearUsuario(email, nombre, new Localizacion(this));
     }
  }
 

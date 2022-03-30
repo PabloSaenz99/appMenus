@@ -1,5 +1,7 @@
 package ucm.appmenus.entities;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +13,7 @@ public class Usuario {
     public static final int MAX_FAV = 5;
     private static Usuario instance = null;
 
+    private final String idUsuario;
     private final String email;
     private String nombre;
     private final Localizacion localizacion;
@@ -36,21 +39,22 @@ public class Usuario {
      * @return el usuario creado en caso de no existir previamente o el usuario creado previamente
      * en caso de existir ya.
      */
-    public static Usuario crearUsuario(String email, String nombre, Localizacion loc) {
+    public static Usuario crearUsuario(String idUsuario, String email, String nombre, Localizacion loc) {
         //Log.i("email", email);
         if(instance == null){
             String imagen = "";
             HashSet<Restaurante> favoritos = new HashSet<>();
             HashSet<Resenia> resenias = new HashSet<>();
             ArrayList<String> preferencias = new ArrayList<>();
-            instance = new Usuario(email, nombre, loc, imagen, favoritos, resenias, preferencias);
+            instance = new Usuario(idUsuario, email, nombre, loc, imagen, favoritos, resenias, preferencias);
         }
         return instance;
     }
 
-    private Usuario(String email, String nombre, Localizacion localizacion,
+    private Usuario(String idUsuario, String email, String nombre, Localizacion localizacion,
                     String imagenDir, HashSet<Restaurante> favoritos,
                     HashSet<Resenia> resenias, ArrayList<String> preferencias) {
+        this.idUsuario = idUsuario;
         this.email = email;
         this.nombre = nombre;
         this.localizacion = localizacion;
@@ -60,6 +64,7 @@ public class Usuario {
         this.preferencias = preferencias;
     }
 
+    public String getIdUsuario() { return idUsuario; }
     public String getEmail() { return email; }
     public String getNombre() { return nombre; }
     public Localizacion getLocalizacion() { return localizacion; }
@@ -82,4 +87,5 @@ public class Usuario {
     }
 
     public void removeRestauranteFavorito(Restaurante r){ this.restaurantesFavoritos.remove(r); }
+
 }

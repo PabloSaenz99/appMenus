@@ -85,7 +85,6 @@ public class RegistroActivity extends AppCompatActivity {
                     //hashMap.put("userId", userId);
                     hashMap.put("userName", nombre);
                     hashMap.put("userEmail", email);
-                    hashMap.put("userPassword", password);
                     databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull @NotNull Task<Void> task) {

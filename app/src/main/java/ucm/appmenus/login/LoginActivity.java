@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                     //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     //TODO: get usaurio nombre
                     Bundle b = new Bundle();
+                    b.putString(Constantes.ID_USUARIO, firebaseAuth.getCurrentUser().getUid());
                     b.putString(Constantes.EMAIL_USUARIO, text_email);
                     b.putString(Constantes.NOMBRE_USUARIO, "Usuario");
                     intent.putExtras(b);
