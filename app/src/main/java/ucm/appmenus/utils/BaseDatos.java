@@ -31,8 +31,7 @@ public class BaseDatos {
 
 
     private static BaseDatos instance;
-    private final FirebaseAuth firebaseAuth;
-    private final DatabaseReference databaseUsuarios;
+    private final DatabaseReference databaseUsuarios, databaseRestaurantes, databaseResenias;
     private String userId;
 
     public static BaseDatos getInstance(){
@@ -42,18 +41,11 @@ public class BaseDatos {
     }
 
     private BaseDatos(){
-        firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser rUser = firebaseAuth.getCurrentUser();
+        FirebaseUser rUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = rUser.getUid();
         databaseUsuarios = FirebaseDatabase.getInstance().getReference("Users").child(userId);
-    }
-
-    private DatabaseReference getDatabaseResenias(String id){
-        return FirebaseDatabase.getInstance().getReference(RESENIAS + "/" + id);
-    }
-
-    private DatabaseReference getDatabaseRestaurantes(String id){
-        return  FirebaseDatabase.getInstance().getReference(RESTAURANTES + "/" + id);
+        databaseRestaurantes = FirebaseDatabase.getInstance().getReference(RESTAURANTES);
+        databaseResenias = FirebaseDatabase.getInstance().getReference(RESENIAS);
     }
 
     /**
@@ -66,15 +58,35 @@ public class BaseDatos {
         //TODO: obtener datos de la bd de los arrays del restaurante y del usuario.
 
         //Añadir los datos a la BD
-        getDatabaseResenias(resenia.getIdResenia()).setValue(resenia);
-        getDatabaseRestaurantes(resenia.getIdRestaurante()).child(RESENIAS).setValue(resenia.getIdResenia());
-        databaseUsuarios.child(RESENIAS).setValue(Usuario.getUsuario().getReseniasId());
+        databaseResenias.child(resenia.getIdResenia()).setValue(resenia);
+        databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).setValue(resenia.getIdResenia());//Poner el array obtenido de la BD
+        databaseUsuarios.child(RESENIAS).setValue(resenia.getIdResenia());//Poner el array obtenido de la bd
     }
 
-    public List<Resenia> getResenias(String restauranteID){
+    /**
+     * Añade filtros a un restaurante.
+     * Los objetos activos actualmente en la app no se modifican.
+     * @param idRestaurante el id de OpenStreetMap del restaurante
+     * @param filtros los filtros nuevos
+     */
+    public void addFiltrosRestaurante(String idRestaurante, List<String> filtros){
+        //TODO: obtener los datos de los restaurantes de la BD y luego actualizarlos con los filtros nuevos
+        databaseRestaurantes.child(idRestaurante).child(FILTROS_NO_APROBADOS).setValue(filtros);
+    }
+
+    /**
+     * Añade restaurantes favoritos al usuario actual.
+     * Los objetos activos actualmente en la app no se modifican.
+     * @param restaurantes el id de OpenStreetMap del restaurante
+     */
+    public void addFavoritosUsuario(List<String> restaurantes){
+        databaseUsuarios.child(FAVORITOS).setValue(restaurantes);
+    }
+
+    public List<Resenia> getReseniasRestaurante(String idRestaurante){
         List<Resenia> resenias = new ArrayList<>();
         //getDatabaseRestaurantes(restauranteID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-        getDatabaseRestaurantes(restauranteID + "/" + RESENIAS).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        databaseRestaurantes.child(idRestaurante).child(RESENIAS).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
@@ -85,16 +97,11 @@ public class BaseDatos {
         return resenias;
     }
 
-    public void addFiltrosRestaurante(String restauranteID, List<String> filtros){
-        //TODO: obtener los datos de los restaurantes de la BD y luego actualizarlos con los filtros nuevos
-        getDatabaseRestaurantes(restauranteID).child(FILTROS_NO_APROBADOS).setValue(filtros);
+    public void getFiltrosRestaurante(String idRestaurante){
+        //TODO: obtener los datos de los filtros
     }
 
-    public void addFavoritosUsuario(List<String> restaurantes){
-        databaseUsuarios.child(FAVORITOS).setValue(restaurantes);
-    }
-
-    public void getDatosusuario(){
+    public void getDatosUsuario(){
         databaseUsuarios.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
