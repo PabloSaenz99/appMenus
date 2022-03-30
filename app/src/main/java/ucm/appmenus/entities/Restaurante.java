@@ -81,9 +81,8 @@ public class Restaurante implements Parcelable {
     public double getValoracion() { return valoracion; }
     public ArrayList<Bitmap> getListaImagenes() { return listaImagenes.getValue(); }
     public LiveData<ArrayList<Bitmap>> getliveDataImagen() { return listaImagenes; }
-    public HashSet<String> getListaFiltros() { return listaFiltros.getValue(); }
     public LiveData<HashSet<String>> getLivedataFiltros() {return this.listaFiltros;}
-    public MutableLiveData<ArrayList<Resenia>> getLiveDataResenia() { return this.listaResenias;};
+    public MutableLiveData<ArrayList<Resenia>> getLiveDataResenia() { return this.listaResenias;}
 
     public void updateImagenes(){ ws.setImagenes(); }
     public void updateFiltros(){

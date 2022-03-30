@@ -1,13 +1,10 @@
 package ucm.appmenus.entities;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import ucm.appmenus.utils.Localizacion;
-import ucm.appmenus.utils.Pair;
 
 public class Usuario {
 
@@ -71,7 +68,7 @@ public class Usuario {
     public List<String> getReseniasId() {
         List<String> reseniasLista = new ArrayList<>();
         for (Resenia r:this.resenias)
-            reseniasLista.add(r.getReseniaID());
+            reseniasLista.add(r.getIdResenia());
         return reseniasLista;
     }
     public HashSet<Restaurante> getRestaurantesFavoritos() { return restaurantesFavoritos; }

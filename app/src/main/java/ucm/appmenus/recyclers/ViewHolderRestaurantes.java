@@ -1,8 +1,6 @@
 package ucm.appmenus.recyclers;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -13,7 +11,6 @@ import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -24,12 +21,9 @@ import ucm.appmenus.entities.Restaurante;
 
 import android.graphics.Bitmap;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-
-import ucm.appmenus.login.RegistroActivity;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
-import ucm.appmenus.utils.Pair;
+import ucm.appmenus.utils.Constantes;
 
 public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante> {
 
@@ -71,7 +65,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
             public void onClick(View v) {
                 //TODO (quiza) hacer que en vez de pulsando la imagen, añadiendo un boton
                 Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
-                intent.putExtra("restaurante", datos);
+                intent.putExtra(Constantes.RESTAURANTE, datos);
                 view.getContext().startActivity(intent);
             }
         });

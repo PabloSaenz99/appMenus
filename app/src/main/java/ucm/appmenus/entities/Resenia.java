@@ -3,40 +3,54 @@ package ucm.appmenus.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Resenia implements Parcelable {
 
-    //TODO: guardar bien
-    private final String reseniaID;
-    private final String restauranteID;
-    private final String usuarioEmail;
+    private final String idResenia;
+    private final String idRestaurante;
+    private final String idUsuario;
+    //TODO: usuario no vale para nada porque el nombre puede cambiar?
     private final String usuarioNombre;
     private final String titulo;
     private final String texto;
     private final double valoracion;
 
     public Resenia(String restauranteID, String usuarioEmail, String usuarioNombre, String titulo, String texto, double valoracion){
-        this.reseniaID = "ID DE LA RESEÑA";
-        this.restauranteID = restauranteID;
-        this.usuarioEmail = usuarioEmail;
+        this.idRestaurante = restauranteID;
+        this.idUsuario = usuarioEmail;
         this.usuarioNombre = usuarioNombre;
         this.titulo = titulo;
         this.texto = texto;
         this.valoracion = valoracion;
+
+        this.idResenia = String.valueOf(this.hashCode());
     }
 
-    public String getReseniaID() { return reseniaID; }
-    public String getRestauranteID() { return restauranteID; }
-    public String getUsuarioEmail() { return usuarioEmail; }
+    public String getIdResenia() { return idResenia; }
+    public String getIdRestaurante() { return idRestaurante; }
+    public String getIdUsuario() { return idUsuario; }
     public String getUsuarioNombre() { return usuarioNombre; }
     public String getTitulo() { return titulo; }
     public String getTexto() { return texto; }
     public double getValoracion() { return valoracion; }
 
+    /**
+     * Redefine el hash del objeto para que si los datos son iguales siempre sea el mismo
+     * @return hash del objeto
+     */
+    @Override
+    public int hashCode() {
+        Object[] x = {idResenia, idRestaurante, idUsuario, titulo, texto, String.valueOf(valoracion)};
+        return Arrays.hashCode(x);
+    }
+
     //--------Las funciones siguientes se usan para poder pasar la clase entre Actividades----------
     protected Resenia(Parcel in) {
-        reseniaID = in.readString();
-        restauranteID = in.readString();
-        usuarioEmail = in.readString();
+        idResenia = in.readString();
+        idRestaurante = in.readString();
+        idUsuario = in.readString();
         usuarioNombre = in.readString();
         titulo = in.readString();
         texto = in.readString();
@@ -62,9 +76,9 @@ public class Resenia implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(reseniaID);
-        parcel.writeString(restauranteID);
-        parcel.writeString(usuarioEmail);
+        parcel.writeString(idResenia);
+        parcel.writeString(idRestaurante);
+        parcel.writeString(idUsuario);
         parcel.writeString(usuarioNombre);
         parcel.writeString(titulo);
         parcel.writeString(texto);

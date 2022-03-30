@@ -5,7 +5,6 @@ package ucm.appmenus.ui.filtros;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +27,7 @@ import ucm.appmenus.R;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.ui.inicio.AniadirFiltrosActivity;
+import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Pair;
 
@@ -55,7 +53,7 @@ public class FiltrosFragment extends Fragment {
         Button botonFiltrar = root.findViewById(R.id.botonFiltrar);
         botonFiltrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                realizarBusqueda();
+                accionBoton(savedInstanceState);
             }
         });
 
@@ -101,7 +99,7 @@ public class FiltrosFragment extends Fragment {
                 ViewHolderFiltros.class, id, R.layout.recycler_filtros, root, nColums));
     }
 
-    private void realizarBusqueda(){
+    private void accionBoton(Bundle savedInstanceState){
         //Obtiene la distancia de los radioButtons (solo permiten seleccionar uno de los tres)
         RadioGroup rg = root.findViewById(R.id.radioGroupDistancia);
         RadioButton but = root.findViewById(rg.getCheckedRadioButtonId());
@@ -146,6 +144,8 @@ public class FiltrosFragment extends Fragment {
         } else if(act instanceof AniadirFiltrosActivity) {
             //TODO: coger los arrays (tiposLocal y tiposCocina y hacer que se guarden en la BD
             Toast.makeText(act, "Filtros añadidos", Toast.LENGTH_SHORT).show();
+            tiposLocal.addAll(tiposCocina);
+            BaseDatos.getInstance().addFiltrosRestaurante(getArguments().getString(Constantes.RESTAURANTE), tiposLocal);
             act.finish();
         }
         //TODO: hacer para si se llama desde el login

@@ -2,24 +2,19 @@ package ucm.appmenus.ui.inicio;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Restaurante;
@@ -27,10 +22,8 @@ import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.recyclers.ViewHolderImagenes;
 import ucm.appmenus.recyclers.ViewHolderResenia;
-import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.utils.Constantes;
-import ucm.appmenus.utils.Pair;
 
 /**
  * Clase utilizada para mostar los detalles de un restaurante, por ejemplo con mas imagenes, filtros o reseñas
@@ -44,7 +37,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurante_detallado);
 
-        restaurante = getIntent().getParcelableExtra("restaurante");
+        restaurante = getIntent().getParcelableExtra(Constantes.RESTAURANTE);
 
         TextView nombre = findViewById(R.id.nombreRestaurante);
         RatingBar valoracion = findViewById(R.id.valoracionRestaurante);
@@ -102,13 +95,13 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         };
         restaurante.getLiveDataResenia().observe(this, observerResenias);
 
-        //Boton que abre la activiry para crear una reseña de un restaurante
+        //Boton que abre la activity para crear una reseña de un restaurante
         botonResenia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ReseniaActivity.class);
                 Bundle b = new Bundle();
-                b.putString(Constantes.RESTAURANTE_ID, restaurante.getIdRestaurante());
+                b.putString(Constantes.RESTAURANTE, restaurante.getIdRestaurante());
                 intent.putExtras(b);
                 startActivity(intent);
             }
@@ -117,7 +110,9 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         botonFiltros.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AniadirFiltrosActivity.class));
+                Intent intent = new Intent(getApplicationContext(), AniadirFiltrosActivity.class);
+                intent.putExtra(Constantes.RESTAURANTE, restaurante.getIdRestaurante());
+                startActivity(intent);
             }
         });
     }
