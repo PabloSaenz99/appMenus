@@ -113,7 +113,7 @@ public class JSONRestaurante {
         jRestaurante.put("nombre", r.getNombre());
         jRestaurante.put("url", r.getStringURL());
         jRestaurante.put("valoracion", r.getValoracion());
-        jRestaurante.put("imagenPrincDir", r.getListaImagenes());
+        jRestaurante.put("imagenPrincDir", r.getliveDataImagen().getValue());
         //Array de filtros:
         JSONArray jArrayFiltros = new JSONArray();
         for(String filtro: r.getLivedataFiltros().getValue()) {

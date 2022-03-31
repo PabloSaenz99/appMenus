@@ -28,7 +28,11 @@
             android:id="@+id/nombreRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre Restaurante" />
+            android:gravity="center"
+            android:text="Nombre Restaurante"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <!--TODO hacer bien este boton de favorito
         <ToggleButton
@@ -52,13 +56,30 @@
             android:id="@+id/filtrosRestauranteRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/infoFiltrosBD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Filtros no confirmados"
+            android:textColor="#FF9800"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filtrosBDRestauranteRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/telefonoRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Telefono" />
+            android:text="Telefono"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/webRestaurante"
@@ -71,13 +92,15 @@
             android:id="@+id/direccionRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dirección" />
+            android:text="Dirección"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/horarioRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Horarios" />
+            android:text="Horarios"
+            android:textColor="#000000" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerReseniaRestaurante"

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -68,7 +69,7 @@ public class BaseDatos {
     }
 
     /**
-     * Añade filtros a un restaurante.
+     * Añade filtros a un restaurante en la BD.
      * Los objetos activos actualmente en la app no se modifican.
      * @param idRestaurante el id de OpenStreetMap del restaurante
      * @param filtros los filtros nuevos
@@ -126,19 +127,19 @@ public class BaseDatos {
     }
 
     /**
-     * //TODO: quiza hay que ponerlo como getReseniasRestaurante
      * Actualiza los filtros de un restaurante (añade los nuevos).
      * Esta funcion no deberia llamarse con la lista de filtros obtenidos de OpenStreetMap, sino con una distinta.
      * @param idRestaurante id del restaurante en OpenStreetMap
-     * @param actualizable variable donde se almacenarán los nuevos filtros
+     * @param actualizable el set donde se guardara el resultado. Hace el post value.
      */
-    public void setFiltrosRestaurante(String idRestaurante, MutableLiveData<Set<String>> actualizable){
+    public void getFiltrosRestaurante(String idRestaurante, MutableLiveData<Set<String>> actualizable){
         databaseRestaurantes.child(idRestaurante).child(FILTROS_NO_APROBADOS).get().addOnCompleteListener(task -> {
            if(task.isSuccessful()){
-               Set<String> aux = actualizable.getValue();
+               Set<String> filtros = actualizable.getValue();
                for (DataSnapshot d: task.getResult().getChildren())
-                   aux.add(String.valueOf(d.getKey()));
-               actualizable.postValue(aux);
+                   filtros.add(String.valueOf(d.getKey()));
+               Log.i("filtros", filtros.toString());
+               actualizable.postValue(filtros);
            }
         });
     }

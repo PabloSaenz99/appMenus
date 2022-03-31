@@ -52,13 +52,10 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
             List<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View v,
             @RecyclerView.Orientation int orientacion){
         RecyclerView recyclerView = v.findViewById(idRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(
-                v.getContext(), orientacion, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), orientacion, false));
 
-        RecyclerAdapter<T, ELEMENT> adapter =
-                new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
+        RecyclerAdapter<T, ELEMENT> adapter = new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
         recyclerView.setAdapter(adapter);
-
         //return recyclerView;
         return adapter;
     }
@@ -81,15 +78,10 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
         RecyclerView recyclerView = view.findViewById(idRecycler);
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), nColums));
 
-        RecyclerAdapter<T, ELEMENT> adapter =
-                new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
+        RecyclerAdapter<T, ELEMENT> adapter = new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
         recyclerView.setAdapter(adapter);
         //return recyclerView;
         return adapter;
-    }
-
-    public static <T> ArrayList<T> transformar(HashSet<T> elementos){
-        return new ArrayList<T>(elementos);
     }
 
     private final int viewID;

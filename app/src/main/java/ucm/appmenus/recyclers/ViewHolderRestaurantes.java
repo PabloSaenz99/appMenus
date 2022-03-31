@@ -13,8 +13,8 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Restaurante;
@@ -80,7 +80,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         favorito.setChecked(false);
         valoracion.setRating((float )restaurante.getValoracion());
         valoracion.setClickable(false);
-        direccion.setText(restaurante.getDireccion().getValue());
+        direccion.setText(restaurante.getLiveDataDireccion().getValue());
 
         /**
          * Observa el TextView que contiene la direccion, cuando se actualiza mediante WebScrapping
@@ -92,15 +92,15 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
                 direccion.setText(dir);
             }
         };
-        restaurante.getDireccion().observe((LifecycleOwner) view.getContext(), observerDireccion);
+        restaurante.getLiveDataDireccion().observe((LifecycleOwner) view.getContext(), observerDireccion);
 
         /**
          * Observa el ImageView que contiene la imagen, cuando se actualiza mediante WebScrapping
          * se muestra en la vista
          * */
-        final Observer<ArrayList<Bitmap>> observerImagen = new Observer<ArrayList<Bitmap>>() {
+        final Observer<List<Bitmap>> observerImagen = new Observer<List<Bitmap>>() {
             @Override
-            public void onChanged(ArrayList<Bitmap> img) {
+            public void onChanged(List<Bitmap> img) {
                 imagenPrinc.setImageBitmap(img.get(0));
             }
         };
@@ -110,9 +110,9 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
          * Observa el recycler que contiene los filtros, cuando se actualizan mediante WebScrapping
          * se muestra en la vista
          * */
-        final Observer<HashSet<String>> observerFiltros = new Observer<HashSet<String>>() {
+        final Observer<Set<String>> observerFiltros = new Observer<Set<String>>() {
             @Override
-            public void onChanged(HashSet<String> filtros) {
+            public void onChanged(Set<String> filtros) {
                 RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false),
                         ViewHolderFiltros.class, R.id.filtrosRestauranteRecycler,
                         R.layout.recycler_filtros, view, 3);

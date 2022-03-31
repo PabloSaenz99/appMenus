@@ -28,6 +28,8 @@ public class ViewHolderImagenes extends RecyclerView.ViewHolder implements IRecl
     @Override
     public void setDatos(Bitmap data) {
         this.bitmap = data;
+        //TODO: Poner esto
+        //bitmap.setHeight(70);
         imagen.setImageBitmap(this.bitmap);
     }
 

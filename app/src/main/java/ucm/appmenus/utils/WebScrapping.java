@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Restaurante;
@@ -28,8 +29,8 @@ public class WebScrapping {
     private static int CONTADOR = 0;
 
     private final String url;
-    private final MutableLiveData<HashSet<String>> listaFiltros;
-    private final MutableLiveData<ArrayList<Bitmap>> listaImagenes;
+    private final MutableLiveData<Set<String>> listaFiltros;
+    private final MutableLiveData<List<Bitmap>> listaImagenes;
 
     /**
      * Clase que realiza una busqueda mediante web scrapping. Todas las busquedas se realiazn en Threads
@@ -42,8 +43,8 @@ public class WebScrapping {
      * @param listaImagenes: lista de imagenes en la que se guardara el resultado de la busqueda.
      *                    Es un MutableLiveData para poder actualizar la interfaz en tiempo real.
      */
-    public WebScrapping(String url, MutableLiveData<HashSet<String>> listaFiltros,
-                        MutableLiveData<ArrayList<Bitmap>> listaImagenes) {
+    public WebScrapping(String url, MutableLiveData<Set<String>> listaFiltros,
+                        MutableLiveData<List<Bitmap>> listaImagenes) {
         this.url= url;
         this.listaFiltros = listaFiltros;
         this.listaImagenes = listaImagenes;

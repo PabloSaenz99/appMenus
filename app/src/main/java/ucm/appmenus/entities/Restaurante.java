@@ -1,7 +1,6 @@
 package ucm.appmenus.entities;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -9,15 +8,13 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import ucm.appmenus.MainActivity;
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.OpenStreetMap;
@@ -34,9 +31,11 @@ public class Restaurante implements Parcelable {
 
     //MutableLiveData para poder actualizar en tiempo real sobre la interfaz
     private final MutableLiveData<String> direccion;
-    private final MutableLiveData<ArrayList<Bitmap>> listaImagenes;
-    private final MutableLiveData<HashSet<String>> listaFiltros;
+    private final MutableLiveData<List<Bitmap>> listaImagenes;
+    private final MutableLiveData<Set<String>> listaFiltros;
+    private final MutableLiveData<Set<String>> listaFiltrosBD;
     private final MutableLiveData<List<Resenia>> listaResenias;
+
     //Utilizado para hacer webscrapping y poder cargar datos extra cuando se accede a la vista con detalles
     private final WebScrapping ws;
 
@@ -50,7 +49,8 @@ public class Restaurante implements Parcelable {
         this.valoracion = valoracion;
         this.direccion = new MutableLiveData<>(" [" + distanciaEnMetros + "m]");
         this.listaImagenes = new MutableLiveData<>();
-        this.listaResenias = new MutableLiveData<>();
+        this.listaResenias = new MutableLiveData<>(new ArrayList<>());
+        this.listaFiltrosBD = new MutableLiveData<>(new HashSet<>());
 
         //Parsea los filtros, separandolos por ";"
         HashSet<String> filtrosAux = new HashSet<>();
@@ -76,14 +76,15 @@ public class Restaurante implements Parcelable {
     public String getIdRestaurante(){return idRestaurante;}
     public String getNombre() { return nombre; }
     public String getStringURL() { return url; }
-    public MutableLiveData<String> getDireccion() { return direccion; }
     public int getTelefono() { return telefono; }
     public String getHorarios() { return horarios; }
     public double getValoracion() { return valoracion; }
-    public ArrayList<Bitmap> getListaImagenes() { return listaImagenes.getValue(); }
-    public LiveData<ArrayList<Bitmap>> getliveDataImagen() { return listaImagenes; }
-    public LiveData<HashSet<String>> getLivedataFiltros() {return this.listaFiltros;}
-    public MutableLiveData<List<Resenia>> getLiveDataResenia() { return this.listaResenias;}
+
+    public LiveData<String> getLiveDataDireccion() { return direccion; }
+    public LiveData<List<Bitmap>> getliveDataImagen() { return listaImagenes; }
+    public LiveData<Set<String>> getLivedataFiltros() {return this.listaFiltros;}
+    public LiveData<Set<String>> getLivedataFiltrosBD() {return this.listaFiltrosBD;}
+    public LiveData<List<Resenia>> getLiveDataResenia() { return this.listaResenias;}
 
     public void updateResenias(){ listaResenias.postValue(BaseDatos.getInstance().getReseniasRestaurante(idRestaurante));}
     public void updateImagenes(){ ws.setImagenes(); }
@@ -93,6 +94,7 @@ public class Restaurante implements Parcelable {
         listOfLists.add(Constantes.filtrosLocal);
         listOfLists.add(Constantes.filtrosPostres);
         ws.setFiltros(listOfLists);
+        BaseDatos.getInstance().getFiltrosRestaurante(idRestaurante, listaFiltrosBD);
     }
 
     @Override
@@ -130,8 +132,9 @@ public class Restaurante implements Parcelable {
         horarios = in.readString();
         valoracion = in.readDouble();
         listaImagenes = new MutableLiveData<>(new ArrayList<>());
-        listaResenias = new MutableLiveData<>();
+        listaResenias = new MutableLiveData<>(new ArrayList<>());
         listaFiltros = new MutableLiveData<>(new HashSet<>(in.createStringArrayList()));
+        listaFiltrosBD = new MutableLiveData<>(new HashSet<>());
         ws = new WebScrapping(url, listaFiltros, listaImagenes);
     }
 
