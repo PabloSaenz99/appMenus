@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
@@ -60,9 +61,10 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
             telefono.setText(restaurante.getTelefono() + "");
         horario.setText(restaurante.getHorarios());
 
-        //Actaualiza las imagenes y filtros de los restaurantes para tener mas detalles.
+        //Actaualiza las imagenes, filtros y reseñas de los restaurantes para tener mas detalles.
         restaurante.updateImagenes();
         restaurante.updateFiltros();
+        restaurante.updateResenias();
 
         View v = getWindow().getDecorView().getRootView();
         //Recycler filtros
@@ -86,9 +88,9 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         restaurante.getliveDataImagen().observe(this, observerImagenes);
 
         //Recycler reseñas
-        final Observer<ArrayList<Resenia>> observerResenias = new Observer<ArrayList<Resenia>>() {
+        final Observer<List<Resenia>> observerResenias = new Observer<List<Resenia>>() {
             @Override
-            public void onChanged(ArrayList<Resenia> res) {
+            public void onChanged(List<Resenia> res) {
                 RecyclerAdapter.crearRecyclerLineal(res, ViewHolderResenia.class, R.id.recyclerReseniaRestaurante,
                         R.layout.recycler_resenias, v, LinearLayoutManager.VERTICAL);
             }

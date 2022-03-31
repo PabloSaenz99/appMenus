@@ -48,7 +48,6 @@ public class InicioFragment extends Fragment {
         //Usado para no hacer la busqueda cada vez que se abre el fragment
         //Si es distinto de null, es que en algun momento se han cargado restaurantes o que hay que cargarlos.
         if(getArguments() != null){
-
             /*Si esta marcado, significa que se ha llegado a este fragment desde el boton de "filtrar"
             en el fragment de filtros, por lo tanto hay que realizar una bsuqueda en OpenStreetMap
             con dichos filtros (guardados en getArguments() mediante un Bundle)*/

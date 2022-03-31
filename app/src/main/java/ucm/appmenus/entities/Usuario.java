@@ -1,11 +1,17 @@
 package ucm.appmenus.entities;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import ucm.appmenus.R;
 import ucm.appmenus.utils.Localizacion;
 
 public class Usuario {
@@ -17,9 +23,9 @@ public class Usuario {
     private final String email;
     private String nombre;
     private final Localizacion localizacion;
-    private String imagenDir;
-    private HashSet<Resenia> resenias;
-    private HashSet<Restaurante> restaurantesFavoritos;
+    private final String imagenDir;
+    private final HashSet<Resenia> resenias;
+    private final HashSet<Restaurante> restaurantesFavoritos;
     private ArrayList<String> preferencias;
 
     /**
@@ -32,31 +38,38 @@ public class Usuario {
     }
 
     /**
+     * Cierra la sesion actual del usuario y borra el login guardado en el dispositivo.
+     */
+    public static void cerrarSesion(Activity activity) {
+        instance = null;
+        SharedPreferences sp = activity.getSharedPreferences(
+                activity.getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
+        sp.edit().clear().commit();
+    }
+
+    /**
      * Crea el usaurio solo si no se ha creado (TODO: los credenciales se comprueban en el login).
      * @param email correo del usuario.
-     * @param nombre nombre del usuario.
      * @param loc la localizacion del usuario actual.
      * @return el usuario creado en caso de no existir previamente o el usuario creado previamente
      * en caso de existir ya.
      */
-    public static Usuario crearUsuario(String idUsuario, String email, String nombre, Localizacion loc) {
-        //Log.i("email", email);
+    public static Usuario crearUsuario(String idUsuario, String email, Localizacion loc) {
         if(instance == null){
             String imagen = "";
             HashSet<Restaurante> favoritos = new HashSet<>();
             HashSet<Resenia> resenias = new HashSet<>();
             ArrayList<String> preferencias = new ArrayList<>();
-            instance = new Usuario(idUsuario, email, nombre, loc, imagen, favoritos, resenias, preferencias);
+            instance = new Usuario(idUsuario, email, loc, imagen, favoritos, resenias, preferencias);
         }
         return instance;
     }
 
-    private Usuario(String idUsuario, String email, String nombre, Localizacion localizacion,
+    private Usuario(String idUsuario, String email, Localizacion localizacion,
                     String imagenDir, HashSet<Restaurante> favoritos,
                     HashSet<Resenia> resenias, ArrayList<String> preferencias) {
         this.idUsuario = idUsuario;
         this.email = email;
-        this.nombre = nombre;
         this.localizacion = localizacion;
         this.imagenDir = imagenDir;
         this.resenias = resenias;
@@ -70,21 +83,13 @@ public class Usuario {
     public Localizacion getLocalizacion() { return localizacion; }
     public String getImagenDir() { return imagenDir; }
     public HashSet<Resenia> getResenias() { return resenias; }
-    public List<String> getReseniasId() {
-        List<String> reseniasLista = new ArrayList<>();
-        for (Resenia r:this.resenias)
-            reseniasLista.add(r.getIdResenia());
-        return reseniasLista;
-    }
     public HashSet<Restaurante> getRestaurantesFavoritos() { return restaurantesFavoritos; }
     public ArrayList<String> getPreferencias() { return preferencias; }
 
     public void setNombre(String nombre) { this.nombre = nombre; }
-    public void setPreferencias(ArrayList<String> preferencias) { this.preferencias = preferencias; }
-    public void addRestauranteFavorito(Restaurante r){
-        if(restaurantesFavoritos.size() < MAX_FAV)
-            restaurantesFavoritos.add(r);
-    }
+    public void addPreferencias(String pref) { preferencias.add(pref); }
+    public void addRestauranteFavorito(Restaurante r){ restaurantesFavoritos.add(r); }
+    public void addResenia(Resenia r){ resenias.add(r); }
 
     public void removeRestauranteFavorito(Restaurante r){ this.restaurantesFavoritos.remove(r); }
 

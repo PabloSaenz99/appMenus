@@ -17,6 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import ucm.appmenus.R;
 import ucm.appmenus.utils.Pair;
@@ -45,10 +46,10 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
      * @param orientacion orientacion del layout, vertical u horizontal
      * @param <T> ViewHolder encargado de gestionar los datos proporcionados
      * @param <ELEMENT> tipo de dato proporcionado
-     * @return el recycler creado
+     * @return el adaptador creado
      */
     public static <T extends RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT> RecyclerAdapter<T, ELEMENT> crearRecyclerLineal(
-            ArrayList<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View v,
+            List<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View v,
             @RecyclerView.Orientation int orientacion){
         RecyclerView recyclerView = v.findViewById(idRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(
@@ -72,10 +73,10 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
      * @param nColums numero de columnas que tendrá el layout
      * @param <T> ViewHolder encargado de gestionar los datos proporcionados
      * @param <ELEMENT> tipo de dato proporcionado
-     * @return el recycler creado
+     * @return el adaptador creado
      */
     public static <T extends RecyclerView.ViewHolder & IReclycerElement<ELEMENT>, ELEMENT> RecyclerAdapter<T, ELEMENT> crearRecyclerGrid(
-            ArrayList<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View view,
+            List<ELEMENT> elementos, Class<T> viewHolder, @IdRes int idRecycler, @LayoutRes int idLayout, View view,
             int nColums){
         RecyclerView recyclerView = view.findViewById(idRecycler);
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), nColums));
@@ -92,8 +93,8 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
     }
 
     private final int viewID;
-    private final ArrayList<ELEMENT> listaDatos;
-    private final ArrayList<ViewHolder> holders;
+    private final List<ELEMENT> listaDatos;
+    private final List<ViewHolder> holders;
     private final Class<ViewHolder> clase;
 
     /**
@@ -101,7 +102,7 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
      * @param viewID : el id (R.layout...) del elemento a representar en bucle
      * @param clase : la clase que implementa  RecyclerView.ViewHolder y extiende IReclycerElement
      * */
-    private RecyclerAdapter(ArrayList<ELEMENT> dataSet, int viewID, Class<ViewHolder> clase) {
+    private RecyclerAdapter(List<ELEMENT> dataSet, int viewID, Class<ViewHolder> clase) {
         this.listaDatos = dataSet;
         this.viewID = viewID;
         this.clase = clase;

@@ -3,6 +3,7 @@ package ucm.appmenus.utils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -15,7 +16,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Restaurante;
@@ -60,7 +65,6 @@ public class BaseDatos {
         databaseResenias.child(resenia.getIdResenia()).setValue(resenia);
         databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).push().setValue(resenia.getIdResenia());
         databaseUsuarios.child(RESENIAS).push().setValue(resenia.getIdResenia());
-        getReseniasRestaurante(resenia.getIdRestaurante());
     }
 
     /**
@@ -70,8 +74,24 @@ public class BaseDatos {
      * @param filtros los filtros nuevos
      */
     public void addFiltrosRestaurante(String idRestaurante, List<String> filtros){
-        //TODO: obtener los datos de los restaurantes de la BD y luego actualizarlos con los filtros nuevos
-        databaseRestaurantes.child(idRestaurante).child(FILTROS_NO_APROBADOS).setValue(filtros);
+        //Transforma los filtros a un mapa
+        Map<String, Long> valoresNuevos = new HashMap<>();
+        for (String s: filtros)
+            valoresNuevos.put(s, 1L);
+        //Obtiene los filtros guardados en la BD
+        databaseRestaurantes.child(idRestaurante).child(FILTROS_NO_APROBADOS).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Map<String, Long> valoresAntiguos = new HashMap<>();
+                for (DataSnapshot d: task.getResult().getChildren()) {
+                    Log.i("obtenido", d.toString());
+                    valoresAntiguos.put(String.valueOf(d.getKey()), (Long) d.getValue());
+                }
+                //Mezcla ambos mapas y suma el contenido de sus valores
+                valoresAntiguos.forEach((k, v) -> valoresNuevos.merge(k, v, Long::sum));
+                //Actualiza la BD
+                databaseRestaurantes.child(idRestaurante).child(FILTROS_NO_APROBADOS).setValue(valoresNuevos);
+            }
+        });
     }
 
     /**
@@ -83,44 +103,75 @@ public class BaseDatos {
         databaseUsuarios.child(FAVORITOS).setValue(restaurantes);
     }
 
+    /**
+     *
+     * @param idRestaurante
+     * @return
+     */
     public List<Resenia> getReseniasRestaurante(String idRestaurante){
         List<Resenia> resenias = new ArrayList<>();
+        //Obtiene la lista de ids de las reseñas de ese restaurante
         databaseRestaurantes.child(idRestaurante).child(RESENIAS).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                Log.i("res", "entro");
                 for (DataSnapshot d: task.getResult().getChildren()) {
+                    //Obtiene los datos de la reseña (busca el id de cada reseña)
                     databaseResenias.child(String.valueOf(d.getValue())).get().addOnCompleteListener(task1 -> {
-                        DataSnapshot res = task1.getResult();
-                        resenias.add(new Resenia(String.valueOf(res.child("idRestaurante").getValue()),
-                                String.valueOf(res.child("idUsuario").getValue()),
-                                String.valueOf(res.child("usuarioNombre").getValue()),
-                                String.valueOf(res.child("titulo").getValue()),
-                                String.valueOf(res.child("texto").getValue()),
-                                Double.valueOf(String.valueOf(res.child("valoracion").getValue()))));
+                        //Añade las reseñas
+                        resenias.add(parseResenia(task1.getResult()));
                     });
                 }
             }
-            else
-                Log.i("res","error");
         });
         return resenias;
     }
 
-    public void getFiltrosRestaurante(String idRestaurante){
-        //TODO: obtener los datos de los filtros
+    /**
+     * //TODO: quiza hay que ponerlo como getReseniasRestaurante
+     * Actualiza los filtros de un restaurante (añade los nuevos).
+     * Esta funcion no deberia llamarse con la lista de filtros obtenidos de OpenStreetMap, sino con una distinta.
+     * @param idRestaurante id del restaurante en OpenStreetMap
+     * @param actualizable variable donde se almacenarán los nuevos filtros
+     */
+    public void setFiltrosRestaurante(String idRestaurante, MutableLiveData<Set<String>> actualizable){
+        databaseRestaurantes.child(idRestaurante).child(FILTROS_NO_APROBADOS).get().addOnCompleteListener(task -> {
+           if(task.isSuccessful()){
+               Set<String> aux = actualizable.getValue();
+               for (DataSnapshot d: task.getResult().getChildren())
+                   aux.add(String.valueOf(d.getKey()));
+               actualizable.postValue(aux);
+           }
+        });
     }
 
-    public void getDatosUsuario(){
-        databaseUsuarios.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
+    /**
+     * Actualiza los datos del usuario.
+     * Actualiza el nombre, las reseñas y los favoritos.
+     */
+    public void setDatosUsuario(){
+        databaseUsuarios.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                //Obtener nombre usuario
+                Usuario.getUsuario().setNombre(String.valueOf(task.getResult().child("usuarioNombre").getValue()));
+                //Obtener reseñas
+                for (DataSnapshot d: task.getResult().child(RESENIAS).getChildren()) {
+                    databaseResenias.child(String.valueOf(d.getValue())).get().addOnCompleteListener(task1 -> {
+                        //Añadir las reseñas
+                        Usuario.getUsuario().addResenia(parseResenia(task1.getResult()));
+                    });
                 }
-                else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                for (DataSnapshot d: task.getResult().child(FAVORITOS).getChildren()) {
+                    //TODO: obtener datos de los restaurantes (sacarlos de openstreetmap)
                 }
             }
         });
+    }
+
+    private Resenia parseResenia(DataSnapshot res) {
+        return new Resenia(String.valueOf(res.child("idRestaurante").getValue()),
+                String.valueOf(res.child("idUsuario").getValue()),
+                String.valueOf(res.child("usuarioNombre").getValue()),
+                String.valueOf(res.child("titulo").getValue()),
+                String.valueOf(res.child("texto").getValue()),
+                Double.parseDouble(String.valueOf(res.child("valoracion").getValue())));
     }
 }

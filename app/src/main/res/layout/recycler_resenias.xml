@@ -9,31 +9,31 @@
         android:id="@+id/tituloResenia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Titulo de la reseña"
         android:layout_gravity="center"
-        android:textColorHint="#8E8E8E"
+        android:layout_marginLeft="12dp"
+        android:hint="Titulo de la reseña"
         android:textColor="#FFFFFF"
+        android:textColorHint="#8E8E8E"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="12dp"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/usuarioResenia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColorHint="#8E8E8E"
+        android:text="usuario"
         android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:text="usuario" />
+        android:textColorHint="#8E8E8E"
+        android:textStyle="bold" />
 
     <RatingBar
         android:id="@+id/valoracionResenia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stepSize="1"
         android:layout_gravity="center"
-        android:theme="@style/RatingBarLong"/>
+        android:stepSize="1"
+        android:theme="@style/RatingBarLong" />
 
     <EditText
         android:id="@+id/descripcionResenia"
@@ -42,5 +42,11 @@
         android:hint="Descripcion de la reseña"
         android:textColor="#FFFFFF"
         android:textColorHint="#8E8E8E" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/vacioValoracion" />
 
 </LinearLayout>

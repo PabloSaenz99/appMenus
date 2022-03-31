@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
@@ -50,15 +51,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Loguea al usaurio para poder usar sus datos luego
+        //Loguea al usuario para poder usar sus datos en caso de ser necesarios
         Bundle loginInfo = getIntent().getExtras();
         this.usuario = Usuario.crearUsuario(
                 loginInfo.getString(Constantes.ID_USUARIO, "error"),
                 loginInfo.getString(Constantes.EMAIL_USUARIO, "Error"),
-                loginInfo.getString(Constantes.NOMBRE_USUARIO, "Error"), new Localizacion(this));
+                new Localizacion(this));
+        BaseDatos.getInstance().setDatosUsuario();
 
         //Importante que esté después del login de usuario o lanzará nullpointer
-        setContentView(R.layout.activity_afterlogin);
+        //TODO: PONER AFTERLOGIN UNA VEZ
+        //setContentView(R.layout.activity_afterlogin);
         setContentView(R.layout.activity_main);
 
         final BottomNavigationView navView = findViewById(R.id.nav_view);

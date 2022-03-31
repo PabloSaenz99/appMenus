@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import ucm.appmenus.MainActivity;
+import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.OpenStreetMap;
 import ucm.appmenus.utils.WebScrapping;
@@ -35,7 +36,7 @@ public class Restaurante implements Parcelable {
     private final MutableLiveData<String> direccion;
     private final MutableLiveData<ArrayList<Bitmap>> listaImagenes;
     private final MutableLiveData<HashSet<String>> listaFiltros;
-    private final MutableLiveData<ArrayList<Resenia>> listaResenias;
+    private final MutableLiveData<List<Resenia>> listaResenias;
     //Utilizado para hacer webscrapping y poder cargar datos extra cuando se accede a la vista con detalles
     private final WebScrapping ws;
 
@@ -82,8 +83,9 @@ public class Restaurante implements Parcelable {
     public ArrayList<Bitmap> getListaImagenes() { return listaImagenes.getValue(); }
     public LiveData<ArrayList<Bitmap>> getliveDataImagen() { return listaImagenes; }
     public LiveData<HashSet<String>> getLivedataFiltros() {return this.listaFiltros;}
-    public MutableLiveData<ArrayList<Resenia>> getLiveDataResenia() { return this.listaResenias;}
+    public MutableLiveData<List<Resenia>> getLiveDataResenia() { return this.listaResenias;}
 
+    public void updateResenias(){ listaResenias.postValue(BaseDatos.getInstance().getReseniasRestaurante(idRestaurante));}
     public void updateImagenes(){ ws.setImagenes(); }
     public void updateFiltros(){
         ArrayList<List<String>> listOfLists = new ArrayList<>();

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class FiltrosFragment extends Fragment {
 
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
-        filtrosViewModel = ViewModelProviders.of(this).get(FiltrosViewModel.class);
+        filtrosViewModel = new ViewModelProvider(this).get(FiltrosViewModel.class);
         root = inflater.inflate(R.layout.fragment_filtros, container, false);
 
         //Crea los recyclers para los filtros, 3 recyclers para 3 tipos distintos de filtros

@@ -1,11 +1,14 @@
 package ucm.appmenus.ui.perfil;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +26,7 @@ import ucm.appmenus.R;
 
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
+import ucm.appmenus.login.LoginActivity;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.recyclers.ViewHolderResenia;
@@ -43,7 +47,7 @@ public class PerfilFragment extends Fragment {
         ImageView imagen = root.findViewById(R.id.imagenUsuarioPerfilFragment);
         TextView email = root.findViewById(R.id.emailUsuarioPerfilFragment);
         TextView nombre = root.findViewById(R.id.nombreUsuarioPerfilFragment);
-        Log.i("mail", usuario.getEmail());
+        Button botonCerrarSesion = root.findViewById(R.id.botonCerrarSesion);
 
         imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
         email.setText(usuario.getEmail());
@@ -51,6 +55,12 @@ public class PerfilFragment extends Fragment {
 
         RecyclerAdapter.crearRecyclerLineal(new ArrayList<>(usuario.getResenias()), ViewHolderResenia.class,
                 R.id.recyclerReseniasPerfilFragment, R.layout.recycler_resenias, root, LinearLayoutManager.VERTICAL);
+
+        botonCerrarSesion.setOnClickListener(view -> {
+            Usuario.cerrarSesion(getActivity());
+            startActivity(new Intent(root.getContext(), LoginActivity.class));
+            getActivity().finish();
+        });
         return root;
     }
 }

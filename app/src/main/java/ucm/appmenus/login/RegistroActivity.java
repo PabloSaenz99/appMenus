@@ -82,13 +82,22 @@ public class RegistroActivity extends AppCompatActivity {
                     String userId = rUser.getUid();
                     databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
                     HashMap<String, String> hashMap = new HashMap<>();
-                    //hashMap.put("userId", userId);
-                    hashMap.put("userName", nombre);
-                    hashMap.put("userEmail", email);
+                    hashMap.put("usuarioId", userId);
+                    hashMap.put("usuarioNombre", nombre);
+                    hashMap.put("usuarioEmail", email);
                     databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull @NotNull Task<Void> task) {
                             if (task.isSuccessful()) {
+                                //Usado para loguear automaticamente
+                                SharedPreferences sp = getSharedPreferences(
+                                        getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString(getString(R.string.email_usuario), email);
+                                editor.putString(getString(R.string.password_usuario), password);
+                                editor.commit();
+
+                                //Abre la activity de login
                                 Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);

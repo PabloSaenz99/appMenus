@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -29,30 +30,39 @@ import java.util.Objects;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btn_registrar, btn_login;
-    EditText et_name, et_email, et_password;
-    FirebaseAuth firebaseAuth;
-
+    private EditText et_email, et_password;
+    private FirebaseAuth firebaseAuth;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicio_sesion);//debo poner la vista de login y me abra directamente el login
+        setContentView(R.layout.activity_inicio_sesion);
 
-
-        //hACER LOGIN
-
-        btn_registrar = findViewById(R.id.botonRegistro);
-        btn_login = findViewById(R.id.botonIniciarSesion);
+        Button btn_registrar = findViewById(R.id.botonRegistro);
+        Button btn_login = findViewById(R.id.botonIniciarSesion);
         et_email = findViewById(R.id.emailLogin);
         et_password = findViewById(R.id.passwordLogin);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //accion en los botones
+        //Usado para comprobar si el usuario está ya logueado
+        sp = this.getSharedPreferences(
+                getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
+        String email = sp.getString(getString(R.string.email_usuario), null);
+        String password = sp.getString(getString(R.string.password_usuario), null);
+
+        //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
+        if(email != null){
+            //Inicia la main activity
+            login(email, password);
+        }
+
+        //aBoton registro
         btn_registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //btn login
+        //Boton Login
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,20 +85,30 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    //metodo login
+    /**
+     * Loguea al usuario en la BD
+     * @param text_email email del usuario
+     * @param text_password contraseña del usuario
+     */
     private void login (String text_email, String text_password){
         firebaseAuth.signInWithEmailAndPassword(text_email, text_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    //Parametros para hacer login en la main activity
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    //TODO: get usaurio nombre
                     Bundle b = new Bundle();
                     b.putString(Constantes.ID_USUARIO, firebaseAuth.getCurrentUser().getUid());
                     b.putString(Constantes.EMAIL_USUARIO, text_email);
-                    b.putString(Constantes.NOMBRE_USUARIO, "Usuario");
                     intent.putExtras(b);
+
+                    //Guarda el login actual de forma local
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString(getString(R.string.email_usuario), text_email);
+                    editor.putString(getString(R.string.password_usuario), text_password);
+                    editor.commit();
+
+                    //Inicia la mainActiviry
                     startActivity(intent);
                     finish();
                 } else {
@@ -98,62 +118,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-
-
-
-/*
-
-        //Usado para comprobar si el usuario está ya logueado
-        final SharedPreferences sp = this.getSharedPreferences(
-                getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
-        String email = sp.getString(getString(R.string.email_usuario), null);
-
-        //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
-        if(email != null){
-            //Inicia la main activity
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }
-
-        final Button botonRegistro = findViewById(R.id.botonRegistro);
-        botonRegistro.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Abrir activity
-                Intent intent = new Intent(botonRegistro.getContext(), RegistroActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        final Button botonInicioSesion = findViewById(R.id.botonIniciarSesion);
-        botonInicioSesion.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //Buscar resultados
-                TextView emailText = findViewById(R.id.emailLogin);
-                TextView passwordText = findViewById(R.id.passwordLogin);
-
-                //TODO: Mirar en la BD que sea correcto
-                String emailUsuario = "AQUI BUSCO EN LA BD";
-                String passwordUsuario = "AQUI BUSCO EN LA BD";
-
-                if(emailText.getText().toString().equals(emailUsuario) &&
-                        passwordText.getText().toString().equals(passwordUsuario)) {
-                    //Guarda el login en SharedPreferences
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString(getString(R.string.email_usuario), emailUsuario);
-                    editor.putString(getString(R.string.password_usuario), passwordUsuario);
-                    editor.commit();
-
-                    //Abrir activity
-                    Intent intent = new Intent(botonInicioSesion.getContext(), MainActivity.class);
-                    //Intent intent = new Intent(botonInicioSesion.getContext(), MapActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
-
-}*/
-
-
-
-
