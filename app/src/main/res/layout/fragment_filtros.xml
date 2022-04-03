@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondoOscuro"
     android:orientation="vertical"
     tools:context=".ui.filtros.FiltrosFragment">
 
@@ -33,7 +32,6 @@
             android:layout_height="wrap_content"
             android:text="Radio de busqueda"
             android:textAlignment="center"
-            android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold|italic" />
 
@@ -51,8 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="false"
-                android:text="1000"
-                android:textColor="#FFFFFF" />
+                android:text="1000"/>
 
             <RadioButton
                 android:id="@+id/radioButton1500"
@@ -60,16 +57,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="1500"
-                android:textColor="#FFFFFF" />
+                android:text="1500"/>
 
             <RadioButton
                 android:id="@+id/radioButton2000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="2000"
-                android:textColor="#FFFFFF" />
+                android:text="2000"/>
 
             <RadioButton
                 android:id="@+id/radioButtonMapa"
@@ -81,7 +76,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Ver en mapa" />
+                android:text="Ver en mapa"
+                android:textColor="#000000"/>
         </RadioGroup>
 
 

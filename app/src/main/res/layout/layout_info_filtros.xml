@@ -2,21 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/logoNaranja1"
     android:orientation="vertical">
 
-    <View style="@style/HorizontalDivider"
+    <View
+        style="@style/HorizontalDivider"
         android:background="@color/logoAzul4" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
         android:text="Tipo de local"
         android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold|italic" />
+
+    <View
+        style="@style/HorizontalDivider"
+        android:background="@color/logoAzul4" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFiltrosLocal"
@@ -26,18 +30,23 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <View style="@style/HorizontalDivider"
+    <View
+        style="@style/HorizontalDivider"
         android:background="@color/logoAzul4" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
         android:text="Tipo de gastronomia"
         android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold|italic" />
+
+    <View
+        style="@style/HorizontalDivider"
+        android:background="@color/logoAzul4" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFiltrosPais"
@@ -47,18 +56,22 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <View style="@style/HorizontalDivider"
-        android:background="@color/logoAzul4"/>
+    <View
+        style="@style/HorizontalDivider"
+        android:background="@color/logoAzul4" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
         android:text="Tipo de alimentos"
         android:textAlignment="center"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold|italic" />
+
+    <View style="@style/HorizontalDivider"
+        android:background="@color/logoAzul4" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFiltrosComida"

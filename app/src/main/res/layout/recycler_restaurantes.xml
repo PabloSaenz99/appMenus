@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#202020"
     android:orientation="vertical">
 
     <LinearLayout
@@ -36,7 +35,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Nombre Restaurante"
-                    android:textColor="#FFFFFF"
                     android:textAlignment="textStart"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -58,7 +56,6 @@
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 android:text="Sitio web"
-                android:textColor="#FFFFFF"
                 android:textAlignment="textStart"
                 android:maxLines="2"/>
 
@@ -78,7 +75,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Direccion"
-        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView

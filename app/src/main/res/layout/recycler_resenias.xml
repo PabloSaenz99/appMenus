@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/fondoOscuro"
     android:orientation="vertical">
 
     <EditText
@@ -12,7 +11,6 @@
         android:layout_gravity="center"
         android:layout_marginLeft="12dp"
         android:hint="Titulo de la reseña"
-        android:textColor="#FFFFFF"
         android:textColorHint="#8E8E8E"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -23,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="usuario"
-        android:textColor="#FFFFFF"
         android:textColorHint="#8E8E8E"
         android:textStyle="bold" />
 
@@ -40,7 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Descripcion de la reseña"
-        android:textColor="#FFFFFF"
         android:textColorHint="#8E8E8E" />
 
     <View
