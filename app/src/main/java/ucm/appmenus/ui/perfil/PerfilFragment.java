@@ -44,12 +44,12 @@ public class PerfilFragment extends Fragment {
 
         Usuario usuario = Usuario.getUsuario();
 
-        ImageView imagen = root.findViewById(R.id.imagenUsuarioPerfilFragment);
+//        ImageView imagen = root.findViewById(R.id.imagenUsuarioPerfilFragment);
         TextView email = root.findViewById(R.id.emailUsuarioPerfilFragment);
         TextView nombre = root.findViewById(R.id.nombreUsuarioPerfilFragment);
         Button botonCerrarSesion = root.findViewById(R.id.botonCerrarSesion);
 
-        imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
+        //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
         email.setText(usuario.getEmail());
         nombre.setText(usuario.getNombre());
 

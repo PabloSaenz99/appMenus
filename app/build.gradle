@@ -75,4 +75,5 @@ dependencies {
         implementation 'org.mapsforge:sqlite-android:0.17.0:natives-x86_64'
         //Web scrapping
         implementation 'org.jsoup:jsoup:1.11.2'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
