@@ -32,7 +32,6 @@ public class BaseDatos {
 
 
     private static final String RESENIAS = "Resenias";
-    private static final String FAVORITOS = "Favoritos";
     private static final String RESTAURANTES = "Restaurantes";
     private static final String FILTROS_APROBADOS = "FiltrosAprobados";
     private static final String FILTROS_NO_APROBADOS = "FiltrosNoAprobados";
@@ -54,6 +53,11 @@ public class BaseDatos {
         databaseUsuarios = FirebaseDatabase.getInstance().getReference("Users").child(userId);
         databaseRestaurantes = FirebaseDatabase.getInstance().getReference(RESTAURANTES);
         databaseResenias = FirebaseDatabase.getInstance().getReference(RESENIAS);
+
+        List<String> fav = new ArrayList<>();
+        fav.add("1388187050");
+        fav.add("3544924417");
+        addFavoritosUsuario(fav);
     }
 
     /**
@@ -101,7 +105,7 @@ public class BaseDatos {
      * @param restaurantes el id de OpenStreetMap del restaurante
      */
     public void addFavoritosUsuario(List<String> restaurantes){
-        databaseUsuarios.child(FAVORITOS).setValue(restaurantes);
+        databaseUsuarios.child(RESTAURANTES).setValue(restaurantes);
     }
 
     /**
@@ -160,8 +164,11 @@ public class BaseDatos {
                         Usuario.getUsuario().addResenia(parseResenia(task1.getResult()));
                     });
                 }
-                for (DataSnapshot d: task.getResult().child(FAVORITOS).getChildren()) {
+                for (DataSnapshot d: task.getResult().child(RESTAURANTES).getChildren()) {
+                    Log.i("restaurante", String.valueOf(d.getValue()));
                     //TODO: obtener datos de los restaurantes (sacarlos de openstreetmap)
+                    //Añadir los restaurantes
+                    new OpenStreetMap().setPlaceById(Usuario.getUsuario().getRestaurantesFavoritos(), String.valueOf(d.getValue()));
                 }
             }
         });
