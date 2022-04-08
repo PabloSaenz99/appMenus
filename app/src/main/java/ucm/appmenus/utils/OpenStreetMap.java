@@ -12,9 +12,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import ucm.appmenus.entities.Restaurante;
+import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONOpenStreetReader;
 
 public class OpenStreetMap {
@@ -67,6 +69,25 @@ public class OpenStreetMap {
      */
     public void setDireccion(MutableLiveData<String> actualizable, double lat, double lon){
         updateDireccionRestaurante(actualizable, construirQueryDireccionPorCoord(lat, lon));
+    }
+
+    public void setPlaceById(Set<Restaurante> actualizable, String id){
+        String query =
+                "[out:json];(node(" + id + "););out;";
+        Log.i("query", query);
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //Obtiene los resultados y los guarda en la cola para que se publiquen en cuanto sea posible
+                    Usuario u = Usuario.getUsuario();
+                    JSONOpenStreetReader reader = new JSONOpenStreetReader();
+                    actualizable.addAll(reader.parsearResultado(getURLData(query),
+                            u.getLocalizacion().latitude, u.getLocalizacion().longitude));
+                } catch (Exception ignored) {}
+            }
+        });
+        th.start();
     }
 
     private void updateDireccionRestaurante(final MutableLiveData<String> d, final String query){
