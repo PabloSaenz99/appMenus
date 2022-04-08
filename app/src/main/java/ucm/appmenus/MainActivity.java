@@ -74,16 +74,6 @@ public class MainActivity extends AppCompatActivity {
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
-
-    /**
-     * Cambia entre 2 fragments
-     * @param id: fragment al que moverse
-     * @param b: datos necesarios para dicho fragment
-    */
-    public void changeFragment(int id, Bundle b){
-        Log.d("BUNDLE", b.toString());
-        navController.navigate(id, b);
-    }
  }
 
 

@@ -103,22 +103,20 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/MisResenas"
+                android:id="@+id/buttonMisResenias"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FF5722"
                 android:text="Mis Reseñas"
-                android:textColor="#070000" />
+                android:textColor="#FFFFFF" />
 
             <Button
-                android:id="@+id/MisFavoritos"
+                android:id="@+id/buttonMisFavoritos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="#A8A1A1"
                 android:text="Mis Favoritos"
-                android:textColor="#0C0000" />
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
