@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
@@ -76,7 +77,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         };
         restaurante.getLivedataFiltros().observe(this, observerFiltros);
 
-        //Recycler filtros
+        //Recycler filtros BD
         final Observer<Set<String>> observerFiltrosBD = filtros -> {
             RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false), ViewHolderFiltros.class,
                     R.id.filtrosBDRestauranteRecycler, R.layout.recycler_filtros, v, 3);
@@ -99,9 +100,11 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         restaurante.getliveDataImagen().observe(this, observerImagenes);
 
         //Recycler reseñas
-        final Observer<List<Resenia>> observerResenias = res ->
-                RecyclerAdapter.crearRecyclerLineal(res, ViewHolderResenia.class, R.id.recyclerReseniaRestaurante,
-                        R.layout.recycler_resenias, v, LinearLayoutManager.VERTICAL);
+        final Observer<List<Resenia>> observerResenias = res -> {
+            RecyclerAdapter.crearRecyclerLineal(res, ViewHolderResenia.class, R.id.recyclerReseniaRestaurante,
+                    R.layout.recycler_resenias, v, LinearLayoutManager.VERTICAL);
+            Log.i("resenias res", res.toString());
+        };
         restaurante.getLiveDataResenia().observe(this, observerResenias);
 
         //Boton que abre la activity para crear una reseña de un restaurante

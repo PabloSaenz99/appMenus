@@ -38,6 +38,7 @@ public class ReseniaActivity extends AppCompatActivity {
             Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
             intent.putExtra("resenia", r);
             BaseDatos.getInstance().addResenia(r);
+            Usuario.getUsuario().addResenia(r);
             finish();
         });
     }
