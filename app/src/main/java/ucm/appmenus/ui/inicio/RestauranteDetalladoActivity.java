@@ -48,6 +48,8 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         TextView horario = findViewById(R.id.horarioRestaurante);
         Button botonResenia = findViewById(R.id.botonAniadirResenia);
         Button botonFiltros = findViewById(R.id.botonAniadirFiltros);
+        findViewById(R.id.progressBarImagenes).setVisibility(View.VISIBLE);
+        findViewById(R.id.progressBarFiltros).setVisibility(View.VISIBLE);
 
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
@@ -68,15 +70,17 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
 
         View v = getWindow().getDecorView().getRootView();
         //Recycler filtros
-        final Observer<Set<String>> observerFiltros = filtros ->
-                RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false), ViewHolderFiltros.class,
-                        R.id.filtrosRestauranteRecycler, R.layout.recycler_filtros, v, 3);
+        final Observer<Set<String>> observerFiltros = filtros -> {
+            RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false), ViewHolderFiltros.class,
+                    R.id.filtrosRestauranteRecycler, R.layout.recycler_filtros, v, 3);
+        };
         restaurante.getLivedataFiltros().observe(this, observerFiltros);
 
         //Recycler filtros
         final Observer<Set<String>> observerFiltrosBD = filtros -> {
             RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false), ViewHolderFiltros.class,
                     R.id.filtrosBDRestauranteRecycler, R.layout.recycler_filtros, v, 3);
+            findViewById(R.id.progressBarFiltros).setVisibility(View.INVISIBLE);
             if(filtros.isEmpty()) {
                 findViewById(R.id.infoFiltrosBD).setVisibility(View.INVISIBLE);
             }
@@ -87,9 +91,11 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         restaurante.getLivedataFiltrosBD().observe(this, observerFiltrosBD);
 
         //Recycler imagenes
-        final Observer<List<Bitmap>> observerImagenes = img ->
-                RecyclerAdapter.crearRecyclerLineal(img, ViewHolderImagenes.class, R.id.recyclerImagenesRestaurante,
-                        R.layout.recycler_imagenes, v, LinearLayoutManager.HORIZONTAL);
+        final Observer<List<Bitmap>> observerImagenes = img -> {
+            RecyclerAdapter.crearRecyclerLineal(img, ViewHolderImagenes.class, R.id.recyclerImagenesRestaurante,
+                    R.layout.recycler_imagenes, v, LinearLayoutManager.HORIZONTAL);
+            findViewById(R.id.progressBarImagenes).setVisibility(View.INVISIBLE);
+        };
         restaurante.getliveDataImagen().observe(this, observerImagenes);
 
         //Recycler reseñas

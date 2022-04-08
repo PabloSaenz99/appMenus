@@ -9,20 +9,39 @@
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:scrollbars="vertical"
-        android:verticalScrollbarPosition="right"
-        app:layout_constraintBottom_toTopOf="@+id/botonAniadirResenia"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerImagenesRestaurante"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="200dp">
+
+            <ProgressBar
+                android:id="@+id/progressBarImagenes"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/recyclerImagenesRestaurante"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/recyclerImagenesRestaurante" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerImagenesRestaurante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/nombreRestaurante"
@@ -34,17 +53,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <!--TODO hacer bien este boton de favorito
-        <ToggleButton
-            android:id="@+id/botonAniadirFavorito"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@android:drawable/btn_star"
-            android:text=""
-            android:textOff=""
-            android:textOn="" />
-            -->
-
         <RatingBar
             android:id="@+id/valoracionRestaurante"
             android:layout_width="wrap_content"
@@ -52,34 +60,55 @@
             android:layout_gravity="center"
             android:theme="@style/RatingBarLong" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/filtrosRestauranteRecycler"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical">
+            android:layout_height="wrap_content">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <ProgressBar
+                android:id="@+id/progressBarFiltros"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/infoFiltrosBD" />
 
-        <TextView
-            android:id="@+id/infoFiltrosBD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Filtros no confirmados"
-            android:textColor="#FF9800"
-            android:textStyle="bold" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/filtrosRestauranteRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/filtrosBDRestauranteRecycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/telefonoRestaurante"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Telefono"
-            android:textColor="#000000" />
+            <TextView
+                android:id="@+id/infoFiltrosBD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Filtros de los usuarios"
+                android:textColor="#FF9800"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/filtrosRestauranteRecycler" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/filtrosBDRestauranteRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:scrollbars="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/infoFiltrosBD" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/webRestaurante"
@@ -102,6 +131,13 @@
             android:text="Horarios"
             android:textColor="#000000" />
 
+        <TextView
+            android:id="@+id/telefonoRestaurante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Telefono"
+            android:textColor="#000000" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerReseniaRestaurante"
             android:layout_width="match_parent"
@@ -110,21 +146,33 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/botonAniadirResenia"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Añade una reseña"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/botonAniadirFiltros"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Añadir filtros"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <Button
+            android:id="@+id/botonAniadirResenia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Añade una reseña" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/botonAniadirFiltros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir filtros" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
