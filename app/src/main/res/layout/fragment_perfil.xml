@@ -10,10 +10,10 @@
         android:id="@+id/view5"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@drawable/ic_wave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <!--android:background="@drawable/ic_wave" esto va en la view de arriba-->
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -26,14 +26,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
+
         <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_image"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:src="@drawable/logo"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#FF000000"/>
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
 
         <View
             android:id="@+id/view7"

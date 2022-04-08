@@ -1,33 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/buttonFiltro"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <CheckBox
-            android:id="@+id/checkBoxRecyclerFiltros"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-5dp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="-20dp"
-            android:background="@drawable/shape">
-
-            <TextView
-                android:id="@+id/textoRecyclerFiltros"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Filtro1"
-                android:textSize="20dp"
-                android:textColor="#000000" />
-
-
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Button"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp" />
 </LinearLayout>

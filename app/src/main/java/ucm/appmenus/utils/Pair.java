@@ -23,4 +23,8 @@ public class Pair<T1, T2> {
     public T2 getSegundo() {
         return segundo;
     }
+
+    public String toString(){
+        return "[" + primero.toString() + " , " + segundo.toString() + "]";
+    }
 }

@@ -29,5 +29,8 @@
     <color name="oroValoracion">#FFC922</color>
     <color name="vacioValoracion">#787878</color>
 
+    <color name="botonActivado">#00BCD4</color>
+    <color name="botonDesactivado">#8C8C8C</color>
+
 
 </resources>

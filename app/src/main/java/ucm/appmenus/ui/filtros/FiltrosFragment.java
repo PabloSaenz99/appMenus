@@ -5,6 +5,7 @@ package ucm.appmenus.ui.filtros;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +92,7 @@ public class FiltrosFragment extends Fragment {
     public static ArrayList<Pair<String, Boolean>> transform(List<String> filtros, boolean modo){
         ArrayList<Pair<String, Boolean>> datos = new ArrayList<>();
         for (String s: filtros) {
-            datos.add(new Pair<String, Boolean>(s, modo));
+            datos.add(new Pair<>(s, modo));
         }
         return datos;
     }
@@ -141,7 +143,8 @@ public class FiltrosFragment extends Fragment {
             b.putBoolean(Constantes.ACTUALIZAR_INTENT, true);
             b.putInt(Constantes.AREA, area);
             b.putString(Constantes.FILTROS_BUSQUEDA, tiposLocal + tiposCocina.toString() + "<" + area + ">");
-            ((MainActivity) act).changeFragment(R.id.navigation_inicio, b);
+
+            Navigation.findNavController(root).navigate(R.id.navigation_inicio, b);
         } else if(act instanceof AniadirFiltrosActivity) {
             //TODO: coger los arrays (tiposLocal y tiposCocina y hacer que se guarden en la BD
             Toast.makeText(act, "Filtros añadidos", Toast.LENGTH_SHORT).show();
