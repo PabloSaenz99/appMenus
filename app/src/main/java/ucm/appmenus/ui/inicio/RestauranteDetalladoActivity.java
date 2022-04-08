@@ -41,7 +41,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         restaurante = getIntent().getParcelableExtra(Constantes.RESTAURANTE);
 
         TextView nombre = findViewById(R.id.nombreRestaurante);
-        RatingBar valoracion = findViewById(R.id.valoracionRestaurante);
+        RatingBar valoracion = findViewById(R.id.valoracionRestaurante);//TODO: BUSACR EN LA BD
         TextView url = findViewById(R.id.webRestaurante);
         TextView direccion = findViewById(R.id.direccionRestaurante);
         TextView telefono = findViewById(R.id.telefonoRestaurante);

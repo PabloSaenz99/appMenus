@@ -48,26 +48,20 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         direccion = view.findViewById(R.id.textDireccionRestaurante);
         imagenPrinc = view.findViewById(R.id.imageRestaurantRecycler);
 
-        favorito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO Aqui se añadiria a los favoritos del usuario
-                if(favorito.isChecked())
-                    Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
+        favorito.setOnClickListener(v -> {
+            //TODO Aqui se añadiria a los favoritos del usuario: tiene que llamar a add a la bd y a add a restaurantes fav de usuario
+            if(favorito.isChecked())
+                Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
+                    Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(view.getContext(), nombre.getText().toString() + " eliminado de favoritos",
                         Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(view.getContext(), nombre.getText().toString() + " eliminado de favoritos",
-                            Toast.LENGTH_LONG).show();
-            }
         });
-        imagenPrinc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO (quiza) hacer que en vez de pulsando la imagen, añadiendo un boton
-                Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
-                intent.putExtra(Constantes.RESTAURANTE, datos);
-                view.getContext().startActivity(intent);
-            }
+        imagenPrinc.setOnClickListener(v -> {
+            //TODO (quiza) hacer que en vez de pulsando la imagen, añadiendo un boton
+            Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
+            intent.putExtra(Constantes.RESTAURANTE, datos);
+            view.getContext().startActivity(intent);
         });
     }
 

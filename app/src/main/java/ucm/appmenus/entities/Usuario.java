@@ -48,7 +48,7 @@ public class Usuario {
     }
 
     /**
-     * Crea el usaurio solo si no se ha creado (TODO: los credenciales se comprueban en el login).
+     * Crea el usaurio solo si no se ha creado
      * @param email correo del usuario.
      * @param loc la localizacion del usuario actual.
      * @return el usuario creado en caso de no existir previamente o el usuario creado previamente

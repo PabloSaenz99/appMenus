@@ -44,7 +44,6 @@ public class JSONOpenStreetReader {
                 String cuisineAux = getStringFor(info, "cuisine");
                 if(!cuisineAux.equals(""))
                     filtros.add(cuisineAux);
-                //TODO: buscar en la BD esto
                 float valoracion = 0;
                 restaurantes.add(new Restaurante(id, nombre, url, dir, lat, lon,
                         Localizacion.distanciaEnMetros(lat, lon, latUsuario, lonUsuario),

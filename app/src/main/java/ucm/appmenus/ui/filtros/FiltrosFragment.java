@@ -145,8 +145,7 @@ public class FiltrosFragment extends Fragment {
             b.putString(Constantes.FILTROS_BUSQUEDA, tiposLocal + tiposCocina.toString() + "<" + area + ">");
 
             Navigation.findNavController(root).navigate(R.id.navigation_inicio, b);
-        } else if(act instanceof AniadirFiltrosActivity) {
-            //TODO: coger los arrays (tiposLocal y tiposCocina y hacer que se guarden en la BD
+        } else if(act instanceof AniadirFiltrosActivity) {      //Guarda los filtros en la BD
             Toast.makeText(act, "Filtros añadidos", Toast.LENGTH_SHORT).show();
             tiposLocal.addAll(tiposCocina);
             BaseDatos.getInstance().addFiltrosRestaurante(getArguments().getString(Constantes.RESTAURANTE), tiposLocal);

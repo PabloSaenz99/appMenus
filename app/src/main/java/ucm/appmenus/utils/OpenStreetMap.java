@@ -72,8 +72,7 @@ public class OpenStreetMap {
     }
 
     public void setPlaceById(Set<Restaurante> actualizable, String id){
-        String query =
-                "[out:json];(node(" + id + "););out;";
+        String query = URL_FIND_PLACES + ";(node(" + id + "););out;";
         Log.i("query", query);
         Thread th = new Thread(new Runnable() {
             @Override

@@ -13,7 +13,7 @@
     <!--Strings para referenciar las claves usadas en el fichero del login-->
     <string name="email_usuario">Email</string>
     <string name="password_usuario">Password</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_resenia">ReseniaActivity</string>
     <!-- Strings used for fragments for navigation -->
