@@ -21,7 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="usuario"
+        android:textColor="#8BC34A"
         android:textColorHint="#8E8E8E"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <RatingBar
