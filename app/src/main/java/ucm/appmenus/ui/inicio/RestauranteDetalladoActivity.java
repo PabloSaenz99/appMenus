@@ -55,7 +55,7 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
         //imagen.setImageBitmap(restaurante.getListaImagenes().get(0));
-        valoracion.setRating((float )restaurante.getValoracion());
+        valoracion.setRating(restaurante.getLiveDataValoracion().getValue().floatValue());
         valoracion.setClickable(false);
         direccion.setText(restaurante.getLiveDataDireccion().getValue());
         if(restaurante.getTelefono() == 0)

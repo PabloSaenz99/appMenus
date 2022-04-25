@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.OpenStreetMap;
@@ -27,9 +29,9 @@ public class Restaurante implements Parcelable {
     private final String url;
     private final int telefono;
     private final String horarios;
-    private final double valoracion;
 
     //MutableLiveData para poder actualizar en tiempo real sobre la interfaz
+    private final MutableLiveData<Double> valoracion;
     private final MutableLiveData<String> direccion;
     private final MutableLiveData<List<Bitmap>> listaImagenes;
     private final MutableLiveData<Set<String>> listaFiltros;
@@ -46,7 +48,7 @@ public class Restaurante implements Parcelable {
         this.url = url;
         this.telefono = telefono;
         this.horarios = horarios;
-        this.valoracion = valoracion;
+        this.valoracion = new MutableLiveData<>(valoracion);
         this.direccion = new MutableLiveData<>(" [" + distanciaEnMetros + "m]");
         this.listaImagenes = new MutableLiveData<>();
         this.listaResenias = new MutableLiveData<>(new ArrayList<>());
@@ -71,6 +73,8 @@ public class Restaurante implements Parcelable {
         } else {
             this.direccion.postValue(direccion + this.direccion.getValue());
         }
+
+        BaseDatos.getInstance().getValoracionRestaurante(idRestaurante, this.valoracion);
     }
 
     public String getIdRestaurante(){return idRestaurante;}
@@ -78,8 +82,8 @@ public class Restaurante implements Parcelable {
     public String getStringURL() { return url; }
     public int getTelefono() { return telefono; }
     public String getHorarios() { return horarios; }
-    public double getValoracion() { return valoracion; }
 
+    public LiveData<Double> getLiveDataValoracion() { return valoracion; }
     public LiveData<String> getLiveDataDireccion() { return direccion; }
     public LiveData<List<Bitmap>> getliveDataImagen() { return listaImagenes; }
     public LiveData<Set<String>> getLivedataFiltros() {return this.listaFiltros;}
@@ -119,7 +123,7 @@ public class Restaurante implements Parcelable {
         dest.writeString(this.direccion.getValue());
         dest.writeInt(this.telefono);
         dest.writeString(this.horarios);
-        dest.writeDouble(this.valoracion);
+        dest.writeDouble(this.valoracion.getValue());
         dest.writeStringList(new ArrayList<String>(this.listaFiltros.getValue()));
     }
 
@@ -130,7 +134,7 @@ public class Restaurante implements Parcelable {
         direccion = new MutableLiveData<>(in.readString());
         telefono = in.readInt();
         horarios = in.readString();
-        valoracion = in.readDouble();
+        valoracion = new MutableLiveData<>(in.readDouble());
         listaImagenes = new MutableLiveData<>(new ArrayList<>());
         listaResenias = new MutableLiveData<>(new ArrayList<>());
         listaFiltros = new MutableLiveData<>(new HashSet<>(in.createStringArrayList()));

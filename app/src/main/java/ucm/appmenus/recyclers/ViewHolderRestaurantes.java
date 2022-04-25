@@ -13,7 +13,6 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -79,32 +78,31 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
         favorito.setChecked(false);
-        valoracion.setRating((float )restaurante.getValoracion());
+        valoracion.setRating(restaurante.getLiveDataValoracion().getValue().floatValue());
         valoracion.setClickable(false);
         direccion.setText(restaurante.getLiveDataDireccion().getValue());
+
+        /**
+         * Observa el RatingBar que contiene la valoración, cuando se actualiza mediante la BD
+         * se muestran las estrellas
+         * */
+        final Observer<Double> observerValoracion = val -> {
+            valoracion.setRating(val.floatValue());
+        };
+        restaurante.getLiveDataValoracion().observe((LifecycleOwner) view.getContext(), observerValoracion);
 
         /**
          * Observa el TextView que contiene la direccion, cuando se actualiza mediante WebScrapping
          * se muestra en la vista
          * */
-        final Observer<String> observerDireccion = new Observer<String>() {
-            @Override
-            public void onChanged(String dir) {
-                direccion.setText(dir);
-            }
-        };
+        final Observer<String> observerDireccion = direccion::setText;
         restaurante.getLiveDataDireccion().observe((LifecycleOwner) view.getContext(), observerDireccion);
 
         /**
          * Observa el ImageView que contiene la imagen, cuando se actualiza mediante WebScrapping
          * se muestra en la vista
          * */
-        final Observer<List<Bitmap>> observerImagen = new Observer<List<Bitmap>>() {
-            @Override
-            public void onChanged(List<Bitmap> img) {
-                imagenPrinc.setImageBitmap(img.get(0));
-            }
-        };
+        final Observer<List<Bitmap>> observerImagen = img -> imagenPrinc.setImageBitmap(img.get(0));
         restaurante.getliveDataImagen().observe((LifecycleOwner) view.getContext(), observerImagen);
 
         /**

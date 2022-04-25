@@ -14,7 +14,7 @@ public class Resenia implements Parcelable {
     private final String usuarioNombre;
     private final String titulo;
     private final String descripcion;
-    private final double valoracion;
+    private double valoracion;
 
     public Resenia(String idRestaurante, String idUsuario, String usuarioNombre, String titulo, String texto, double valoracion){
         this.idRestaurante = idRestaurante;
@@ -34,6 +34,8 @@ public class Resenia implements Parcelable {
     public String getTitulo() { return titulo; }
     public String getDescripcion() { return descripcion; }
     public double getValoracion() { return valoracion; }
+
+    public void setValoracion(double valoracion) {this.valoracion = valoracion; }
 
     /**
      * Redefine el hash del objeto para que si los datos son iguales siempre sea el mismo

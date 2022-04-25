@@ -13,6 +13,7 @@ import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ui.inicio.ReseniaActivity;
+import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 
 public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IReclycerElement<Resenia>, View.OnClickListener {
@@ -40,7 +41,14 @@ public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IRecl
         creador.setText(res.getUsuarioNombre());
         texto.setText(res.getDescripcion());
         valoracion.setRating((float) res.getValoracion());
-        valoracion.setClickable(false);
+        valoracion.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float value, boolean b) {
+                resenia.setValoracion(value);
+                BaseDatos.getInstance().setValoracionRestaurante(resenia.getIdRestaurante(), value);
+                BaseDatos.getInstance().addResenia(resenia);
+            }
+        });
     }
 
     @Override

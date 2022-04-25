@@ -37,6 +37,9 @@ public class BaseDatos {
 
     private static final String RESENIAS = "Resenias";
     private static final String RESTAURANTES = "Restaurantes";
+    private static final String VALORACION = "Valoracion";
+    private static final String VALORACION_TOTAL = "Valoracion_total";
+    private static final String NUM_VALORACIONES = "Numero_valoraciones";
     private static final String FILTROS_APROBADOS = "FiltrosAprobados";
     private static final String FILTROS_NO_APROBADOS = "FiltrosNoAprobados";
 
@@ -152,9 +155,36 @@ public class BaseDatos {
                Set<String> filtros = actualizable.getValue();
                for (DataSnapshot d: task.getResult().getChildren())
                    filtros.add(String.valueOf(d.getKey()));
-               Log.i("filtros", filtros.toString());
                actualizable.postValue(filtros);
            }
+        });
+    }
+
+    public void getValoracionRestaurante(String idRestaurante, MutableLiveData<Double> actualizable){
+        databaseRestaurantes.child(idRestaurante).child(VALORACION).child(VALORACION_TOTAL).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful() && task.getResult().getValue() != null) {
+                actualizable.postValue(task.getResult().getValue(Double.class));
+            }
+        });
+    }
+
+    public void setValoracionRestaurante(String idRestaurante, double nuevaVal){
+        databaseRestaurantes.child(idRestaurante).child(VALORACION).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                if (task.getResult().getValue() != null) {
+                    double antVal = task.getResult().child(VALORACION_TOTAL).getValue(Double.class);
+                    double numVal = task.getResult().child(NUM_VALORACIONES).getValue(Double.class);
+                    double aux = (antVal * numVal + nuevaVal);
+                    numVal++;
+                    aux /= (numVal + 1);
+                    databaseRestaurantes.child(idRestaurante).child(VALORACION).child(VALORACION_TOTAL).setValue(aux);
+                    databaseRestaurantes.child(idRestaurante).child(VALORACION).child(NUM_VALORACIONES).setValue(numVal);
+                }
+                else {
+                    databaseRestaurantes.child(idRestaurante).child(VALORACION).child(VALORACION_TOTAL).setValue(nuevaVal);
+                    databaseRestaurantes.child(idRestaurante).child(VALORACION).child(NUM_VALORACIONES).setValue(1);
+                }
+            }
         });
     }
 
