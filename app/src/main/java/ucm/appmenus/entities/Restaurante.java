@@ -86,7 +86,7 @@ public class Restaurante implements Parcelable {
     public LiveData<Set<String>> getLivedataFiltrosBD() {return this.listaFiltrosBD;}
     public LiveData<List<Resenia>> getLiveDataResenia() { return this.listaResenias;}
 
-    public void updateResenias(){ listaResenias.postValue(BaseDatos.getInstance().getReseniasRestaurante(idRestaurante));}
+    public void updateResenias(){ BaseDatos.getInstance().getReseniasRestaurante(idRestaurante, listaResenias);}
     public void updateImagenes(){ ws.setImagenes(); }
     public void updateFiltros(){
         ArrayList<List<String>> listOfLists = new ArrayList<>();

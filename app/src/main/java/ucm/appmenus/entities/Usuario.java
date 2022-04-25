@@ -99,5 +99,5 @@ public class Usuario {
     public void addResenia(Resenia r){ resenias.add(r); }
 
     public void removeRestauranteFavorito(Restaurante r){ this.restaurantesFavoritos.remove(r); }
-
+    public void removeResenia(Resenia r) { this.resenias.remove(r); }
 }

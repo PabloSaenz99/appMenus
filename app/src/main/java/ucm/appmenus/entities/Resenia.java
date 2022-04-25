@@ -41,7 +41,7 @@ public class Resenia implements Parcelable {
      */
     @Override
     public int hashCode() {
-        Object[] x = {idResenia, idRestaurante, idUsuario, titulo, descripcion, String.valueOf(valoracion)};
+        Object[] x = {idRestaurante, idUsuario};
         return Arrays.hashCode(x);
     }
 

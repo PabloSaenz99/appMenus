@@ -52,19 +52,17 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         imagenPrinc = view.findViewById(R.id.imageRestaurantRecycler);
 
         favorito.setOnClickListener(v -> {
-            //TODO Aqui se añadiria a los favoritos del usuario: tiene que llamar a add a la bd y a add a restaurantes fav de usuario
             if(favorito.isChecked()) {
                 Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
                         Toast.LENGTH_LONG).show();
                 Usuario.getUsuario().addRestauranteFavorito(restaurante);
-                BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
             }
             else {
                 Toast.makeText(view.getContext(), nombre.getText().toString() + " eliminado de favoritos",
                         Toast.LENGTH_LONG).show();
                 Usuario.getUsuario().removeRestauranteFavorito(restaurante);
-                BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
             }
+            BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
         });
         imagenPrinc.setOnClickListener(v -> {
             //TODO (quiza) hacer que en vez de pulsando la imagen, añadiendo un boton
