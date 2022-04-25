@@ -13,6 +13,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -21,14 +22,16 @@ import ucm.appmenus.entities.Restaurante;
 
 import android.graphics.Bitmap;
 
+import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
+import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 
 public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante> {
 
     private final View view;
-    private Restaurante datos;
+    private Restaurante restaurante;
 
     private final TextView nombre;
     private final TextView url;
@@ -50,24 +53,30 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
 
         favorito.setOnClickListener(v -> {
             //TODO Aqui se añadiria a los favoritos del usuario: tiene que llamar a add a la bd y a add a restaurantes fav de usuario
-            if(favorito.isChecked())
+            if(favorito.isChecked()) {
                 Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
-                    Toast.LENGTH_LONG).show();
-            else
+                        Toast.LENGTH_LONG).show();
+                Usuario.getUsuario().addRestauranteFavorito(restaurante);
+                BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
+            }
+            else {
                 Toast.makeText(view.getContext(), nombre.getText().toString() + " eliminado de favoritos",
                         Toast.LENGTH_LONG).show();
+                Usuario.getUsuario().removeRestauranteFavorito(restaurante);
+                BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
+            }
         });
         imagenPrinc.setOnClickListener(v -> {
             //TODO (quiza) hacer que en vez de pulsando la imagen, añadiendo un boton
             Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
-            intent.putExtra(Constantes.RESTAURANTE, datos);
+            intent.putExtra(Constantes.RESTAURANTE, restaurante);
             view.getContext().startActivity(intent);
         });
     }
 
     @Override
     public void setDatos(final Restaurante restaurante) {
-        datos = restaurante;
+        this.restaurante = restaurante;
 
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
@@ -116,5 +125,5 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
     }
 
     @Override
-    public Restaurante getDatos() { return datos; }
+    public Restaurante getDatos() { return restaurante; }
 }

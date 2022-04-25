@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,13 +35,14 @@ public class InicioFragment extends Fragment {
     private InicioViewModel inicioViewModel;
     private View root;
 
+    //TODO: seguir este tutorial: https://androidwave.com/fragment-communication-using-viewmodel/
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         this.mainActivity = (MainActivity) getActivity();
 
-        //inicioViewModel = ViewModelProviders.of(this).get(InicioViewModel.class);
-        inicioViewModel = new ViewModelProvider(getActivity()).get(InicioViewModel.class);
+        inicioViewModel = new ViewModelProvider(requireActivity()).get(InicioViewModel.class);
         this.root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
         root.findViewById(R.id.progressBarInicio).setVisibility(View.VISIBLE);
@@ -105,7 +108,8 @@ public class InicioFragment extends Fragment {
      * Usado para guardar los datos cuando cambia el fragmento (por ejemplo se hace swipe al fragmento de
      * "filtros", asi no hace falta volver a hacer la busqueda en OpenStreetMap
      * @param outState variable donde se van a guardar los datos necesarios
-     * TODO hacer que guarde bien el estado no va Xd
+     * TODO hacer que guarde bien el estado no va Xd:
+     *                 https://stackoverflow.com/questions/42781409/restoring-fragment-state-when-changing-fragments-through-bottom-navigation-bar
      */
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -113,5 +117,35 @@ public class InicioFragment extends Fragment {
         Log.i("Salvo", "cosas");
         outState.putParcelableArrayList(Constantes.LISTA_RESTAURANTES, inicioViewModel.getRestaurantes().getValue());
         outState.putString(Constantes.FILTROS_BUSQUEDA, filtrosAplicados.getText().toString());
+    }
+
+    @Override
+    public void onPrimaryNavigationFragmentChanged(boolean bool){
+        super.onPrimaryNavigationFragmentChanged(bool);
+        Log.i("info", "cambio frag");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("info", "pause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i("info", "stop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i("info", "destroy view");
+    }
+
+    @Override
+    public  void onDestroy() {
+        super.onDestroy();
+        Log.i("info", "destroy");
     }
 }

@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class Resenia implements Parcelable {
 
@@ -14,7 +13,7 @@ public class Resenia implements Parcelable {
     //TODO: usuario no vale para nada porque el nombre puede cambiar?
     private final String usuarioNombre;
     private final String titulo;
-    private final String texto;
+    private final String descripcion;
     private final double valoracion;
 
     public Resenia(String idRestaurante, String idUsuario, String usuarioNombre, String titulo, String texto, double valoracion){
@@ -22,7 +21,7 @@ public class Resenia implements Parcelable {
         this.idUsuario = idUsuario;
         this.usuarioNombre = usuarioNombre;
         this.titulo = titulo;
-        this.texto = texto;
+        this.descripcion = texto;
         this.valoracion = valoracion;
 
         this.idResenia = String.valueOf(this.hashCode());
@@ -33,7 +32,7 @@ public class Resenia implements Parcelable {
     public String getIdUsuario() { return idUsuario; }
     public String getUsuarioNombre() { return usuarioNombre; }
     public String getTitulo() { return titulo; }
-    public String getTexto() { return texto; }
+    public String getDescripcion() { return descripcion; }
     public double getValoracion() { return valoracion; }
 
     /**
@@ -42,7 +41,7 @@ public class Resenia implements Parcelable {
      */
     @Override
     public int hashCode() {
-        Object[] x = {idResenia, idRestaurante, idUsuario, titulo, texto, String.valueOf(valoracion)};
+        Object[] x = {idResenia, idRestaurante, idUsuario, titulo, descripcion, String.valueOf(valoracion)};
         return Arrays.hashCode(x);
     }
 
@@ -53,7 +52,7 @@ public class Resenia implements Parcelable {
         idUsuario = in.readString();
         usuarioNombre = in.readString();
         titulo = in.readString();
-        texto = in.readString();
+        descripcion = in.readString();
         valoracion = in.readDouble();
     }
 
@@ -81,7 +80,7 @@ public class Resenia implements Parcelable {
         parcel.writeString(idUsuario);
         parcel.writeString(usuarioNombre);
         parcel.writeString(titulo);
-        parcel.writeString(texto);
+        parcel.writeString(descripcion);
         parcel.writeDouble(valoracion);
     }
 }

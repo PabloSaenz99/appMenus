@@ -30,6 +30,14 @@ public class ReseniaActivity extends AppCompatActivity {
         RatingBar valoracion = findViewById(R.id.valoracionResenia);
         findViewById(R.id.usuarioResenia).setVisibility(View.INVISIBLE);
 
+        //Busca si la reseña tiene datos pasados
+        Resenia resenia = getIntent().getParcelableExtra(Constantes.RESENIA);
+        if(resenia != null){
+            titulo.setText(resenia.getTitulo());
+            descripcion.setText(resenia.getDescripcion());
+            //valoracion.setRating((float) resenia.getValoracion());
+        }
+
         Button crearResenia = findViewById(R.id.botonCrearResenia);
         crearResenia.setOnClickListener(view -> {
             Resenia r = new Resenia(getIntent().getExtras().getString(Constantes.RESTAURANTE),

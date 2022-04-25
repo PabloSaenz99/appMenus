@@ -85,6 +85,13 @@ public class Usuario {
     public HashSet<Resenia> getResenias() { return resenias; }
     public HashSet<Restaurante> getRestaurantesFavoritos() { return restaurantesFavoritos; }
     public ArrayList<String> getPreferencias() { return preferencias; }
+    public List<String> getRestaurantesFavoritosID() {
+        List<String> res = new ArrayList<>();
+        for(Restaurante r: restaurantesFavoritos){
+            res.add(r.getIdRestaurante());
+        }
+        return res;
+    }
 
     public void setNombre(String nombre) { this.nombre = nombre; }
     public void addPreferencias(String pref) { preferencias.add(pref); }

@@ -1,5 +1,7 @@
 package ucm.appmenus.recyclers;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -9,8 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
+import ucm.appmenus.entities.Usuario;
+import ucm.appmenus.ui.inicio.ReseniaActivity;
+import ucm.appmenus.utils.Constantes;
 
-public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IReclycerElement<Resenia> {
+public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IReclycerElement<Resenia>, View.OnClickListener {
 
     private Resenia resenia;
 
@@ -25,6 +30,7 @@ public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IRecl
         creador = view.findViewById(R.id.usuarioResenia);
         texto = view.findViewById(R.id.descripcionResenia);
         valoracion = view.findViewById(R.id.valoracionResenia);
+        itemView.setOnClickListener(this);
     }
 
     @Override
@@ -32,7 +38,7 @@ public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IRecl
         this.resenia = res;
         titulo.setText(res.getTitulo());
         creador.setText(res.getUsuarioNombre());
-        texto.setText(res.getTexto());
+        texto.setText(res.getDescripcion());
         valoracion.setRating((float) res.getValoracion());
         valoracion.setClickable(false);
     }
@@ -40,5 +46,17 @@ public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IRecl
     @Override
     public Resenia getDatos() {
         return resenia;
+    }
+
+    @Override
+    public void onClick(View view) {
+        //Si el usuario que creó la reseña es el mismo que el usuario actual se permite editar
+        if(resenia.getIdUsuario().contentEquals(Usuario.getUsuario().getIdUsuario())){
+            Intent intent = new Intent(view.getContext(), ReseniaActivity.class);
+            Bundle b = new Bundle();
+            b.putParcelable(Constantes.RESENIA, resenia);
+            intent.putExtras(b);
+            view.getContext().startActivity(intent);
+        }
     }
 }
