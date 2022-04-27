@@ -168,6 +168,7 @@ public class BaseDatos {
         });
     }
 
+    //TODO creo que aqui deberia haber hecho que las reseñas no se puedan cambiar de valoración, sino que al añadir o modificar una se cambie la valoracion del restaurante
     public void setValoracionRestaurante(String idRestaurante, double nuevaVal){
         databaseRestaurantes.child(idRestaurante).child(VALORACION).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()) {

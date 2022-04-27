@@ -27,7 +27,7 @@ import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 
-public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante> {
+public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante>, View.OnClickListener {
 
     private final View view;
     private Restaurante restaurante;
@@ -63,12 +63,8 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
             }
             BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
         });
-        imagenPrinc.setOnClickListener(v -> {
-            //TODO (quiza) hacer que en vez de pulsando la imagen, añadiendo un boton
-            Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
-            intent.putExtra(Constantes.RESTAURANTE, restaurante);
-            view.getContext().startActivity(intent);
-        });
+
+        itemView.setOnClickListener(this);
     }
 
     @Override
@@ -86,9 +82,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
          * Observa el RatingBar que contiene la valoración, cuando se actualiza mediante la BD
          * se muestran las estrellas
          * */
-        final Observer<Double> observerValoracion = val -> {
-            valoracion.setRating(val.floatValue());
-        };
+        final Observer<Double> observerValoracion = val -> valoracion.setRating(val.floatValue());
         restaurante.getLiveDataValoracion().observe((LifecycleOwner) view.getContext(), observerValoracion);
 
         /**
@@ -122,4 +116,11 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
 
     @Override
     public Restaurante getDatos() { return restaurante; }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
+        intent.putExtra(Constantes.RESTAURANTE, restaurante);
+        view.getContext().startActivity(intent);
+    }
 }
