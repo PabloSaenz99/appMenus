@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,13 +31,29 @@ public class ReseniaActivity extends AppCompatActivity {
         RatingBar valoracion = findViewById(R.id.valoracionResenia);
         findViewById(R.id.usuarioResenia).setVisibility(View.INVISIBLE);
 
+        //Busca si la reseña tiene datos pasados
+        Resenia resenia = getIntent().getParcelableExtra(Constantes.RESENIA);
+        String idRestaurante;
+        if(resenia != null){
+            Log.i("resenia", "edit " + true);
+            idRestaurante = resenia.getIdRestaurante();
+            titulo.setText(resenia.getTitulo());
+            descripcion.setText(resenia.getDescripcion());
+            //valoracion.setRating((float) resenia.getValoracion());
+        }
+        else{
+            Log.i("resenia", "nueva " + false);
+            idRestaurante = getIntent().getExtras().getString(Constantes.RESTAURANTE);
+        }
+
         Button crearResenia = findViewById(R.id.botonCrearResenia);
         crearResenia.setOnClickListener(view -> {
-            Resenia r = new Resenia(getIntent().getExtras().getString(Constantes.RESTAURANTE),
-                    Usuario.getUsuario().getIdUsuario(), Usuario.getUsuario().getNombre(),
+            Resenia r = new Resenia(idRestaurante, Usuario.getUsuario().getIdUsuario(), Usuario.getUsuario().getNombre(),
                     titulo.getText().toString(), descripcion.getText().toString(), valoracion.getRating());
-            Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
-            intent.putExtra("resenia", r);
+
+            if(resenia != null) {
+                Usuario.getUsuario().removeResenia(resenia);
+            }
             BaseDatos.getInstance().addResenia(r);
             Usuario.getUsuario().addResenia(r);
             finish();

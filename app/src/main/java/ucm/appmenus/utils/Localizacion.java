@@ -55,8 +55,9 @@ public class Localizacion {
                 final LocationManager lm = (LocationManager) mainActivity.getSystemService(Context.LOCATION_SERVICE);
                 Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if(location != null) {
-                    longitude = location.getLongitude();
-                    latitude = location.getLatitude();
+                    //TODO: descomentar
+                    longitude = -122.0965848;//location.getLongitude();
+                    latitude = 37.3943617;//location.getLatitude();
                     Log.d("Localizacion", longitude + " and " + latitude);
                 }
                 else{

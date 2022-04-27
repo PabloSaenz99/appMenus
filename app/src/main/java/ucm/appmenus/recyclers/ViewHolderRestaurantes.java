@@ -21,14 +21,16 @@ import ucm.appmenus.entities.Restaurante;
 
 import android.graphics.Bitmap;
 
+import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
+import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 
-public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante> {
+public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante>, View.OnClickListener {
 
     private final View view;
-    private Restaurante datos;
+    private Restaurante restaurante;
 
     private final TextView nombre;
     private final TextView url;
@@ -49,55 +51,52 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         imagenPrinc = view.findViewById(R.id.imageRestaurantRecycler);
 
         favorito.setOnClickListener(v -> {
-            //TODO Aqui se añadiria a los favoritos del usuario: tiene que llamar a add a la bd y a add a restaurantes fav de usuario
-            if(favorito.isChecked())
+            if(favorito.isChecked()) {
                 Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
-                    Toast.LENGTH_LONG).show();
-            else
+                        Toast.LENGTH_LONG).show();
+                Usuario.getUsuario().addRestauranteFavorito(restaurante);
+            }
+            else {
                 Toast.makeText(view.getContext(), nombre.getText().toString() + " eliminado de favoritos",
                         Toast.LENGTH_LONG).show();
+                Usuario.getUsuario().removeRestauranteFavorito(restaurante);
+            }
+            BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
         });
-        imagenPrinc.setOnClickListener(v -> {
-            //TODO (quiza) hacer que en vez de pulsando la imagen, añadiendo un boton
-            Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
-            intent.putExtra(Constantes.RESTAURANTE, datos);
-            view.getContext().startActivity(intent);
-        });
+
+        itemView.setOnClickListener(this);
     }
 
     @Override
     public void setDatos(final Restaurante restaurante) {
-        datos = restaurante;
+        this.restaurante = restaurante;
 
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
         favorito.setChecked(false);
-        valoracion.setRating((float )restaurante.getValoracion());
+        valoracion.setRating(restaurante.getLiveDataValoracion().getValue().floatValue());
         valoracion.setClickable(false);
         direccion.setText(restaurante.getLiveDataDireccion().getValue());
+
+        /**
+         * Observa el RatingBar que contiene la valoración, cuando se actualiza mediante la BD
+         * se muestran las estrellas
+         * */
+        final Observer<Double> observerValoracion = val -> valoracion.setRating(val.floatValue());
+        restaurante.getLiveDataValoracion().observe((LifecycleOwner) view.getContext(), observerValoracion);
 
         /**
          * Observa el TextView que contiene la direccion, cuando se actualiza mediante WebScrapping
          * se muestra en la vista
          * */
-        final Observer<String> observerDireccion = new Observer<String>() {
-            @Override
-            public void onChanged(String dir) {
-                direccion.setText(dir);
-            }
-        };
+        final Observer<String> observerDireccion = direccion::setText;
         restaurante.getLiveDataDireccion().observe((LifecycleOwner) view.getContext(), observerDireccion);
 
         /**
          * Observa el ImageView que contiene la imagen, cuando se actualiza mediante WebScrapping
          * se muestra en la vista
          * */
-        final Observer<List<Bitmap>> observerImagen = new Observer<List<Bitmap>>() {
-            @Override
-            public void onChanged(List<Bitmap> img) {
-                imagenPrinc.setImageBitmap(img.get(0));
-            }
-        };
+        final Observer<List<Bitmap>> observerImagen = img -> imagenPrinc.setImageBitmap(img.get(0));
         restaurante.getliveDataImagen().observe((LifecycleOwner) view.getContext(), observerImagen);
 
         /**
@@ -116,5 +115,12 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
     }
 
     @Override
-    public Restaurante getDatos() { return datos; }
+    public Restaurante getDatos() { return restaurante; }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
+        intent.putExtra(Constantes.RESTAURANTE, restaurante);
+        view.getContext().startActivity(intent);
+    }
 }

@@ -1,5 +1,6 @@
 package ucm.appmenus.utils;
 
+import android.icu.util.Calendar;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -10,12 +11,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +37,9 @@ public class BaseDatos {
 
     private static final String RESENIAS = "Resenias";
     private static final String RESTAURANTES = "Restaurantes";
+    private static final String VALORACION = "Valoracion";
+    private static final String VALORACION_TOTAL = "Valoracion_total";
+    private static final String NUM_VALORACIONES = "Numero_valoraciones";
     private static final String FILTROS_APROBADOS = "FiltrosAprobados";
     private static final String FILTROS_NO_APROBADOS = "FiltrosNoAprobados";
 
@@ -62,9 +69,19 @@ public class BaseDatos {
      * @param resenia la reseña a añadir
      */
     public void addResenia(Resenia resenia){
-        databaseResenias.child(resenia.getIdResenia()).setValue(resenia);
-        databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).push().setValue(resenia.getIdResenia());
-        databaseUsuarios.child(RESENIAS).push().setValue(resenia.getIdResenia());
+        //TODO: añadir tiempo Log.i("BD", Calendar.getInstance().getTime().toString());
+        databaseResenias.child(resenia.getIdResenia()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){                      //No existe una reseña, por lo que se añade a todas partes
+                    databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).push().setValue(resenia.getIdResenia());
+                    databaseUsuarios.child(RESENIAS).push().setValue(resenia.getIdResenia());
+                }
+                databaseResenias.child(resenia.getIdResenia()).setValue(resenia);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
     }
 
     /**
@@ -83,7 +100,6 @@ public class BaseDatos {
             if(task.isSuccessful()){
                 Map<String, Long> valoresAntiguos = new HashMap<>();
                 for (DataSnapshot d: task.getResult().getChildren()) {
-                    Log.i("obtenido", d.toString());
                     valoresAntiguos.put(String.valueOf(d.getKey()), (Long) d.getValue());
                 }
                 //Mezcla ambos mapas y suma el contenido de sus valores
@@ -104,25 +120,27 @@ public class BaseDatos {
     }
 
     /**
-     *  //TODO: va mal
-     * @param idRestaurante
-     * @return
+     * Obtiene las reseñas de un restaurante almacenadas en la BD
+     * @param idRestaurante id del resaturante del cual buscar las reseñas
+     * @param res lista donde se guaradrá el resultado
      */
-    public List<Resenia> getReseniasRestaurante(String idRestaurante){
-        List<Resenia> resenias = new ArrayList<>();
+    public void getReseniasRestaurante(String idRestaurante, MutableLiveData<List<Resenia>> res){
         //Obtiene la lista de ids de las reseñas de ese restaurante
         databaseRestaurantes.child(idRestaurante).child(RESENIAS).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
+                List<Resenia> resenias = res.getValue();
                 for (DataSnapshot d: task.getResult().getChildren()) {
                     //Obtiene los datos de la reseña (busca el id de cada reseña)
                     databaseResenias.child(String.valueOf(d.getValue())).get().addOnCompleteListener(task1 -> {
                         //Añade las reseñas
-                        resenias.add(parseResenia(task1.getResult()));
+                        if(task1.isSuccessful()) {
+                            resenias.add(parseResenia(task1.getResult()));
+                            res.postValue(resenias);
+                        }
                     });
                 }
             }
         });
-        return resenias;
     }
 
     /**
@@ -137,9 +155,37 @@ public class BaseDatos {
                Set<String> filtros = actualizable.getValue();
                for (DataSnapshot d: task.getResult().getChildren())
                    filtros.add(String.valueOf(d.getKey()));
-               Log.i("filtros", filtros.toString());
                actualizable.postValue(filtros);
            }
+        });
+    }
+
+    public void getValoracionRestaurante(String idRestaurante, MutableLiveData<Double> actualizable){
+        databaseRestaurantes.child(idRestaurante).child(VALORACION).child(VALORACION_TOTAL).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful() && task.getResult().getValue() != null) {
+                actualizable.postValue(task.getResult().getValue(Double.class));
+            }
+        });
+    }
+
+    //TODO creo que aqui deberia haber hecho que las reseñas no se puedan cambiar de valoración, sino que al añadir o modificar una se cambie la valoracion del restaurante
+    public void setValoracionRestaurante(String idRestaurante, double nuevaVal){
+        databaseRestaurantes.child(idRestaurante).child(VALORACION).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                if (task.getResult().getValue() != null) {
+                    double antVal = task.getResult().child(VALORACION_TOTAL).getValue(Double.class);
+                    double numVal = task.getResult().child(NUM_VALORACIONES).getValue(Double.class);
+                    double aux = (antVal * numVal + nuevaVal);
+                    numVal++;
+                    aux /= (numVal + 1);
+                    databaseRestaurantes.child(idRestaurante).child(VALORACION).child(VALORACION_TOTAL).setValue(aux);
+                    databaseRestaurantes.child(idRestaurante).child(VALORACION).child(NUM_VALORACIONES).setValue(numVal);
+                }
+                else {
+                    databaseRestaurantes.child(idRestaurante).child(VALORACION).child(VALORACION_TOTAL).setValue(nuevaVal);
+                    databaseRestaurantes.child(idRestaurante).child(VALORACION).child(NUM_VALORACIONES).setValue(1);
+                }
+            }
         });
     }
 
@@ -172,7 +218,7 @@ public class BaseDatos {
                 String.valueOf(res.child("idUsuario").getValue()),
                 String.valueOf(res.child("usuarioNombre").getValue()),
                 String.valueOf(res.child("titulo").getValue()),
-                String.valueOf(res.child("texto").getValue()),
+                String.valueOf(res.child("descripcion").getValue()),
                 Double.parseDouble(String.valueOf(res.child("valoracion").getValue())));
     }
 }

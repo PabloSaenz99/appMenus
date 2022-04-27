@@ -116,10 +116,10 @@ public class WebScrapping {
 
     /**
      * Establece los filtros del lugar.
-     * @param buscar: lista con todos los filtros a buscar.
+     * @param filtros: lista con todos los filtros a buscar.
      * Crea su propio Thread.
      */
-    public void setFiltros(final List<List<String>> buscar) {
+    public void setFiltros(final List<List<String>> filtros) {
         //Necesario el thread para no lanzar excepciones y no sobrecargar el hilo principal
         Thread th = new Thread(new Runnable() {
             @Override
@@ -133,9 +133,9 @@ public class WebScrapping {
 
                     //Accede a dichos parametros, cargando su enlace (href)
                     if(elementoMenu != null)
-                        listaFiltros.getValue().addAll(buscarTags(url, elementoMenu.attr("href"), buscar));
+                        listaFiltros.getValue().addAll(buscarTags(url, elementoMenu.attr("href"), filtros));
                     if(elementoCarta != null)
-                        listaFiltros.getValue().addAll(buscarTags(url, elementoCarta.attr("href"), buscar));
+                        listaFiltros.getValue().addAll(buscarTags(url, elementoCarta.attr("href"), filtros));
                     if(elementoMenu != null || elementoCarta!= null) {
                         listaFiltros.postValue(listaFiltros.getValue());
                     }
