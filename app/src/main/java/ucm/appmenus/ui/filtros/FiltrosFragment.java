@@ -49,6 +49,7 @@ public class FiltrosFragment extends Fragment {
         //Crea los recyclers para los filtros, 3 recyclers para 3 tipos distintos de filtros
         listaRecyclers = new ArrayList<>();
         crearRecyclerFiltros(root, Constantes.filtrosLocal, R.id.recyclerFiltrosLocal, 3);
+        crearRecyclerFiltros(root, Constantes.filtrosDietaOSM, R.id.recyclerDietaEspecial, 3);
         crearRecyclerFiltros(root, Constantes.filtrosPais, R.id.recyclerFiltrosPais, 3);
         crearRecyclerFiltros(root, Constantes.filtrosComida, R.id.recyclerFiltrosComida, 3);
 
@@ -115,17 +116,26 @@ public class FiltrosFragment extends Fragment {
         }
 
         //Primero busca los tipos de local
-        ArrayList<String> tiposLocal = new ArrayList<String>();
-        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> vh = listaRecyclers.get(0);
-        for (int i = 0; i < vh.size(); i++) {
-            if (vh.get(i).getDatos().getSegundo()) {
-                tiposLocal.add(vh.get(i).getDatos().getPrimero());
+        ArrayList<String> tiposLocal = new ArrayList<>();
+        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> vhLocal = listaRecyclers.get(0);
+        for (int i = 0; i < vhLocal.size(); i++) {
+            if (vhLocal.get(i).getDatos().getSegundo()) {
+                tiposLocal.add(vhLocal.get(i).getDatos().getPrimero());
+            }
+        }
+
+        //Segundo busca los tipos de dieta
+        ArrayList<String> tiposDieta = new ArrayList<>();
+        RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> vhDieta = listaRecyclers.get(1);
+        for (int i = 0; i < vhDieta.size(); i++) {
+            if (vhDieta.get(i).getDatos().getSegundo()) {
+                tiposDieta.add(vhDieta.get(i).getDatos().getPrimero());
             }
         }
 
         //Luego recorre los demas recyclers que tienen los tipos de comida
         ArrayList<String> tiposCocina = new ArrayList<>();
-        for (int i = 1; i < listaRecyclers.size(); i++) {
+        for (int i = 2; i < listaRecyclers.size(); i++) {
             RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> aux = listaRecyclers.get(i);
             for (int j = 0; j < aux.size(); j++) {
                 if (aux.get(j).getDatos().getSegundo()) {
@@ -138,6 +148,7 @@ public class FiltrosFragment extends Fragment {
         if(act instanceof MainActivity) { //abre el fragment de inicio en modo busqueda (ahi se realiza la busqueda en OpenStreetMap)
             //Guarda los filtros de la busqueda en un bundle
             Bundle b = new Bundle();
+            b.putStringArrayList(Constantes.TIPOS_DIETA, tiposDieta);
             b.putStringArrayList(Constantes.TIPOS_LOCAL, tiposLocal);
             b.putStringArrayList(Constantes.TIPOS_COCINA, tiposCocina);
             b.putBoolean(Constantes.ACTUALIZAR_INTENT, true);

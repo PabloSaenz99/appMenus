@@ -3,20 +3,16 @@ package ucm.appmenus.entities;
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.OpenStreetMap;
@@ -64,7 +60,7 @@ public class Restaurante implements Parcelable {
         //Importante que vaya despues de iniciar los filtros
         ws = new WebScrapping(url, listaFiltros, listaImagenes);
         if(url != null){
-            ws.setFiltros(Collections.singletonList(Constantes.filtrosPais));
+            ws.setFiltros(filtrosBasicos());
             ws.setImagenPrincipal();
         }
         //Si no hay direccion (", ) entonces la busca mediante las coordenadas
@@ -93,12 +89,18 @@ public class Restaurante implements Parcelable {
     public void updateResenias(){ BaseDatos.getInstance().getReseniasRestaurante(idRestaurante, listaResenias);}
     public void updateImagenes(){ ws.setImagenes(); }
     public void updateFiltros(){
+        List<List<String>> filtros = filtrosBasicos();
+        filtros.add(Constantes.filtrosLocal);
+        filtros.add(Constantes.filtrosPostres);
+        ws.setFiltros(filtros);
+        BaseDatos.getInstance().getFiltrosRestaurante(idRestaurante, listaFiltrosBD);
+    }
+
+    private List<List<String>> filtrosBasicos() {
         ArrayList<List<String>> listOfLists = new ArrayList<>();
         listOfLists.add(Constantes.filtrosPais);
-        listOfLists.add(Constantes.filtrosLocal);
-        listOfLists.add(Constantes.filtrosPostres);
-        ws.setFiltros(listOfLists);
-        BaseDatos.getInstance().getFiltrosRestaurante(idRestaurante, listaFiltrosBD);
+        listOfLists.add(Constantes.filtrosDietaWebScrapping);
+        return listOfLists;
     }
 
     @Override

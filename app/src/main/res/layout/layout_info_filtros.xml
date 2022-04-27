@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:scrollbars="vertical">
 
     <View
         style="@style/HorizontalDivider"
@@ -35,6 +36,26 @@
         android:background="@color/logoAzul4" />
 
     <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DietaEspecial"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+    <View
+        style="@style/HorizontalDivider"
+        android:background="@color/logoAzul4" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerDietaEspecial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,9 +73,7 @@
         android:id="@+id/recyclerFiltrosPais"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scrollbars="vertical">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
 
     <View
         style="@style/HorizontalDivider"
@@ -70,7 +89,8 @@
         android:textSize="18sp"
         android:textStyle="bold|italic" />
 
-    <View style="@style/HorizontalDivider"
+    <View
+        style="@style/HorizontalDivider"
         android:background="@color/logoAzul4" />
 
     <androidx.recyclerview.widget.RecyclerView

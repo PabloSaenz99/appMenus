@@ -7,6 +7,7 @@ import java.util.List;
 public class Constantes {
 
     public static final String ACTUALIZAR_INTENT = "Actualizar intent";
+    public static final String TIPOS_DIETA = "Tipos de dieta";
     public static final String TIPOS_LOCAL = "Tipos de local";
     public static final String TIPOS_COCINA = "Tipos de cocina";
     public static final String AREA = "Area de busqueda";
@@ -43,9 +44,14 @@ public class Constantes {
         add("waffle"); add("teahouse");
     }});
 
-    //https://wiki.openstreetmap.org/wiki/Key:drink
-    public static final String[] filtrosBebida = {};
-
     //https://wiki.openstreetmap.org/wiki/Key:diet
-    public static final String[] filtrosDieta = {};
+    public static final List<String> filtrosDietaOSM = Collections.unmodifiableList(new ArrayList<String>(){{
+        //para OSM
+        add("vegetarian"); add("vegan"); add("gluten_free"); add("lactose_free");
+    }});
+
+    public static final List<String> filtrosDietaWebScrapping = Collections.unmodifiableList(new ArrayList<String>(){{
+        //Para web Scrapping
+        add("vegetarian"); add("vegan");add("veggie");add("gluten free"); add("lactose free");
+    }});
 }

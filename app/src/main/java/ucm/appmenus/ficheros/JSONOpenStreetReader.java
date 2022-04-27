@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.utils.BaseDatos;
+import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Localizacion;
 import ucm.appmenus.utils.OpenStreetMap;
 
@@ -43,8 +44,12 @@ public class JSONOpenStreetReader {
                 ArrayList<String> filtros = new ArrayList<>();
                 filtros.add(getStringFor(info, "amenity"));
                 String cuisineAux = getStringFor(info, "cuisine");
-                if(!cuisineAux.equals(""))
+                if(!cuisineAux.contentEquals(""))
                     filtros.add(cuisineAux);
+                for (String dieta: Constantes.filtrosDietaOSM) {
+                    if(!getStringFor(info, "diet:" + dieta).contentEquals(""))
+                        filtros.add(dieta);
+                }
                 restaurantes.add(new Restaurante(id, nombre, url, dir, lat, lon,
                         Localizacion.distanciaEnMetros(lat, lon, latUsuario, lonUsuario),
                         telefono, horario, 0, filtros));

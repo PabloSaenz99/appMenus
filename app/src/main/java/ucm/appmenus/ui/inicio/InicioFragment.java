@@ -60,6 +60,7 @@ public class InicioFragment extends Fragment {
                 //Usado para cargar los datos de OpenStreetMap (ver funciones para mas informacion)
                 OpenStreetMap osm = new OpenStreetMap();
                 osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
+                        getArguments().getStringArrayList(Constantes.TIPOS_DIETA),
                         getArguments().getStringArrayList(Constantes.TIPOS_LOCAL),
                         getArguments().getStringArrayList(Constantes.TIPOS_COCINA),
                         getArguments().getInt(Constantes.AREA),
@@ -82,8 +83,9 @@ public class InicioFragment extends Fragment {
             //TODO: Pedir los datos por defecto (los almacenados en la config inicial en un fichero) en vez de estos
             OpenStreetMap osm = new OpenStreetMap();
             osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
+                    new ArrayList<>(),
                     new ArrayList<String>(){{add("restaurant");}},
-                    new ArrayList<String>(),
+                    new ArrayList<>(),
                     1500,
                     Usuario.getUsuario().getLocalizacion().latitude,
                     Usuario.getUsuario().getLocalizacion().longitude));

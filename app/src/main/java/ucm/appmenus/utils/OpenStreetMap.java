@@ -139,10 +139,11 @@ public class OpenStreetMap {
         else{
             res+="[timeout:" + 7 + "];";
         }
-        //Tipos restaurantes
+        /*
+        Para cada tipo de local añade todos los parámetros de búsqueda proporcionados, como tipos de dieta (vegana, sin gluten etc...),
+        tipos de codina (italiana, india, hamburguesas, ensaladas...) y el área en el que buscar.
+         */
         //TODO: la query falla cuando hay varios tipos de local porque hay que poner el around para cada uno
-        if(attr.tiposLocal.isEmpty())       //Si no hay, se selecciona restaurante por defecto
-            attr.tiposLocal.add(Constantes.filtrosLocal.get(5));
         for (String local: attr.tiposLocal) {
             res += "(node[%22amenity%22=%22" + local + "%22]";
             //Tipos cocina
@@ -155,14 +156,31 @@ public class OpenStreetMap {
                 }
                 res += attr.tiposCocina.get(attr.tiposCocina.size() - 1) + "%22]";
             }
+            //Dieta
+            if(attr.tiposDieta.size() == 1){
+                res+="[%22diet:" + attr.tiposDieta.get(0) + "%22=%22yes%22]";
+            } else if(attr.tiposDieta.size() > 1){
+                for (int i = 0; i < attr.tiposDieta.size() - 1; i++) {
+                    res += "[%22diet:" + attr.tiposDieta.get(i) + "%22=%22yes%22|";
+                }
+                res += attr.tiposDieta.get(attr.tiposDieta.size() - 1) + "%22=%22yes%22]";
+            }
+            //Distancia
+            if(attr.area < 500){
+                res+="(around:" + 1500 +"," + attr.latitud + "," + attr.longitud + ");";
+            }
+            else{
+                res+="(around:" + attr.area +"," + attr.latitud + "," + attr.longitud + ");";
+            }
         }
-        //Distancia
-        if(attr.area < 500){
-            res+="(around:" + 1500 +"," + attr.latitud + "," + attr.longitud + ");";
-        }
-        else{
-            res+="(around:" + attr.area +"," + attr.latitud + "," + attr.longitud + ");";
-        }
+
+        /*/Distancia
+            if(attr.area < 500){
+                res+="(around:" + 1500 +"," + attr.latitud + "," + attr.longitud + ");";
+            }
+            else{
+                res+="(around:" + attr.area +"," + attr.latitud + "," + attr.longitud + ");";
+            }*/
 
         res+=");out+30;";
         Log.d("QUERY OSM", res);
@@ -179,7 +197,7 @@ public class OpenStreetMap {
 
     public static class OpenStreetAttributes {
         public final int timeout, area;
-        public final ArrayList<String> tiposLocal, tiposCocina;
+        public final ArrayList<String> tiposDieta, tiposLocal, tiposCocina;
         public final double latitud, longitud;
 
         /**
@@ -191,19 +209,23 @@ public class OpenStreetMap {
          * @param latitud: latitud desde la que se realiza la busqueda (con un radio establecido por {@link #area})
          * @param longitud: longitud desde la que se realiza la busqueda (con un radio establecido por {@link #area})
          */
-        public OpenStreetAttributes(int timeout, ArrayList<String> tiposLocal,  ArrayList<String> tiposCocina,
+        public OpenStreetAttributes(int timeout, ArrayList<String> tiposDieta, ArrayList<String> tiposLocal,  ArrayList<String> tiposCocina,
                                     int area, double latitud, double longitud){
             this.timeout = timeout;
             this.area = area;
+            this.tiposDieta = tiposDieta;
             this.tiposLocal = tiposLocal;
             this.tiposCocina = tiposCocina;
             this.latitud = latitud;
             this.longitud = longitud;
+
+            if(tiposLocal.isEmpty())
+                tiposLocal.add("restaurant");
         }
 
-        public OpenStreetAttributes(ArrayList<String> tiposLocal,  ArrayList<String> tiposCocina,
+        public OpenStreetAttributes(ArrayList<String> tiposDieta, ArrayList<String> tiposLocal,  ArrayList<String> tiposCocina,
                                     int area, double latitud, double longitud){
-            this(7, tiposLocal, tiposCocina, area, latitud, longitud);
+            this(7, tiposDieta, tiposLocal, tiposCocina, area, latitud, longitud);
         }
     }
 }
