@@ -16,9 +16,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -186,17 +191,22 @@ public class WebScrapping {
 
     private List<Double> buscarPrecios(String texto){
         List<Double> res = new ArrayList<>();
+        Map<Double, Integer> map = new TreeMap<>();
         try {
             //Pattern original: (?=\\$)*\\d+(,|.)\\d+
             Pattern pattern = Pattern.compile("\\$\\d+(,|.)\\d");
             Matcher matcher = pattern.matcher(texto);
             while (matcher.find()) {
-                res.add(Double.valueOf(matcher.group().replace("$", "")));
+                double d = Double.parseDouble(matcher.group().replace("$", ""));
+                res.add(d);
+                map.put(d, map.getOrDefault(d, 0) + 1);
             }
-            Log.i("res", res.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Collections.sort(res);
+        Log.i("map", map.toString());
+        Log.i("list", res.toString());
         return res;
     }
 }
