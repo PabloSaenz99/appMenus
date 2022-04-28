@@ -1,7 +1,5 @@
 package ucm.appmenus.ficheros;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,10 +7,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ucm.appmenus.entities.Restaurante;
-import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Localizacion;
-import ucm.appmenus.utils.OpenStreetMap;
 
 public class JSONOpenStreetReader {
 

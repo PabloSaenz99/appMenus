@@ -1,6 +1,5 @@
 package ucm.appmenus.recyclers;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ucm.appmenus.R;
 import ucm.appmenus.utils.Pair;
+
 /**
  * Clase usada para la representacion de los filtros
  * */

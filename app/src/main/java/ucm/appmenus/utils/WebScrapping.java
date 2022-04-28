@@ -17,8 +17,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +24,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import ucm.appmenus.R;
-import ucm.appmenus.entities.Restaurante;
 
 //https://www.tutorialspoint.com/web-scrapping-in-android-application
 public class WebScrapping {
@@ -190,23 +185,32 @@ public class WebScrapping {
     }
 
     private List<Double> buscarPrecios(String texto){
-        List<Double> res = new ArrayList<>();
+        List<Double> list = new ArrayList<>();
         Map<Double, Integer> map = new TreeMap<>();
+        double moda = 0, modaPrecio = 0;
         try {
             //Pattern original: (?=\\$)*\\d+(,|.)\\d+
             Pattern pattern = Pattern.compile("\\$\\d+(,|.)\\d");
             Matcher matcher = pattern.matcher(texto);
             while (matcher.find()) {
                 double d = Double.parseDouble(matcher.group().replace("$", ""));
-                res.add(d);
+                list.add(d);
                 map.put(d, map.getOrDefault(d, 0) + 1);
+                if(map.get(d) > moda) {
+                    moda = map.get(d);
+                    modaPrecio = d;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Collections.sort(res);
+        Collections.sort(list);
         Log.i("map", map.toString());
-        Log.i("list", res.toString());
-        return res;
+        Log.i("list", list.toString());
+        if(list.size() > 1) {
+            Log.i("media", list.get(0) + " - " + list.get(list.size() / 2).toString() + " - " + list.get(list.size() - 1));
+            Log.i("moda", modaPrecio + " nª veces: " + map.get(modaPrecio));
+        }
+        return list;
     }
 }
