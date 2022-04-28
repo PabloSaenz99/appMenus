@@ -69,7 +69,7 @@ public class JSONOpenStreetReader {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i("Dir es", dir);
+        //Log.i("Dir es", dir);
         return dir;
     }
 

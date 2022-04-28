@@ -73,7 +73,6 @@ public class OpenStreetMap {
 
     public void setPlaceById(Set<Restaurante> actualizable, String id){
         String query = URL_FIND_PLACES + ";(node(" + id + "););out;";
-        Log.i("query", query);
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -110,16 +109,12 @@ public class OpenStreetMap {
      */
     private String getURLData(String query){
         try{
-            StringBuilder content = new StringBuilder();
-
             URL url = new URL(query);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             urlConnection.connect();
-
-            //Log.d("Fin", "Fin del hilo de OpenStreetMap");
             return bufferedReader.lines().collect(Collectors.joining());
         } catch (IOException e) {
             return "";
@@ -152,7 +147,7 @@ public class OpenStreetMap {
         //Distancia
         res+="(around:" + attr.area +"," + attr.latitud + "," + attr.longitud + ");";
         res+=");out+30;";
-        
+
         Log.d("QUERY OSM", res);
         return res;
     }
