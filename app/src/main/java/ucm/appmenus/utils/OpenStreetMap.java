@@ -73,7 +73,6 @@ public class OpenStreetMap {
 
     public void setPlaceById(Set<Restaurante> actualizable, String id){
         String query = URL_FIND_PLACES + ";(node(" + id + "););out;";
-        Log.i("query", query);
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -110,16 +109,12 @@ public class OpenStreetMap {
      */
     private String getURLData(String query){
         try{
-            StringBuilder content = new StringBuilder();
-
             URL url = new URL(query);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             urlConnection.connect();
-
-            //Log.d("Fin", "Fin del hilo de OpenStreetMap");
             return bufferedReader.lines().collect(Collectors.joining());
         } catch (IOException e) {
             return "";
@@ -132,58 +127,48 @@ public class OpenStreetMap {
      * @return un string con la query final, lista para ser utilizada por OpenStreetMap
      */
     private String construirQueryRestaurante(OpenStreetAttributes attr){
-        String res = URL_FIND_PLACES;
-        if(attr.timeout < 10 && attr.timeout > 5){
-            res+="[timeout:" + attr.timeout + "];";
-        }
-        else{
-            res+="[timeout:" + 7 + "];";
-        }
+        String res = URL_FIND_PLACES + "[timeout:" + attr.timeout + "];";
         /*
-        Para cada tipo de local añade todos los parámetros de búsqueda proporcionados, como tipos de dieta (vegana, sin gluten etc...),
-        tipos de codina (italiana, india, hamburguesas, ensaladas...) y el área en el que buscar.
+        Parsea cada una de las listas y añade todos los parámetros de búsqueda proporcionados,
+        como el tipo de local (restauran, bar...), los tipos de dieta (vegana, sin gluten etc...)
+        o tipos de cocina (italiana, india, hamburguesas, ensaladas...)
          */
-        //TODO: la query falla cuando hay varios tipos de local porque hay que poner el around para cada uno
-        for (String local: attr.tiposLocal) {
-            res += "(node[%22amenity%22=%22" + local + "%22]";
-            //Tipos cocina
-            if (attr.tiposCocina.size() == 1) {
-                res += "[%22cuisine%22=%22" + attr.tiposCocina.get(0) + "%22]";
-            } else if (attr.tiposCocina.size() > 1) {
-                res += "[%22cuisine%22~%22";
-                for (int i = 0; i < attr.tiposCocina.size() - 1; i++) {
-                    res += attr.tiposCocina.get(i) + "|";
-                }
-                res += attr.tiposCocina.get(attr.tiposCocina.size() - 1) + "%22]";
+        res += "(node";
+        res += parseLista(attr.tiposLocal, "amenity");
+        res += parseLista(attr.tiposCocina, "cuisine");
+        if(attr.tiposDieta.size() == 1){
+            res+="[%22diet:" + attr.tiposDieta.get(0) + "%22=%22yes%22]";
+        } else if(attr.tiposDieta.size() > 1){
+            for (int i = 0; i < attr.tiposDieta.size() - 1; i++) {
+                res += "[%22diet:" + attr.tiposDieta.get(i) + "%22=%22yes%22|";
             }
-            //Dieta
-            if(attr.tiposDieta.size() == 1){
-                res+="[%22diet:" + attr.tiposDieta.get(0) + "%22=%22yes%22]";
-            } else if(attr.tiposDieta.size() > 1){
-                for (int i = 0; i < attr.tiposDieta.size() - 1; i++) {
-                    res += "[%22diet:" + attr.tiposDieta.get(i) + "%22=%22yes%22|";
-                }
-                res += attr.tiposDieta.get(attr.tiposDieta.size() - 1) + "%22=%22yes%22]";
-            }
-            //Distancia
-            if(attr.area < 500){
-                res+="(around:" + 1500 +"," + attr.latitud + "," + attr.longitud + ");";
-            }
-            else{
-                res+="(around:" + attr.area +"," + attr.latitud + "," + attr.longitud + ");";
-            }
+            res += attr.tiposDieta.get(attr.tiposDieta.size() - 1) + "%22=%22yes%22]";
         }
-
-        /*/Distancia
-            if(attr.area < 500){
-                res+="(around:" + 1500 +"," + attr.latitud + "," + attr.longitud + ");";
-            }
-            else{
-                res+="(around:" + attr.area +"," + attr.latitud + "," + attr.longitud + ");";
-            }*/
-
+        //Distancia
+        res+="(around:" + attr.area +"," + attr.latitud + "," + attr.longitud + ");";
         res+=");out+30;";
+
         Log.d("QUERY OSM", res);
+        return res;
+    }
+
+    /**
+     * Obtiene un string parseando la lista
+     * @param lista lista con los filtros a parsear
+     * @param filtro tipo de filtro (amenity, cuisine...)
+     * @return resultado del parseo usable por OSM
+     */
+    private String parseLista(ArrayList<String> lista, String filtro){
+        String res = "";
+        if (lista.size() == 1) {
+            res += "[%22" + filtro + "%22~%22" + lista.get(0) + "%22]";
+        } else if(lista.size() > 1) {
+            res += "[%22" + filtro + "%22~%22";
+            for (int i = 0; i < lista.size() - 1; i++) {
+                res += lista.get(i) + "|";
+            }
+            res += lista.get(lista.size() - 1) + "%22]";
+        }
         return res;
     }
 
@@ -211,8 +196,8 @@ public class OpenStreetMap {
          */
         public OpenStreetAttributes(int timeout, ArrayList<String> tiposDieta, ArrayList<String> tiposLocal,  ArrayList<String> tiposCocina,
                                     int area, double latitud, double longitud){
-            this.timeout = timeout;
-            this.area = area;
+            this.timeout = (timeout < 10 && timeout > 5 ? timeout : 7);
+            this.area = (area < 500 ? 1500 : area);
             this.tiposDieta = tiposDieta;
             this.tiposLocal = tiposLocal;
             this.tiposCocina = tiposCocina;

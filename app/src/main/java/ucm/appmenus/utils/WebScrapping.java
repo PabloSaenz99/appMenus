@@ -16,9 +16,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Restaurante;
@@ -80,7 +87,7 @@ public class WebScrapping {
                         listaImagenes.postValue(new ArrayList<Bitmap>(){{add(BitmapFactory.decodeStream(finalIs));}});
                     }
                 } catch (Exception ignored) {}
-                Log.d("CONTADOR IMG:", aux0 + ", " + --CONTADOR);
+                //Log.d("CONTADOR IMG:", aux0 + ", " + --CONTADOR);
             }
         });
         th.start();
@@ -132,43 +139,74 @@ public class WebScrapping {
                     Element elementoCarta = document.select("a:contains(order)").first();  //Buscar tambien por "carta"
 
                     //Accede a dichos parametros, cargando su enlace (href)
+                    String textoURL = "";
                     if(elementoMenu != null)
-                        listaFiltros.getValue().addAll(buscarTags(url, elementoMenu.attr("href"), filtros));
-                    if(elementoCarta != null)
-                        listaFiltros.getValue().addAll(buscarTags(url, elementoCarta.attr("href"), filtros));
+                        textoURL += obtenerTextoMenu(url, elementoMenu.attr("href"));
+                    else if(elementoCarta != null) //TODO: hacerlo solo else?
+                        textoURL += obtenerTextoMenu(url, elementoCarta.attr("href"));
+                    listaFiltros.getValue().addAll(buscarTags(textoURL, filtros));
+                    buscarPrecios(textoURL);
+
                     if(elementoMenu != null || elementoCarta!= null) {
                         listaFiltros.postValue(listaFiltros.getValue());
                     }
                 } catch (Exception ignored) {}
-                Log.d("CONTADOR FIL:", aux0 + ", " + --CONTADOR);
+                //Log.d("CONTADOR FIL:", aux0 + ", " + --CONTADOR);
             }
         });
         th.start();
     }
 
     /**
+     * Transforma la url de la carta en un texto legible
+     * @param url url del establecimiento
+     * @param urlCarta url del elemento (boton generalmente) de la carta/menu
+     * @return el html de la carta en modo texto
+     */
+    private String obtenerTextoMenu(String url, String urlCarta) {
+        if(urlCarta.startsWith("/"))
+            urlCarta = url + urlCarta;
+        try {
+            return Jsoup.connect(urlCarta).get().text().toLowerCase();
+        } catch (IOException e) {
+            return "";
+        }
+    }
+
+    /**
      * Busca en la url todos los filtros del parametro filtros
-     * @param url la direccion de la pagina donde buscar los filtros
-     * @param urlCarta la url de la carta (puede ser distinta de la url general de la pagina)
+     * @param texto string del texto de la URL del restaurante (llamar antes a {@link #obtenerTextoMenu(String, String)}
      * @param filtros los filtros a buscar en la pagina web
      * @return un HashSet con todos los filtros encontrados en la web, sin repetidos
      */
     @NonNull
-    private HashSet<String> buscarTags(String url, String urlCarta, List<List<String>> filtros){
+    private HashSet<String> buscarTags(String texto, List<List<String>> filtros){
         HashSet<String> nuevosFiltros = new HashSet<>();
-        //Genera una url correcta (si por ejemplo la url de la carta no contiene el path completo de la web)
-        if(urlCarta.startsWith("/"))
-            urlCarta = url + urlCarta;
-        try {
-            String res = Jsoup.connect(urlCarta).get().text().toLowerCase();
-            for (List<String> l: filtros) {
-                for (String s: l)
-                    if(res.contains(s))
-                        nuevosFiltros.add(s);
-            }
-        } catch (IOException e) {
-            //e.printStackTrace();
-        }
+        for (List<String> l: filtros)
+            for (String s: l)
+                if(texto.contains(s))
+                    nuevosFiltros.add(s);
         return nuevosFiltros;
+    }
+
+    private List<Double> buscarPrecios(String texto){
+        List<Double> res = new ArrayList<>();
+        Map<Double, Integer> map = new TreeMap<>();
+        try {
+            //Pattern original: (?=\\$)*\\d+(,|.)\\d+
+            Pattern pattern = Pattern.compile("\\$\\d+(,|.)\\d");
+            Matcher matcher = pattern.matcher(texto);
+            while (matcher.find()) {
+                double d = Double.parseDouble(matcher.group().replace("$", ""));
+                res.add(d);
+                map.put(d, map.getOrDefault(d, 0) + 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Collections.sort(res);
+        Log.i("map", map.toString());
+        Log.i("list", res.toString());
+        return res;
     }
 }
