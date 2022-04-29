@@ -105,6 +105,7 @@
                     android:layout_weight="2"
                     app:srcCompat="@android:drawable/ic_lock_idle_lock" />
 
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordLogin"
                     android:layout_width="0dp"
@@ -114,7 +115,16 @@
                     android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#B6B6B6" />
+                    android:textColorHint="#B6B6B6"/>
+
+                <ImageView
+                    android:id="@+id/hidePwd"
+                    android:layout_width="40dp"
+                    android:layout_height="42dp"
+                    android:layout_below="@+id/passwordLoginShowHide"
+                    android:backgroundTint="#ECE8E8"
+                    android:visibility="visible"
+                    />
 
             </LinearLayout>
 
