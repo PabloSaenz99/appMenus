@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Button btn_registrar = findViewById(R.id.botonRegistro);
         Button btn_login = findViewById(R.id.botonIniciarSesion);
+        Button btn_acceso_facil = findViewById(R.id.accesoFacil);
         et_email = findViewById(R.id.emailLogin);
         et_password = findViewById(R.id.passwordLogin);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = sp.getString(getString(R.string.password_usuario), null);
 
         //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
-        if(email != null){
+        if (email != null){
             //Inicia la main activity
             login(email, password);
         }
@@ -71,18 +72,26 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //Boton Login
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text_email = et_email.getText().toString();
-                String text_password = et_password.getText().toString();
-                if (TextUtils.isEmpty(text_email) || TextUtils.isEmpty(text_password)) {
-                    Toast.makeText(LoginActivity.this, "All fields required", Toast.LENGTH_SHORT).show();
-                } else {
-                    login(text_email, text_password);
-                }
-            }
-        });
+        btn_login.setOnClickListener(view -> loginButton());
+        //Boton acceso facil
+        btn_acceso_facil.setOnClickListener(v -> accesoFacil());
+    }
+
+    private void accesoFacil(){
+        String text_email = Constantes.EMAIL_INVITADO;
+        String text_password = Constantes.PASSWORD_INVITADO;
+        login(text_email, text_password);
+    }
+
+
+    private void loginButton(){
+        String text_email = et_email.getText().toString();
+        String text_password = et_password.getText().toString();
+        if (TextUtils.isEmpty(text_email) || TextUtils.isEmpty(text_password)) {
+            Toast.makeText(LoginActivity.this, "All fields required", Toast.LENGTH_SHORT).show();
+        } else {
+            login(text_email, text_password);
+        }
     }
 
     /**

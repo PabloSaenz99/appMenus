@@ -1,5 +1,7 @@
 package ucm.appmenus.utils;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +20,13 @@ public class Constantes {
     public static final String NOMBRE_USUARIO = "Nombre usuario";
     public static final String RESTAURANTE = "Restaurante";
     public static final String RESENIA = "Resenia";
+
+    public static final String EMAIL_INVITADO = "invitado@invitado.es";
+    public static final String NOMBRE_INVITADO = "invitado";
+    public static final String PASSWORD_INVITADO = "invitado";
+    public static final String NECESARIO_LOGIN = "Login necesario";
+
+
 
     /**
      * Filtros

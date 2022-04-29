@@ -58,6 +58,8 @@ public class FiltrosFragment extends Fragment {
         botonFiltrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 accionBoton(savedInstanceState);
+                botonFiltrar.setBackgroundColor(root.getResources().getColor(R.color.botonDesactivado));
+                botonFiltrar.setBackgroundColor(root.getResources().getColor(R.color.botonActivado));
             }
         });
 
@@ -68,6 +70,8 @@ public class FiltrosFragment extends Fragment {
                 RadioButton rb = root.findViewById(R.id.radioButtonMapa);
                 rb.setChecked(true);
                 startActivity(new Intent(view.getContext(), MapActivity.class));
+                botonAbrirMapa.setBackgroundColor(root.getResources().getColor(R.color.botonDesactivado));
+                botonAbrirMapa.setBackgroundColor(root.getResources().getColor(R.color.botonActivado));
             }
         });
 
