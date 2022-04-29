@@ -119,8 +119,8 @@
 
                 <ImageView
                     android:id="@+id/hidePwd"
-                    android:layout_width="40dp"
-                    android:layout_height="42dp"
+                    android:layout_width="30dp"
+                    android:layout_height="32dp"
                     android:layout_below="@+id/passwordLoginShowHide"
                     android:backgroundTint="#ECE8E8"
                     android:visibility="visible"

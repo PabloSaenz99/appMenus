@@ -161,11 +161,12 @@
                 <!--  app:endIconMode="password_toggle"-->
                 <ImageView
                     android:id="@+id/hidePwdRegister"
-                    android:layout_width="40dp"
-                    android:layout_height="42dp"
+                    android:layout_width="30dp"
+                    android:layout_height="32dp"
                     android:layout_below="@+id/passwordRegistro"
                     android:backgroundTint="#ECE8E8"
                     android:visibility="visible"
+
                     />
             </LinearLayout>
 
