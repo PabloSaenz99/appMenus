@@ -11,9 +11,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +51,25 @@ public class RegistroActivity extends AppCompatActivity {
         final EditText et_email = findViewById(R.id.emailRegistro);
         final EditText et_password = findViewById(R.id.passwordRegistro);
         final Button botonRegistro = findViewById(R.id.botonRegistro);
+//boton de ocultar/mostrar pwd
+        ImageView imageViewShowHidePwd= findViewById(R.id.hidePwdRegister);
+        imageViewShowHidePwd.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+        imageViewShowHidePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (et_password.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
+                    //si pwd esta visible y lo ocultamos
+                    et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                    //cambiar icono
+                    imageViewShowHidePwd.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+                } else {
+
+                    et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    imageViewShowHidePwd.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+                }
+            }
+        });
 
         //Llamada cuando se pulse al boton registrar (llamada a la BD)
         botonRegistro.setOnClickListener(new View.OnClickListener() {
