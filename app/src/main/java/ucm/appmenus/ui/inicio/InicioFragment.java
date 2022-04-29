@@ -42,7 +42,7 @@ public class InicioFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         this.mainActivity = (MainActivity) getActivity();
 
-        inicioViewModel = new ViewModelProvider(requireActivity()).get(InicioViewModel.class);
+        inicioViewModel = new ViewModelProvider(getActivity()).get(InicioViewModel.class);
         this.root = inflater.inflate(R.layout.fragment_inicio, container, false);
 
         root.findViewById(R.id.progressBarInicio).setVisibility(View.VISIBLE);

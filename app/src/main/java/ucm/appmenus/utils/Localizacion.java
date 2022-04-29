@@ -55,10 +55,8 @@ public class Localizacion {
                 final LocationManager lm = (LocationManager) mainActivity.getSystemService(Context.LOCATION_SERVICE);
                 Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 if(location != null) {
-                    //TODO: descomentar
                     longitude = location.getLongitude();//-122.0040131;//-122.0965848;//location.getLongitude();
                     latitude = location.getLatitude();//37.3891201;//37.3943617;//location.getLatitude();
-                    Log.d("Localizacion", longitude + " and " + latitude);
                 }
                 else{
                     lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
@@ -67,7 +65,6 @@ public class Localizacion {
                             longitude = location.getLongitude();
                             latitude = location.getLatitude();
                             lm.removeUpdates(this);
-                            Log.d("Location Changed", longitude + " and " + latitude);
                         }
                     });
                 }
