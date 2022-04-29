@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,7 @@ import java.util.Set;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Restaurante;
+import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.recyclers.ViewHolderImagenes;
@@ -38,6 +40,8 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurante_detallado);
+
+        Usuario usuario = Usuario.getUsuario();
 
         restaurante = getIntent().getParcelableExtra(Constantes.RESTAURANTE);
 
@@ -107,15 +111,20 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         };
         restaurante.getLiveDataResenia().observe(this, observerResenias);
 
+
         //Boton que abre la activity para crear una reseña de un restaurante
         botonResenia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ReseniaActivity.class);
-                Bundle b = new Bundle();
-                b.putString(Constantes.RESTAURANTE, restaurante.getIdRestaurante());
-                intent.putExtras(b);
-                startActivity(intent);
+                if(usuario.getEmail().equals(Constantes.EMAIL_INVITADO)){
+                    Toast.makeText(view.getContext(), Constantes.NECESARIO_LOGIN, Toast.LENGTH_LONG).show();
+                }else {
+                    Intent intent = new Intent(getApplicationContext(), ReseniaActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString(Constantes.RESTAURANTE, restaurante.getIdRestaurante());
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
             }
         });
 

@@ -50,18 +50,26 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         direccion = view.findViewById(R.id.textDireccionRestaurante);
         imagenPrinc = view.findViewById(R.id.imageRestaurantRecycler);
 
+        Usuario usuario = Usuario.getUsuario();
+
         favorito.setOnClickListener(v -> {
-            if(favorito.isChecked()) {
-                Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
-                        Toast.LENGTH_LONG).show();
-                Usuario.getUsuario().addRestauranteFavorito(restaurante);
+
+            if(usuario.getEmail().equals(Constantes.EMAIL_INVITADO)){
+                Toast.makeText(view.getContext(), Constantes.NECESARIO_LOGIN, Toast.LENGTH_LONG).show();
+            }else{
+
+                if(favorito.isChecked()) {
+                    Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
+                            Toast.LENGTH_LONG).show();
+                    Usuario.getUsuario().addRestauranteFavorito(restaurante);
+                }
+                else {
+                    Toast.makeText(view.getContext(), nombre.getText().toString() + " eliminado de favoritos",
+                            Toast.LENGTH_LONG).show();
+                    Usuario.getUsuario().removeRestauranteFavorito(restaurante);
+                }
+                BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
             }
-            else {
-                Toast.makeText(view.getContext(), nombre.getText().toString() + " eliminado de favoritos",
-                        Toast.LENGTH_LONG).show();
-                Usuario.getUsuario().removeRestauranteFavorito(restaurante);
-            }
-            BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
         });
 
         itemView.setOnClickListener(this);
