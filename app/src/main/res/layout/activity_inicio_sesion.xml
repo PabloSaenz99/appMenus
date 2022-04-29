@@ -162,6 +162,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="2"
                     android:backgroundTint="#605F5F"
+                    android:textColor="@color/white"
                     android:text="Registrarse" />
 
                 <Button
@@ -170,6 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center"
                     android:layout_weight="2"
+                    android:textColor="@color/white"
                     android:backgroundTint="@color/logoNaranja0"
                     android:text="Iniciar sesión" />
 
@@ -182,7 +184,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/fondoOscuro"
-                android:textColor="@color/logoAzul0"
+                android:textColor="@color/logoAzul2"
                 android:text="Acceder sin iniciar sesión" />
 
 

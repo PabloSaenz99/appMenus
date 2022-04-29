@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.perfil.PerfilFragment">
 
+    <ToggleButton
+        android:id="@+id/settings"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/settings"
+        android:textOff=""
+        android:textOn=""
+        android:translationZ="90dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <View
         android:id="@+id/view5"
         android:layout_width="match_parent"
@@ -72,13 +83,9 @@
             android:gravity="center_horizontal"
             android:text="Email"
             android:textColor="#30514E"
+            android:layout_marginBottom="20dp"
             android:textSize="18sp"
             android:textStyle="bold|italic" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,16 +98,28 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Mis Reseñas"
+                android:layout_marginHorizontal="10dp"
                 android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/buttonMisFavoritos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
                 android:text="Mis Favoritos"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
+
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="-6dp"
+            android:background="@color/logoAzul0" />
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerReseniasPerfilFragment"
@@ -114,6 +133,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cerrar Sesion"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

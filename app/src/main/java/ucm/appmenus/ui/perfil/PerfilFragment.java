@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -45,10 +46,28 @@ public class PerfilFragment extends Fragment {
         Button botonCerrarSesion = root.findViewById(R.id.botonCerrarSesion);
         Button botonResenias = root.findViewById(R.id.buttonMisResenias);
         Button botonFavoritos = root.findViewById(R.id.buttonMisFavoritos);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerReseniasPerfilFragment);
+        View line = root.findViewById(R.id.divider);
+        ToggleButton settings = root.findViewById(R.id.settings);
 
-        //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
-        email.setText(usuario.getEmail());
-        nombre.setText(usuario.getNombre());
+
+        if(usuario.getEmail().equals(Constantes.EMAIL_INVITADO)){
+
+            nombre.setText("INICIA SESION");
+            email.setText("para una mejor experiencia");
+
+            botonResenias.setVisibility(View.INVISIBLE);
+            line.setVisibility(View.INVISIBLE);
+            botonFavoritos.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+            botonCerrarSesion.setText("INICIA SESION");
+
+        }else{
+            //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
+            email.setText(usuario.getEmail());
+            nombre.setText(usuario.getNombre());
+
+        }
 
         botonResenias.setOnClickListener(view -> {
             RecyclerAdapter.crearRecyclerLineal(new ArrayList<>(usuario.getResenias()), ViewHolderResenia.class,
@@ -68,6 +87,10 @@ public class PerfilFragment extends Fragment {
             Usuario.cerrarSesion(getActivity());
             startActivity(new Intent(root.getContext(), LoginActivity.class));
             getActivity().finish();
+        });
+
+        settings.setOnClickListener(v ->{
+            //TODO
         });
 
         botonResenias.callOnClick();
