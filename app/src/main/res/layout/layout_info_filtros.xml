@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Tipo de local"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#FF5722"
         android:textSize="18sp"
         android:textStyle="bold|italic" />
 
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:text="Tipo de gastronomia"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#FF5722"
         android:textSize="18sp"
         android:textStyle="bold|italic" />
 
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:text="Tipo de alimentos"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#FF5722"
         android:textSize="18sp"
         android:textStyle="bold|italic" />
 

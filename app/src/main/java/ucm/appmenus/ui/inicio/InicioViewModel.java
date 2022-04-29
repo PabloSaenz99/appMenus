@@ -1,15 +1,11 @@
 package ucm.appmenus.ui.inicio;
 
-import android.util.Log;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 
-import ucm.appmenus.BuildConfig;
 import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.utils.Constantes;
 

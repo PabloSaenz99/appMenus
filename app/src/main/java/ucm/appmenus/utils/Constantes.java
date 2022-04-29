@@ -61,6 +61,6 @@ public class Constantes {
 
     public static final List<String> filtrosDietaWebScrapping = Collections.unmodifiableList(new ArrayList<String>(){{
         //Para web Scrapping
-        add("vegetarian"); add("vegan");add("veggie");add("gluten free"); add("lactose free");
+        add("vegetarian"); add("vegan");add("veggie");add("gluten free"); add("lactose free"); add("allergen");
     }});
 }

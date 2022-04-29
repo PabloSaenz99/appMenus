@@ -1,10 +1,7 @@
 package ucm.appmenus.ui.perfil;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
-
-
-import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.login.LoginActivity;
 import ucm.appmenus.recyclers.RecyclerAdapter;
-import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.recyclers.ViewHolderResenia;
 import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
@@ -54,18 +46,9 @@ public class PerfilFragment extends Fragment {
         Button botonResenias = root.findViewById(R.id.buttonMisResenias);
         Button botonFavoritos = root.findViewById(R.id.buttonMisFavoritos);
 
-
-        if(!usuario.getEmail().equals(Constantes.EMAIL_INVITADO)) {
-            //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
-            email.setText(usuario.getEmail());
-            nombre.setText(usuario.getNombre());
-        }else{
-            email.setText("para una mejor experiencia");
-            nombre.setText("INICIA SESIÓN");
-            botonResenias.setVisibility(View.INVISIBLE);
-            botonFavoritos.setVisibility(View.INVISIBLE);
-            botonCerrarSesion.setText("Inicia sesion");
-        }
+        //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
+        email.setText(usuario.getEmail());
+        nombre.setText(usuario.getNombre());
 
         botonResenias.setOnClickListener(view -> {
             RecyclerAdapter.crearRecyclerLineal(new ArrayList<>(usuario.getResenias()), ViewHolderResenia.class,
