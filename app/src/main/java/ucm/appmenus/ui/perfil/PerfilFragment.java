@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.recyclers.ViewHolderResenia;
 import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
+import ucm.appmenus.utils.Constantes;
 
 public class PerfilFragment extends Fragment {
 
@@ -52,9 +54,18 @@ public class PerfilFragment extends Fragment {
         Button botonResenias = root.findViewById(R.id.buttonMisResenias);
         Button botonFavoritos = root.findViewById(R.id.buttonMisFavoritos);
 
-        //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
-        email.setText(usuario.getEmail());
-        nombre.setText(usuario.getNombre());
+
+        if(!usuario.getEmail().equals(Constantes.EMAIL_INVITADO)) {
+            //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
+            email.setText(usuario.getEmail());
+            nombre.setText(usuario.getNombre());
+        }else{
+            email.setText("para una mejor experiencia");
+            nombre.setText("INICIA SESIÓN");
+            botonResenias.setVisibility(View.INVISIBLE);
+            botonFavoritos.setVisibility(View.INVISIBLE);
+            botonCerrarSesion.setText("Inicia sesion");
+        }
 
         botonResenias.setOnClickListener(view -> {
             RecyclerAdapter.crearRecyclerLineal(new ArrayList<>(usuario.getResenias()), ViewHolderResenia.class,

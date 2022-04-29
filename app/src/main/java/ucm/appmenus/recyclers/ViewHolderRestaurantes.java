@@ -55,6 +55,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         favorito.setOnClickListener(v -> {
 
             if(usuario.getEmail().equals(Constantes.EMAIL_INVITADO)){
+                favorito.setChecked(false);
                 Toast.makeText(view.getContext(), Constantes.NECESARIO_LOGIN, Toast.LENGTH_LONG).show();
             }else{
 

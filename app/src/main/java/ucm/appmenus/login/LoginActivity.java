@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = sp.getString(getString(R.string.password_usuario), null);
 
         //Si el usuario ya está logueado, email será != null, por lo que abre la MainActivity directamente
-        if (email != null){
+        if (email != null && !email.equals(Constantes.EMAIL_INVITADO)){
             //Inicia la main activity
             login(email, password);
         }
