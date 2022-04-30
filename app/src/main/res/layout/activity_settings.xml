@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="600dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logo"
+        android:alpha="0.2"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/logoAzul1"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="Opciones"
+            android:textColor="@color/black"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/black" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        tools:layout_editor_absoluteX="180dp">
+
+        <Button
+            android:id="@+id/changePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cambiar contraseña"
+            android:textColor="@color/black"
+            android:backgroundTint="#E6E5E5"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
+            />
+
+
+        <Button
+            android:id="@+id/changeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cambiar nombre"
+            android:textColor="@color/black"
+            android:backgroundTint="#E6E5E5"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
+            />
+
+
+        <Button
+            android:id="@+id/changeLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cambiar localización"
+            android:textColor="@color/black"
+            android:backgroundTint="#E6E5E5"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
+            />
+
+        <Button
+            android:id="@+id/deleteData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Borrar datos"
+            android:textColor="@color/black"
+            android:backgroundTint="#E6E5E5"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
+            />
+
+        <Button
+            android:id="@+id/deleteAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Borrar cuenta"
+            android:textColor="#000000"
+            android:backgroundTint="#FF9696"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
+            />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

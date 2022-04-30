@@ -61,6 +61,7 @@ public class PerfilFragment extends Fragment {
             botonFavoritos.setVisibility(View.INVISIBLE);
             recyclerView.setVisibility(View.INVISIBLE);
             botonCerrarSesion.setText("INICIA SESION");
+            settings.setVisibility(View.INVISIBLE);
 
         }else{
             //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
