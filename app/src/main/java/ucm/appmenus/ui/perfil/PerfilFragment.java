@@ -22,9 +22,11 @@ import java.util.ArrayList;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.login.LoginActivity;
+import ucm.appmenus.login.RegistroActivity;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderResenia;
 import ucm.appmenus.recyclers.ViewHolderRestaurantes;
+import ucm.appmenus.ui.SettingsActivity;
 import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.utils.Constantes;
 
@@ -92,7 +94,7 @@ public class PerfilFragment extends Fragment {
         });
 
         settings.setOnClickListener(v ->{
-            //TODO
+            startActivity(new Intent(root.getContext(), SettingsActivity.class));
         });
 
         botonResenias.callOnClick();
