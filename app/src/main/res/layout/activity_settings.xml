@@ -49,6 +49,17 @@
         tools:layout_editor_absoluteX="180dp">
 
         <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cerrar sesión"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/logoAzul0"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
+            />
+
+        <Button
             android:id="@+id/changePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
