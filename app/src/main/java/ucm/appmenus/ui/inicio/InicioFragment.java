@@ -95,30 +95,22 @@ public class InicioFragment extends Fragment {
         }
 
         //Actualiza el recycler cuando se reciben los datos
-        final Observer<ArrayList<Restaurante>> observer = new Observer<ArrayList<Restaurante>>() {
-            @Override
-            public void onChanged(ArrayList<Restaurante> restaurantes) {
-                root.findViewById(R.id.progressBarInicio).setVisibility(View.INVISIBLE);
-                recyclerAdapter = RecyclerAdapter.crearRecyclerLineal(restaurantes, ViewHolderRestaurantes.class, R.id.recyclerRestauranteInicio,
-                        R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);
-            }
+        final Observer<ArrayList<Restaurante>> observer = restaurantes -> {
+            root.findViewById(R.id.progressBarInicio).setVisibility(View.INVISIBLE);
+            recyclerAdapter = RecyclerAdapter.crearRecyclerLineal(restaurantes, ViewHolderRestaurantes.class, R.id.recyclerRestauranteInicio,
+                    R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);
         };
         inicioViewModel.getRestaurantes().observe(getActivity(), observer);
 
         RadioGroup rg = root.findViewById(R.id.radioGroupOrdenar);
         rg.setOnCheckedChangeListener((radioGroup, i) -> {
-            if(i == R.id.radioPrecio){
+            if(i == R.id.radioPrecio)
                 OrdenarRestaurantes.ordenarPorPrecio(inicioViewModel.getRestaurantes().getValue());
-                Log.i("ordeno", "precio");
-            }
-            else if(i == R.id.radioAbierto){
+            else if(i == R.id.radioAbierto)
                 OrdenarRestaurantes.ordenarPorApertura(inicioViewModel.getRestaurantes().getValue());
-                Log.i("ordeno", "abierto");
-            }
-            else if(i == R.id.radioVegano){
+            else if(i == R.id.radioVegano)
                 OrdenarRestaurantes.ordenarPorVegano(inicioViewModel.getRestaurantes().getValue());
-                Log.i("ordeno", "vegano");
-            }
+
             recyclerAdapter = RecyclerAdapter.crearRecyclerLineal(inicioViewModel.getRestaurantes().getValue(),
                     ViewHolderRestaurantes.class, R.id.recyclerRestauranteInicio,
                     R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);

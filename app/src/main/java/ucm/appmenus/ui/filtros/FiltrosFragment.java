@@ -59,16 +59,10 @@ public class FiltrosFragment extends Fragment {
                 calcularMetros(i);
                 textDistancia.setText(metros+ "m");
             }
-
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
+            public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) { }
         });
 
         //Crea los recyclers para los filtros, 3 recyclers para 3 tipos distintos de filtros
@@ -109,7 +103,6 @@ public class FiltrosFragment extends Fragment {
     }
 
     private void calcularMetros(int i){
-        if(i==0) i++;
         metros = 500 + (2500*i)/100;
     }
 
