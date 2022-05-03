@@ -30,6 +30,9 @@
         <activity
             android:name=".ui.inicio.RestauranteDetalladoActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="false" />
         <!-- METIDO POR MIRIAM -->
         <activity android:name=".MainActivity" />
         <activity android:name=".login.RegistroActivity" />

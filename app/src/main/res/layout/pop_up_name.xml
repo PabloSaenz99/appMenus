@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondoOscuro"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_gravity="center"
+    android:background="@color/popupwindow">
 
-    <EditText
-        android:id="@id/new_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Introduce tu nuevo nombre"
-        android:textSize="20dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <Button
-        android:id="@+id/change_name_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cambiar nombre"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/logoNaranja0"
-        android:textSize="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_name" />
+        <EditText
+            android:id="@+id/new_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Introduce tu nuevo nombre"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="20dp"
+            app:backgroundTint="@color/white" />
 
+        <Button
+            android:id="@+id/change_name_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/logoNaranja0"
+            android:text="Cambiar nombre"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
 
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

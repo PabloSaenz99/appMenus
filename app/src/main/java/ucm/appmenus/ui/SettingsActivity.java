@@ -2,20 +2,25 @@ package ucm.appmenus.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.login.LoginActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private int index;
+    private Usuario usuario;
 
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
@@ -30,6 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_settings);
+
+        usuario = Usuario.getUsuario();
 
         Button botonCerrarSesion = findViewById(R.id.logout);
         Button botonCambiarContrasena = findViewById(R.id.changePassword);
@@ -63,9 +70,11 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         botonCerrarSesion.setOnClickListener(view -> {
+            Usuario.cerrarSesion(this);
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
+
 
 
     }
@@ -88,6 +97,30 @@ public class SettingsActivity extends AppCompatActivity {
             //TODO
         });
 
+
+        ImageView imageViewShowHidePwd= changePasswordView.findViewById(R.id.hidePwd);
+        imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility);
+        imageViewShowHidePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (newPassword.getTransformationMethod().equals(HideReturnsTransformationMethod.getInstance())) {
+                    newPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    oldPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    newPasswordConfirm.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                    imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility);
+                } else {
+
+                    newPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    oldPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    newPasswordConfirm.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility_no);
+                }
+            }
+        });
+
+
+
     }
 
 
@@ -103,7 +136,9 @@ public class SettingsActivity extends AppCompatActivity {
         dialog.show();
 
         changeNameButton.setOnClickListener(view -> {
-            //TODO
+            if(newName.getText().toString() != null && newName.getText().toString() != "") {
+                usuario.setNombre(newName.getText().toString());
+            }
         });
 
     }
@@ -120,13 +155,13 @@ public class SettingsActivity extends AppCompatActivity {
             textoCompletar.setText("borrar la cuenta?");
         }
 
-        deleteButton = (Button) deleteView.findViewById(R.id.change_name_button);
+        deleteButton = (Button) deleteView.findViewById(R.id.delete_button);
 
         dialogBuilder.setView(deleteView);
         dialog = dialogBuilder.create();
         dialog.show();
 
-        changeNameButton.setOnClickListener(view -> {
+        deleteButton.setOnClickListener(view -> {
 
             //TODO
             if(index == 0){
@@ -157,7 +192,7 @@ public class SettingsActivity extends AppCompatActivity {
         dialog = dialogBuilder.create();
         dialog.show();
 
-        changePasswordButton.setOnClickListener(view -> {
+        changeLocationButton.setOnClickListener(view -> {
             //TODO
         });
 

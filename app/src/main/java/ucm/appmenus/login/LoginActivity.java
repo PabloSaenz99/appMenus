@@ -26,14 +26,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.jetbrains.annotations.NotNull;
 
-import android.widget.TextView;
-
 
 import java.util.Objects;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
-import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 
 public class LoginActivity extends AppCompatActivity {
@@ -48,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inicio_sesion);
 //boton de ocultar/mostrar pwd
         ImageView imageViewShowHidePwd= findViewById(R.id.hidePwd);
-        imageViewShowHidePwd.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+        imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility);
         imageViewShowHidePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,11 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                     et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
                     //cambiar icono
-                    imageViewShowHidePwd.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+                    imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility);
                 } else {
 
                     et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    imageViewShowHidePwd.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+                    imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility_no);
                 }
             }
         });
