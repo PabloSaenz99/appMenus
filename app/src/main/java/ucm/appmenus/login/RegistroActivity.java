@@ -3,7 +3,6 @@ package ucm.appmenus.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
 
 import android.content.Context;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -53,7 +51,7 @@ public class RegistroActivity extends AppCompatActivity {
         final Button botonRegistro = findViewById(R.id.botonRegistro);
 //boton de ocultar/mostrar pwd
         ImageView imageViewShowHidePwd= findViewById(R.id.hidePwdRegister);
-        imageViewShowHidePwd.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+        imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility);
         imageViewShowHidePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,11 +60,11 @@ public class RegistroActivity extends AppCompatActivity {
                     et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
                     //cambiar icono
-                    imageViewShowHidePwd.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+                    imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility);
                 } else {
 
                     et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    imageViewShowHidePwd.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+                    imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility_no);
                 }
             }
         });
