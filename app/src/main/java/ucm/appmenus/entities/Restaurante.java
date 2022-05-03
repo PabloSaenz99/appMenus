@@ -102,6 +102,12 @@ public class Restaurante implements Parcelable {
      * @return el esatdo de apertura del local
      */
     public int getAbierto(){ return this.abierto; }
+    public int getVegano() {
+        return (listaFiltros.getValue().stream().anyMatch(Constantes.filtrosDietaOSM::contains) ||
+        listaFiltros.getValue().stream().anyMatch(Constantes.filtrosDietaWebScrapping::contains)) ? 1 : -1;
+    }
+    //TODO: ordenar bien porque esto solo ordena los que tienen precio arriba y los que no abajo
+    public double getPrecioMediana() { return this.precios.getValue().esCorrecto() ? this.precios.getValue().mediana : 0; }
 
     public LiveData<Double> getLiveDataValoracion() { return valoracion; }
     public LiveData<String> getLiveDataDireccion() { return direccion; }
@@ -171,8 +177,9 @@ public class Restaurante implements Parcelable {
         dest.writeString(this.direccion.getValue());
         dest.writeInt(this.telefono);
         dest.writeString(this.horarios);
+        dest.writeInt(this.abierto);
         dest.writeDouble(this.valoracion.getValue());
-        dest.writeStringList(new ArrayList<String>(this.listaFiltros.getValue()));
+        dest.writeStringList(new ArrayList<>(this.listaFiltros.getValue()));
     }
 
     protected Restaurante(Parcel in) {
@@ -182,6 +189,7 @@ public class Restaurante implements Parcelable {
         direccion = new MutableLiveData<>(in.readString());
         telefono = in.readInt();
         horarios = in.readString();
+        abierto = in.readInt();
         valoracion = new MutableLiveData<>(in.readDouble());
         precios = new MutableLiveData<>(new Precios());
         listaImagenes = new MutableLiveData<>(new ArrayList<>());

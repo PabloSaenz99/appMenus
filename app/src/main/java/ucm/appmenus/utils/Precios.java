@@ -16,7 +16,5 @@ public class Precios {
         this(0, 0, 0);
     }
 
-    public boolean esCorrecto(){
-        return minimo > 0;
-    }
+    public boolean esCorrecto(){ return minimo > 0; }
 }
