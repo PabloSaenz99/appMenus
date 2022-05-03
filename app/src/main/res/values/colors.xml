@@ -34,5 +34,8 @@
     <color name="botonActivado">#00BCD4</color>
     <color name="botonDesactivado">#8C8C8C</color>
 
+    <color name="restauranteAbierto">#4CAF50</color>
+    <color name="restauranteCerrado">#F44336</color>
+    <color name="restauranteSinHorario">#FFC107</color>
 
 </resources>

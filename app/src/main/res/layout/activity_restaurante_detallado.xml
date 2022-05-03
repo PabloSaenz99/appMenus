@@ -68,7 +68,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/filtrosRestauranteRecycler"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="70dp"
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -116,28 +116,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
-            android:text="Página Web" />
+            android:text="Página Web"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/direccionRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Dirección"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/horarioRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Horarios"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/telefonoRestaurante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Telefono"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerReseniaRestaurante"
@@ -163,14 +167,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
-            android:text="Añade una reseña" />
+            android:text="Añade una reseña"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/botonAniadirFiltros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Añadir filtros" />
+            android:text="Añadir filtros"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

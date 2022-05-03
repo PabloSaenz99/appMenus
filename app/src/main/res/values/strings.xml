@@ -24,4 +24,8 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!--Strings para el estado de apertura del restaurante-->
+    <string name="aperturaDesconocida">Desconocido</string>
+    <string name="aperturaCerrado">Cerrado</string>
+    <string name="aperturaAbierto">Abierto</string>
 </resources>

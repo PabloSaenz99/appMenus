@@ -207,11 +207,11 @@ public class WebScrapping {
             e.printStackTrace();
         }
         Collections.sort(list);
-        Log.i("map", map.toString());
-        Log.i("list", list.toString());
+        //Log.i("map", map.toString());
+        //Log.i("list", list.toString());
         if(list.size() > 1) {
-            Log.i("media", list.get(0) + " - " + list.get(list.size() / 2).toString() + " - " + list.get(list.size() - 1));
-            Log.i("moda", modaPrecio + " nª veces: " + map.get(modaPrecio));
+            //Log.i("media", list.get(0) + " - " + list.get(list.size() / 2).toString() + " - " + list.get(list.size() - 1));
+            //Log.i("moda", modaPrecio + " nª veces: " + map.get(modaPrecio));
             this.precios.postValue(new Precios(list.get(0), list.get(list.size() / 2), list.get(list.size() -1)));
         }
     }

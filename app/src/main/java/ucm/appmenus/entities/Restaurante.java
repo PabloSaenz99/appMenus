@@ -1,17 +1,30 @@
 package ucm.appmenus.entities;
 
+import static android.provider.Settings.System.DATE_FORMAT;
+
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
@@ -26,6 +39,7 @@ public class Restaurante implements Parcelable {
     private final String url;
     private final int telefono;
     private final String horarios;
+    private int abierto;
 
     //MutableLiveData para poder actualizar en tiempo real sobre la interfaz
     private final MutableLiveData<Double> valoracion;
@@ -46,6 +60,7 @@ public class Restaurante implements Parcelable {
         this.url = url;
         this.telefono = telefono;
         this.horarios = horarios;
+        updateAbierto();
         this.valoracion = new MutableLiveData<>(valoracion);
         this.direccion = new MutableLiveData<>(" [" + distanciaEnMetros + "m]");
         this.precios = new MutableLiveData<>(new Precios());
@@ -82,6 +97,12 @@ public class Restaurante implements Parcelable {
     public int getTelefono() { return telefono; }
     public String getHorarios() { return horarios; }
 
+    /**
+     * Devuelve 1 si está abierto, 0 si no se sabe y -1 si cerrado
+     * @return el esatdo de apertura del local
+     */
+    public int getAbierto(){ return this.abierto; }
+
     public LiveData<Double> getLiveDataValoracion() { return valoracion; }
     public LiveData<String> getLiveDataDireccion() { return direccion; }
     public LiveData<Precios> getLiveDataPrecios() { return precios; }
@@ -98,6 +119,27 @@ public class Restaurante implements Parcelable {
         filtros.add(Constantes.filtrosPostres);
         ws.setFiltros(filtros);
         BaseDatos.getInstance().getFiltrosRestaurante(idRestaurante, listaFiltrosBD);
+    }
+    public void updateAbierto(){
+        abierto = -1;
+        if(horarios.contentEquals(""))
+            abierto = 0;
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        Pattern pattern = Pattern.compile("\\d{2}:\\d{2}");
+        Matcher matcher = pattern.matcher(horarios);
+        try {
+            Date apertura = matcher.find() ? df.parse(matcher.group()) : null;
+            Date cierre = matcher.find() ? df.parse(matcher.group()) : null;
+
+            Calendar calendario = Calendar.getInstance();
+            calendario.add(Calendar.HOUR_OF_DAY, -4);
+            Date ahora = df.parse(calendario.get(Calendar.HOUR_OF_DAY) + ":" + calendario.get(Calendar.MINUTE));
+            if(apertura != null && cierre != null && ahora != null &&
+                    //Si la hora de "ahora" es mayor a la del compareTo, devuelve 1, sino -1 (igual si es la misma)
+                    (ahora.compareTo(apertura) > 0 && ahora.compareTo(cierre) < 0)) {
+                abierto = 1;
+            }
+        } catch (ParseException ignore) {}
     }
 
     private List<List<String>> filtrosBasicos() {
