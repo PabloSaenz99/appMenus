@@ -26,6 +26,7 @@ import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
+import ucm.appmenus.utils.Precios;
 
 public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante>, View.OnClickListener {
 
@@ -39,6 +40,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
     private final TextView direccion;
     private final ImageView imagenPrinc;
     private RecyclerView filtrosRecycler;
+    private final TextView precioMin, precioMed, precioMax;
 
     public ViewHolderRestaurantes(@NonNull View view) {
         super(view);
@@ -49,6 +51,9 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         valoracion = view.findViewById(R.id.ratingRestaurantRecycler);
         direccion = view.findViewById(R.id.textDireccionRestaurante);
         imagenPrinc = view.findViewById(R.id.imageRestaurantRecycler);
+        precioMin = view.findViewById(R.id.textPrecioMin);
+        precioMed = view.findViewById(R.id.textPrecioMed);
+        precioMax = view.findViewById(R.id.textPrecioMax);
 
         Usuario usuario = Usuario.getUsuario();
 
@@ -100,6 +105,19 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
          * */
         final Observer<String> observerDireccion = direccion::setText;
         restaurante.getLiveDataDireccion().observe((LifecycleOwner) view.getContext(), observerDireccion);
+
+        final Observer<Precios> observerPrecios = precios -> {
+            if(precios.esCorrecto()) {
+                view.findViewById(R.id.layoutPrecios).setVisibility(View.VISIBLE);
+                precioMin.setText("Min: " + precios.minimo + "$");
+                precioMed.setText("Med: " + precios.mediana + "$");
+                precioMax.setText("Max: " + precios.maximo + "$");
+            }
+            else {
+                view.findViewById(R.id.layoutPrecios).setVisibility(View.INVISIBLE);
+            }
+        };
+        restaurante.getLiveDataPrecios().observe((LifecycleOwner) view.getContext(), observerPrecios);
 
         /**
          * Observa el ImageView que contiene la imagen, cuando se actualiza mediante WebScrapping

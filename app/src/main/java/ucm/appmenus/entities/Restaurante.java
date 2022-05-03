@@ -16,6 +16,7 @@ import java.util.Set;
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.OpenStreetMap;
+import ucm.appmenus.utils.Precios;
 import ucm.appmenus.utils.WebScrapping;
 
 public class Restaurante implements Parcelable {
@@ -29,6 +30,7 @@ public class Restaurante implements Parcelable {
     //MutableLiveData para poder actualizar en tiempo real sobre la interfaz
     private final MutableLiveData<Double> valoracion;
     private final MutableLiveData<String> direccion;
+    private final MutableLiveData<Precios> precios;
     private final MutableLiveData<List<Bitmap>> listaImagenes;
     private final MutableLiveData<Set<String>> listaFiltros;
     private final MutableLiveData<Set<String>> listaFiltrosBD;
@@ -46,6 +48,7 @@ public class Restaurante implements Parcelable {
         this.horarios = horarios;
         this.valoracion = new MutableLiveData<>(valoracion);
         this.direccion = new MutableLiveData<>(" [" + distanciaEnMetros + "m]");
+        this.precios = new MutableLiveData<>(new Precios());
         this.listaImagenes = new MutableLiveData<>();
         this.listaResenias = new MutableLiveData<>(new ArrayList<>());
         this.listaFiltrosBD = new MutableLiveData<>(new HashSet<>());
@@ -58,7 +61,7 @@ public class Restaurante implements Parcelable {
         this.listaFiltros = new MutableLiveData<>(filtrosAux);
 
         //Importante que vaya despues de iniciar los filtros
-        ws = new WebScrapping(url, listaFiltros, listaImagenes);
+        ws = new WebScrapping(url, listaFiltros, listaImagenes, precios);
         if(url != null){
             ws.setFiltros(filtrosBasicos());
             ws.setImagenPrincipal();
@@ -81,6 +84,7 @@ public class Restaurante implements Parcelable {
 
     public LiveData<Double> getLiveDataValoracion() { return valoracion; }
     public LiveData<String> getLiveDataDireccion() { return direccion; }
+    public LiveData<Precios> getLiveDataPrecios() { return precios; }
     public LiveData<List<Bitmap>> getliveDataImagen() { return listaImagenes; }
     public LiveData<Set<String>> getLivedataFiltros() {return this.listaFiltros;}
     public LiveData<Set<String>> getLivedataFiltrosBD() {return this.listaFiltrosBD;}
@@ -137,11 +141,12 @@ public class Restaurante implements Parcelable {
         telefono = in.readInt();
         horarios = in.readString();
         valoracion = new MutableLiveData<>(in.readDouble());
+        precios = new MutableLiveData<>(new Precios());
         listaImagenes = new MutableLiveData<>(new ArrayList<>());
         listaResenias = new MutableLiveData<>(new ArrayList<>());
         listaFiltros = new MutableLiveData<>(new HashSet<>(in.createStringArrayList()));
         listaFiltrosBD = new MutableLiveData<>(new HashSet<>());
-        ws = new WebScrapping(url, listaFiltros, listaImagenes);
+        ws = new WebScrapping(url, listaFiltros, listaImagenes, precios);
     }
 
     public static final Creator<Restaurante> CREATOR = new Creator<Restaurante>() {

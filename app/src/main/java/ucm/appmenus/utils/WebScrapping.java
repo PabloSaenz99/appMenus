@@ -33,6 +33,7 @@ public class WebScrapping {
     private final String url;
     private final MutableLiveData<Set<String>> listaFiltros;
     private final MutableLiveData<List<Bitmap>> listaImagenes;
+    private final MutableLiveData<Precios> precios;
 
     /**
      * Clase que realiza una busqueda mediante web scrapping. Todas las busquedas se realiazn en Threads
@@ -46,10 +47,11 @@ public class WebScrapping {
      *                    Es un MutableLiveData para poder actualizar la interfaz en tiempo real.
      */
     public WebScrapping(String url, MutableLiveData<Set<String>> listaFiltros,
-                        MutableLiveData<List<Bitmap>> listaImagenes) {
+                        MutableLiveData<List<Bitmap>> listaImagenes, MutableLiveData<Precios> precios) {
         this.url= url;
         this.listaFiltros = listaFiltros;
         this.listaImagenes = listaImagenes;
+        this.precios = precios;
     }
 
     /**
@@ -184,7 +186,7 @@ public class WebScrapping {
         return nuevosFiltros;
     }
 
-    private List<Double> buscarPrecios(String texto){
+    private void buscarPrecios(String texto){
         List<Double> list = new ArrayList<>();
         Map<Double, Integer> map = new TreeMap<>();
         double moda = 0, modaPrecio = 0;
@@ -210,7 +212,7 @@ public class WebScrapping {
         if(list.size() > 1) {
             Log.i("media", list.get(0) + " - " + list.get(list.size() / 2).toString() + " - " + list.get(list.size() - 1));
             Log.i("moda", modaPrecio + " nª veces: " + map.get(modaPrecio));
+            this.precios.postValue(new Precios(list.get(0), list.get(list.size() / 2), list.get(list.size() -1)));
         }
-        return list;
     }
 }
