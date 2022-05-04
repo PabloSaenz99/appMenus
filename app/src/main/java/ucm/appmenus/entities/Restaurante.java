@@ -138,7 +138,6 @@ public class Restaurante implements Parcelable {
             Date cierre = matcher.find() ? df.parse(matcher.group()) : null;
 
             Calendar calendario = Calendar.getInstance();
-            calendario.add(Calendar.HOUR_OF_DAY, -4);
             Date ahora = df.parse(calendario.get(Calendar.HOUR_OF_DAY) + ":" + calendario.get(Calendar.MINUTE));
             if(apertura != null && cierre != null && ahora != null &&
                     //Si la hora de "ahora" es mayor a la del compareTo, devuelve 1, sino -1 (igual si es la misma)
