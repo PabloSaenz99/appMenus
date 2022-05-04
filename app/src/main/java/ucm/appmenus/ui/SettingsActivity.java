@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.login.LoginActivity;
@@ -76,11 +78,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-
     }
 
 
-    private void changePassword(){
+    private void changePassword() {
         dialogBuilder = new AlertDialog.Builder(this);
         final View changePasswordView = getLayoutInflater().inflate(R.layout.pop_up_password, null);
         oldPassword = (EditText) changePasswordView.findViewById(R.id.old_password);
@@ -94,11 +95,23 @@ public class SettingsActivity extends AppCompatActivity {
         dialog.show();
 
         changePasswordButton.setOnClickListener(view -> {
-            //TODO
+            if(oldPassword.getText().toString().equals("") || newPassword.getText().toString().equals("") || newPasswordConfirm.getText().toString().equals("")){
+                Toast.makeText(view.getContext(), "Hay algún campo vacío", Toast.LENGTH_LONG).show();
+            }else if(oldPassword.getText().toString().equals(newPassword.getText().toString())) {
+                Toast.makeText(view.getContext(), "La nueva contraseña no puede ser igual a la antigua", Toast.LENGTH_LONG).show();
+            }else if(!newPasswordConfirm.getText().toString().equals(newPassword.getText().toString())){
+                Toast.makeText(view.getContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
+            }else{
+                //TODO do something
+
+
+                dialog.dismiss();
+            }
+
         });
 
 
-        ImageView imageViewShowHidePwd= changePasswordView.findViewById(R.id.hidePwd);
+        ImageView imageViewShowHidePwd = changePasswordView.findViewById(R.id.hidePwd);
         imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility);
         imageViewShowHidePwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,11 +133,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-
     }
 
 
-    private void changeName(){
+    private void changeName() {
         dialogBuilder = new AlertDialog.Builder(this);
         final View changeNameView = getLayoutInflater().inflate(R.layout.pop_up_name, null);
         newName = (EditText) changeNameView.findViewById(R.id.new_name);
@@ -136,22 +148,32 @@ public class SettingsActivity extends AppCompatActivity {
         dialog.show();
 
         changeNameButton.setOnClickListener(view -> {
-            if(newName.getText().toString() != null && newName.getText().toString() != "") {
-                usuario.setNombre(newName.getText().toString());
+            if (newName.getText().toString().equals("")) {
+
+                Toast.makeText(view.getContext(), "Tienes que poner algo",
+                        Toast.LENGTH_LONG).show();
+
+            } else if (newName.getText().toString().matches("\\d+")) {
+
+                Toast.makeText(view.getContext(), "El nombre no puede tener números",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                //TODO do something
+                dialog.dismiss();
             }
         });
 
     }
 
-    private void delete(){
+    private void delete() {
 
         dialogBuilder = new AlertDialog.Builder(this);
         final View deleteView = getLayoutInflater().inflate(R.layout.pop_up_delete, null);
         textoCompletar = (TextView) deleteView.findViewById(R.id.text_completar);
 
-        if(index == 0){
+        if (index == 0) {
             textoCompletar.setText("borrar los datos?");
-        }else{
+        } else {
             textoCompletar.setText("borrar la cuenta?");
         }
 
@@ -164,22 +186,24 @@ public class SettingsActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(view -> {
 
             //TODO
-            if(index == 0){
+            if (index == 0) {   //Ha elegido borrar los datos
 
 
-
-            }else{
-
-
+            } else {            //Ha elegido borrar la cuenta
 
 
             }
+            //TODO do something
+
+
+            dialog.dismiss();
+
         });
 
     }
 
 
-    private void changeLocation(){
+    private void changeLocation() {
 
         dialogBuilder = new AlertDialog.Builder(this);
         final View changeLocationView = getLayoutInflater().inflate(R.layout.pop_up_location, null);
@@ -193,7 +217,18 @@ public class SettingsActivity extends AppCompatActivity {
         dialog.show();
 
         changeLocationButton.setOnClickListener(view -> {
-            //TODO
+            if (latitude.getText().toString().equals("") || longitude.getText().toString().equals("")) {
+                Toast.makeText(view.getContext(), "Hay algún campo vacío", Toast.LENGTH_LONG).show();
+
+            } else if (latitude.getText().toString().matches("^[0-9,.]+$")
+                    || longitude.getText().toString().matches("^[0-9,.]+$")) {
+                Toast.makeText(view.getContext(), "No es una localización válida", Toast.LENGTH_LONG).show();
+
+            } else {
+                //TODO do something
+
+                dialog.dismiss();
+            }
         });
 
     }
