@@ -42,7 +42,7 @@ public class JSONOpenStreetReader {
                 String cuisineAux = getStringFor(info, "cuisine");
                 if(!cuisineAux.contentEquals(""))
                     filtros.add(cuisineAux);
-                for (String dieta: Constantes.filtrosDietaOSM) {
+                for (String dieta: Constantes.filtrosDietaOSMIngles()) {
                     if(!getStringFor(info, "diet:" + dieta).contentEquals(""))
                         filtros.add(dieta);
                 }

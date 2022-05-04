@@ -2,6 +2,7 @@ package ucm.appmenus.recyclers;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.ui.inicio.RestauranteDetalladoActivity;
 import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
+import ucm.appmenus.utils.Pair;
 import ucm.appmenus.utils.Precios;
 
 public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements IReclycerElement<Restaurante>, View.OnClickListener {
@@ -41,6 +43,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
     private final ImageView imagenPrinc;
     private RecyclerView filtrosRecycler;
     private final TextView precioMin, precioMed, precioMax;
+    private final Button abierto;
 
     public ViewHolderRestaurantes(@NonNull View view) {
         super(view);
@@ -54,6 +57,7 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         precioMin = view.findViewById(R.id.textPrecioMin);
         precioMed = view.findViewById(R.id.textPrecioMed);
         precioMax = view.findViewById(R.id.textPrecioMax);
+        abierto = view.findViewById(R.id.buttonAbierto);
 
         Usuario usuario = Usuario.getUsuario();
 
@@ -92,6 +96,20 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         valoracion.setClickable(false);
         direccion.setText(restaurante.getLiveDataDireccion().getValue());
 
+        int apertura = restaurante.getAbierto();
+        if(apertura == 1) {
+            abierto.setBackgroundColor(view.getResources().getColor(R.color.restauranteAbierto));
+            abierto.setText(R.string.aperturaAbierto);
+        }
+        else if(apertura == -1){
+            abierto.setBackgroundColor(view.getResources().getColor(R.color.restauranteCerrado));
+            abierto.setText(R.string.aperturaCerrado);
+        }
+        else{
+            abierto.setBackgroundColor(view.getResources().getColor(R.color.restauranteSinHorario));
+            abierto.setText(R.string.aperturaDesconocida);
+        }
+
         /**
          * Observa el RatingBar que contiene la valoración, cuando se actualiza mediante la BD
          * se muestran las estrellas
@@ -106,6 +124,10 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         final Observer<String> observerDireccion = direccion::setText;
         restaurante.getLiveDataDireccion().observe((LifecycleOwner) view.getContext(), observerDireccion);
 
+        /**
+         * Observa los TextView que contienen los precios del restaurante, cuando se actualizan mediante WebScrapping
+         * se muestran en la vista
+         * */
         final Observer<Precios> observerPrecios = precios -> {
             if(precios.esCorrecto()) {
                 view.findViewById(R.id.layoutPrecios).setVisibility(View.VISIBLE);
@@ -133,9 +155,12 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         final Observer<Set<String>> observerFiltros = new Observer<Set<String>>() {
             @Override
             public void onChanged(Set<String> filtros) {
-                RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false),
-                        ViewHolderFiltros.class, R.id.filtrosRestauranteRecycler,
-                        R.layout.recycler_filtros, view, 3);
+                RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> recycler =
+                        RecyclerAdapter.crearRecyclerGrid(
+                                FiltrosFragment.transform(Constantes.traducirAlEsp(filtros), false),
+                                ViewHolderFiltros.class, R.id.filtrosRestauranteRecycler,
+                                R.layout.recycler_filtros, view, 3);
+                //recycler.setMax(ViewGroup.LayoutParams.MATCH_PARENT, 250);
             }
         };
         restaurante.getLivedataFiltros().observe((LifecycleOwner) view.getContext(), observerFiltros);

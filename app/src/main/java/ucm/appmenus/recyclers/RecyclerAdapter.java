@@ -54,7 +54,7 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
         RecyclerView recyclerView = v.findViewById(idRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), orientacion, false));
 
-        RecyclerAdapter<T, ELEMENT> adapter = new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
+        RecyclerAdapter<T, ELEMENT> adapter = new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder, recyclerView);
         recyclerView.setAdapter(adapter);
         //return recyclerView;
         return adapter;
@@ -78,13 +78,14 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
         RecyclerView recyclerView = view.findViewById(idRecycler);
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), nColums));
 
-        RecyclerAdapter<T, ELEMENT> adapter = new RecyclerAdapter<T, ELEMENT>(elementos, idLayout, viewHolder);
+        RecyclerAdapter<T, ELEMENT> adapter = new RecyclerAdapter<>(elementos, idLayout, viewHolder, recyclerView);
         recyclerView.setAdapter(adapter);
         //return recyclerView;
         return adapter;
     }
 
     private final int viewID;
+    private final RecyclerView recyclerView;
     private final List<ELEMENT> listaDatos;
     private final List<ViewHolder> holders;
     private final Class<ViewHolder> clase;
@@ -94,18 +95,41 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
      * @param viewID : el id (R.layout...) del elemento a representar en bucle
      * @param clase : la clase que implementa  RecyclerView.ViewHolder y extiende IReclycerElement
      * */
-    private RecyclerAdapter(List<ELEMENT> dataSet, int viewID, Class<ViewHolder> clase) {
+    private RecyclerAdapter(List<ELEMENT> dataSet, int viewID, Class<ViewHolder> clase, RecyclerView recyclerView) {
         this.listaDatos = dataSet;
         this.viewID = viewID;
         this.clase = clase;
-        this.holders = new ArrayList<ViewHolder>();
+        this.recyclerView = recyclerView;
+        this.holders = new ArrayList<>();
     }
 
-    /*
-    * Funciones usadas para moverse por los elementos del recycler
-    * */
+    /**
+     * Obtiene el ViewHolder de la posición i
+     * @param i posicioón (salta una excepción si no existe)
+     * @return ViewHolder en esa posición
+     */
     public ViewHolder get(int i){ return holders.get(i); }
+
+    /**
+     * @return número de viewHolders en este recycler
+     */
     public int size(){ return holders.size(); }
+
+    /**
+     * Establece el máximo tamaño del recycler
+     * ViewGroup.LayoutParams.WRAP_CONTENT para ajustarlo al ancho
+     * ViewGroup.LayoutParams.MATCH_PARENT para ajustarlo al tamaño máximo del layout
+     * @param width ancho máximo del recycler
+     * @param height alto máximo del recycler
+     */
+    public void setMax(int width, int height){
+        /*RecyclerView.LayoutParams params = new RecyclerView.LayoutParams(width, height);
+        recyclerView.setLayoutParams(params);*/
+        if(recyclerView.getLayoutParams() != null) {
+            recyclerView.getLayoutParams().height = height;
+            recyclerView.getLayoutParams().width = width;
+        }
+    }
 
     @NonNull
     @Override
@@ -147,79 +171,3 @@ public class RecyclerAdapter<ViewHolder extends RecyclerView.ViewHolder & IRecly
         }
     }
 }
-
-/* OTRA IMPLEMENTACION
-package ucm.appmenus.recyclers;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-
-public class RecyclerAdapter<ELEMENT, ViewHolder extends AbstractViewHolder<ELEMENT>> extends
-        RecyclerView.Adapter<ViewHolder> {
-
-    Class<ViewHolder> clase;
-    private int viewID;
-    private ArrayList<ELEMENT> listaDatos;
-
-    public RecyclerAdapter(ArrayList<ELEMENT> dataSet, int viewID, Class<ViewHolder> clase) {
-        this.listaDatos = dataSet;
-        this.viewID = viewID;
-        this.clase = clase;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(viewID, parent, false);
-        //Testear (no va):
-        try {
-            return clase.getConstructor(View.class).newInstance(view);
-        } catch (IllegalAccessException | InstantiationException |
-                InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
-            return (ViewHolder) new AbstractViewHolder.NullViewHolder(parent);
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setDatos(listaDatos.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return listaDatos.size();
-    }
-}
-
-public abstract class AbstractViewHolder<ELEMENT> extends RecyclerView.ViewHolder{
-
-    private ELEMENT datos;
-
-    public AbstractViewHolder(@NonNull View itemView) {
-        super(itemView);
-    }
-
-    public abstract void setDatos(ELEMENT data);
-    public final ELEMENT getDatos(){
-        return datos;
-    }
-
-    public static class NullViewHolder extends  AbstractViewHolder<Object> {
-        public NullViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-
-        @Override
-        public void setDatos(Object data) {}
-    }
-}
-*/

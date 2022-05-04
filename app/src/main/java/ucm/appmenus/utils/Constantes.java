@@ -1,10 +1,16 @@
 package ucm.appmenus.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Constantes {
 
@@ -27,40 +33,65 @@ public class Constantes {
     public static final String NECESARIO_LOGIN = "Login necesario";
 
 
+    public static Set<String> filtrosLocalIngles() {return filtrosLocal.keySet();}
+    public static Set<String> filtrosComidaIngles() {return filtrosComida.keySet();}
+    public static Set<String> filtrosPaisIngles() {return filtrosPais.keySet();}
+    public static Set<String> filtrosPostresIngles() {return filtrosPostres.keySet();}
+    public static Set<String> filtrosDietaOSMIngles() {return filtrosDietaOSM.keySet();}
+    public static Set<String> filtrosDietaWSIngles() {return filtrosDietaWebScrapping.keySet();}
 
-    /**
-     * Filtros
-     * */
-    //https://wiki.openstreetmap.org/wiki/Category:Food_and_beverages
-    public static final List<String> filtrosLocal = Collections.unmodifiableList(new ArrayList<String>(){{
-        add("bar"); add("cafe"); add("fast+food"); add("nightclub"); add("pub"); add("restaurant");
+    public static String traducirAlEsp(String ing){ return ingles.get(ing); }
+    public static ArrayList<String> traducirAlEsp(Collection<String> ing){
+        ArrayList<String> res = new ArrayList<>();
+        for (String s: ing)
+            res.add(ingles.get(s));
+        return res;
+    }
+
+    public static ArrayList<String> traducirAlIngles(Collection<String> esp){
+        ArrayList<String> res = new ArrayList<>();
+        for (String s: esp)
+            res.add(espaniol.get(s));
+        return res;
+    }
+
+    private static final Map<String, String> filtrosLocal = Collections.unmodifiableMap(new HashMap<String, String>(){{
+        put("bar", "bar"); put("cafe", "cafetería"); put("fast+food", "comida rápida"); put("nightclub", "club nocturno");
+        put("pub", "pub"); put("restaurant", "restaurante");
     }});
 
-    //Las 3 siguientes (comida, pais y postres) se podrian poner en una unica lista
-    //https://wiki.openstreetmap.org/wiki/Key:cuisine
-    public static final  List<String> filtrosComida = Collections.unmodifiableList(new ArrayList<String>(){{
-        add("barbecue"); add("burger"); add("chicken"); add( "curry"); add("fish"); add("hot+dog");
-        add("kebab"); add("noodle"); add("pasta"); add("pizza"); add("ramen"); add("sandwich");
-        add("seafood"); add("steak-house"); add("sushi");  add("tapas");
+    private static final  Map<String, String> filtrosComida = Collections.unmodifiableMap(new HashMap<String, String>(){{
+        put("barbecue", "barbacoa"); put("burger", "hamburguesa"); put("chicken", "pollo"); put( "curry", "curry");
+        put("fish", "pescado"); put("hot+dog", "perrito caliente");
+        put("kebab", "kebab"); put("noodle", "fideos"); put("pasta", "pasta"); put("pizza", "pizza"); put("ramen", "ramen"); put("sandwich", "sándwich");
+        put("seafood", "marisco"); put("steak-house", "asador"); put("sushi", "sushi");  put("tapas", "tapas");
     }});
-    public static final List<String> filtrosPais = Collections.unmodifiableList(new ArrayList<String>(){{
-        add("asian"); add("brazilian"); add("greek"); add("indian"); add("indonesian");
-        add("italian"); add("japanese"); add("korean"); add("mediterranean"); add("mexican");
-        add("regional"); add("spanish"); add("thai"); add("traditional");
+    private static final Map<String, String> filtrosPais = Collections.unmodifiableMap(new HashMap<String, String>(){{
+        put("asian", "asiático"); put("brazilian", "brasileño"); put("greek", "griego"); put("indian", "indio"); put("indonesian", "indoneso");
+        put("italian", "italiano"); put("japanese", "japonés"); put("korean", "coreano"); put("mediterranean", "mediterráneo"); put("mexican", "mexicano");
+        put("regional", "regional"); put("spanish", "español"); put("thai", "tailandés"); put("traditional", "tradicional");
     }});
-    public static final List<String> filtrosPostres = Collections.unmodifiableList(new ArrayList<String>(){{
-        add("cake"); add("coffe+shop"); add("crepe"); add("dessert"); add("ice+cream");
-        add("waffle"); add("teahouse");
+    private static final Map<String, String> filtrosPostres = Collections.unmodifiableMap(new HashMap<String, String>(){{
+        put("cake", "tarta"); put("coffe+shop", "café"); put("crepe", "crepe"); put("dessert", "postres"); put("ice+cream", "helados");
+        put("waffle", "gofre"); put("teahouse", "té");
     }});
 
     //https://wiki.openstreetmap.org/wiki/Key:diet
-    public static final List<String> filtrosDietaOSM = Collections.unmodifiableList(new ArrayList<String>(){{
+    private static final Map<String, String> filtrosDietaOSM = Collections.unmodifiableMap(new HashMap<String, String>(){{
         //para OSM
-        add("vegetarian"); add("vegan"); add("gluten_free"); add("lactose_free");
+        put("vegetarian", "vegetariano"); put("vegan", "vegano"); put("gluten_free", "sin gluten"); put("lactose_free", "sin lactosa");
     }});
 
-    public static final List<String> filtrosDietaWebScrapping = Collections.unmodifiableList(new ArrayList<String>(){{
+    private static final Map<String, String> filtrosDietaWebScrapping = Collections.unmodifiableMap(new HashMap<String, String>(){{
         //Para web Scrapping
-        add("vegetarian"); add("vegan");add("veggie");add("gluten free"); add("lactose free"); add("allergen");
+        ;put("veggie", "veg"); put("allergen", "alérgenos");
+    }});
+
+    private static final Map<String, String> ingles = Collections.unmodifiableMap(new HashMap<String, String>(){{
+        putAll(filtrosLocal); putAll(filtrosComida); putAll(filtrosPais); putAll(filtrosPostres); putAll(filtrosDietaOSM); putAll(filtrosDietaWebScrapping);
+    }});
+
+    private static final Map<String, String> espaniol = Collections.unmodifiableMap(new HashMap<String, String>(){{
+        putAll(ingles.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey)));
     }});
 }

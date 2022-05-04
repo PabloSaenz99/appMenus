@@ -21,6 +21,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <RadioGroup
+        android:id="@+id/radioGroupOrdenar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionFiltrosAplicados">
+
+        <RadioButton
+            android:id="@+id/radioPrecio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Precio (mayor primero)"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/radioAbierto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Abiertos primero"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/radioVegano"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Veganos primero"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+    <View
+        android:id="@+id/view"
+        style="@style/HorizontalDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupOrdenar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRestauranteInicio"
         android:layout_width="match_parent"
@@ -28,7 +71,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcionFiltrosAplicados" />
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <ProgressBar
         android:id="@+id/progressBarInicio"

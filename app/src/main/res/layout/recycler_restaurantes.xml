@@ -17,9 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="Nombre Restaurante"
             android:textAlignment="textStart"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <ToggleButton
@@ -43,14 +44,14 @@
         <ImageView
             android:id="@+id/imageRestaurantRecycler"
             android:layout_width="150dp"
-            android:layout_height="130dp"
+            android:layout_height="140dp"
             android:contentDescription="@string/imageRestaurantRecycler"
             app:srcCompat="@drawable/no_image"
             tools:srcCompat="@drawable/no_image" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -65,15 +66,6 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textRestaurantURL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:text="Sitio web"
-                android:textAlignment="textStart"
-                android:maxLines="2"/>
-
             <RatingBar
                 android:id="@+id/ratingRestaurantRecycler"
                 android:layout_width="wrap_content"
@@ -83,8 +75,27 @@
                 android:isIndicator="true"
                 android:theme="@style/RatingBarLong" />
 
+            <Button
+                android:id="@+id/buttonAbierto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Abierto"
+                android:textColor="@color/white" />
+
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textRestaurantURL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:maxLines="2"
+        android:text="Sitio web"
+        android:textAlignment="textStart"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textDireccionRestaurante"
@@ -99,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
 
-        android:scrollbars="horizontal" />
+        android:scrollbars="vertical" />
 
     <!--https://stackoverflow.com/questions/42694355/how-to-set-recyclerview-max-height altura max-->
 
@@ -108,34 +119,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textPrecioMin"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Sin datos"
+            android:text="Precios"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/textPrecioMed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Sin datos"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textPrecioMax"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Sin datos"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/textPrecioMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Sin datos"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textPrecioMed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Sin datos"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textPrecioMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Sin datos"
+                android:textSize="18sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <View style="@style/HorizontalDivider" />

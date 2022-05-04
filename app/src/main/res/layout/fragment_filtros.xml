@@ -30,68 +30,36 @@
             android:id="@+id/textInfoFiltros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Radio de busqueda"
+            android:text="Radio de búsqueda"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold|italic" />
 
         <!--TODO: Hacer que el recycler haga un wrap hasta un tam
         maximo, asi ocupara menos si lo necesita pero no mucho si es muy grande-->
-        <RadioGroup
-            android:id="@+id/radioGroupDistancia"
+
+        <LinearLayout
+            android:id="@+id/layoutSeekbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radioButton1000"
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:max="100"
+                android:progress="50" />
+
+            <TextView
+                android:id="@+id/textDistancia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:checked="false"
-                android:text="1000"/>
-
-            <RadioButton
-                android:id="@+id/radioButton1500"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="1500"/>
-
-            <RadioButton
-                android:id="@+id/radioButton2000"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="2000"/>
-
-            <RadioButton
-                android:id="@+id/radioButtonMapa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/botonVerMapa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ver en mapa"
-                android:textColor="#000000"/>
-        </RadioGroup>
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <SeekBar
-            android:id="@+id/seekBar2"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="10"
-            android:progress="3" />
+                android:text="Metros"
+                android:textSize="18sp" />
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,10 +27,12 @@ import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.OpenStreetMap;
+import ucm.appmenus.utils.OrdenarRestaurantes;
 
 public class InicioFragment extends Fragment {
 
     private MainActivity mainActivity;
+    private RecyclerAdapter recyclerAdapter;
 
     private TextView filtrosAplicados;
     private InicioViewModel inicioViewModel;
@@ -92,16 +95,26 @@ public class InicioFragment extends Fragment {
         }
 
         //Actualiza el recycler cuando se reciben los datos
-        final Observer<ArrayList<Restaurante>> observer = new Observer<ArrayList<Restaurante>>() {
-            @Override
-            public void onChanged(ArrayList<Restaurante> restaurantes) {
-                root.findViewById(R.id.progressBarInicio).setVisibility(View.INVISIBLE);
-                //crearRecycler(inicioViewModel.getRestaurantes().getValue());
-                RecyclerAdapter.crearRecyclerLineal(restaurantes, ViewHolderRestaurantes.class, R.id.recyclerRestauranteInicio,
-                        R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);
-            }
+        final Observer<ArrayList<Restaurante>> observer = restaurantes -> {
+            root.findViewById(R.id.progressBarInicio).setVisibility(View.INVISIBLE);
+            recyclerAdapter = RecyclerAdapter.crearRecyclerLineal(restaurantes, ViewHolderRestaurantes.class, R.id.recyclerRestauranteInicio,
+                    R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);
         };
         inicioViewModel.getRestaurantes().observe(getActivity(), observer);
+
+        RadioGroup rg = root.findViewById(R.id.radioGroupOrdenar);
+        rg.setOnCheckedChangeListener((radioGroup, i) -> {
+            if(i == R.id.radioPrecio)
+                OrdenarRestaurantes.ordenarPorPrecio(inicioViewModel.getRestaurantes().getValue());
+            else if(i == R.id.radioAbierto)
+                OrdenarRestaurantes.ordenarPorApertura(inicioViewModel.getRestaurantes().getValue());
+            else if(i == R.id.radioVegano)
+                OrdenarRestaurantes.ordenarPorVegano(inicioViewModel.getRestaurantes().getValue());
+
+            recyclerAdapter = RecyclerAdapter.crearRecyclerLineal(inicioViewModel.getRestaurantes().getValue(),
+                    ViewHolderRestaurantes.class, R.id.recyclerRestauranteInicio,
+                    R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);
+        });
 
         return root;
     }
