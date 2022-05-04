@@ -76,14 +76,16 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         View v = getWindow().getDecorView().getRootView();
         //Recycler filtros
         final Observer<Set<String>> observerFiltros = filtros -> {
-            RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false), ViewHolderFiltros.class,
+            RecyclerAdapter.crearRecyclerGrid(
+                    FiltrosFragment.transform(Constantes.traducirAlEsp(filtros), false), ViewHolderFiltros.class,
                     R.id.filtrosRestauranteRecycler, R.layout.recycler_filtros, v, 3);
         };
         restaurante.getLivedataFiltros().observe(this, observerFiltros);
 
         //Recycler filtros BD
         final Observer<Set<String>> observerFiltrosBD = filtros -> {
-            RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false), ViewHolderFiltros.class,
+            RecyclerAdapter.crearRecyclerGrid(
+                    FiltrosFragment.transform(Constantes.traducirAlEsp(filtros), false), ViewHolderFiltros.class,
                     R.id.filtrosBDRestauranteRecycler, R.layout.recycler_filtros, v, 3);
             findViewById(R.id.progressBarFiltros).setVisibility(View.INVISIBLE);
             if(filtros.isEmpty()) {

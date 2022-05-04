@@ -156,7 +156,8 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
             @Override
             public void onChanged(Set<String> filtros) {
                 RecyclerAdapter<ViewHolderFiltros, Pair<String, Boolean>> recycler =
-                        RecyclerAdapter.crearRecyclerGrid(FiltrosFragment.transform(filtros, false),
+                        RecyclerAdapter.crearRecyclerGrid(
+                                FiltrosFragment.transform(Constantes.traducirAlEsp(filtros), false),
                                 ViewHolderFiltros.class, R.id.filtrosRestauranteRecycler,
                                 R.layout.recycler_filtros, view, 3);
                 //recycler.setMax(ViewGroup.LayoutParams.MATCH_PARENT, 250);

@@ -103,8 +103,8 @@ public class Restaurante implements Parcelable {
      */
     public int getAbierto(){ return this.abierto; }
     public int getVegano() {
-        return (listaFiltros.getValue().stream().anyMatch(Constantes.filtrosDietaOSM::contains) ||
-        listaFiltros.getValue().stream().anyMatch(Constantes.filtrosDietaWebScrapping::contains)) ? 1 : -1;
+        return (listaFiltros.getValue().stream().anyMatch(Constantes.filtrosDietaOSMIngles()::contains) ||
+        listaFiltros.getValue().stream().anyMatch(Constantes.filtrosDietaWSIngles()::contains)) ? 1 : -1;
     }
     //TODO: ordenar bien porque esto solo ordena los que tienen precio arriba y los que no abajo
     public double getPrecioMediana() { return this.precios.getValue().esCorrecto() ? this.precios.getValue().mediana : 0; }
@@ -120,9 +120,9 @@ public class Restaurante implements Parcelable {
     public void updateResenias(){ BaseDatos.getInstance().getReseniasRestaurante(idRestaurante, listaResenias);}
     public void updateImagenes(){ ws.setImagenes(); }
     public void updateFiltros(){
-        List<List<String>> filtros = filtrosBasicos();
-        filtros.add(Constantes.filtrosLocal);
-        filtros.add(Constantes.filtrosPostres);
+        List<Set<String>> filtros = filtrosBasicos();
+        filtros.add(Constantes.filtrosLocalIngles());
+        filtros.add(Constantes.filtrosPostresIngles());
         ws.setFiltros(filtros);
         BaseDatos.getInstance().getFiltrosRestaurante(idRestaurante, listaFiltrosBD);
     }
@@ -148,10 +148,11 @@ public class Restaurante implements Parcelable {
         } catch (ParseException ignore) {}
     }
 
-    private List<List<String>> filtrosBasicos() {
-        ArrayList<List<String>> listOfLists = new ArrayList<>();
-        listOfLists.add(Constantes.filtrosPais);
-        listOfLists.add(Constantes.filtrosDietaWebScrapping);
+    private List<Set<String>> filtrosBasicos() {
+        ArrayList<Set<String>> listOfLists = new ArrayList<>();
+        listOfLists.add(Constantes.filtrosPaisIngles());
+        listOfLists.add(Constantes.filtrosDietaWSIngles());
+        listOfLists.add(Constantes.filtrosDietaOSMIngles());
         return listOfLists;
     }
 

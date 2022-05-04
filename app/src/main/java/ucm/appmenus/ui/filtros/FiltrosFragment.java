@@ -3,15 +3,12 @@ package ucm.appmenus.ui.filtros;
 
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
@@ -62,15 +58,15 @@ public class FiltrosFragment extends Fragment {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) { }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         //Crea los recyclers para los filtros, 3 recyclers para 3 tipos distintos de filtros
         listaRecyclers = new ArrayList<>();
-        crearRecyclerFiltros(root, Constantes.filtrosLocal, R.id.recyclerFiltrosLocal, 3);
-        crearRecyclerFiltros(root, Constantes.filtrosDietaOSM, R.id.recyclerDietaEspecial, 3);
-        crearRecyclerFiltros(root, Constantes.filtrosPais, R.id.recyclerFiltrosPais, 3);
-        crearRecyclerFiltros(root, Constantes.filtrosComida, R.id.recyclerFiltrosComida, 3);
+        crearRecyclerFiltros(root, Constantes.traducirAlEsp(Constantes.filtrosLocalIngles()), R.id.recyclerFiltrosLocal, 3);
+        crearRecyclerFiltros(root, Constantes.traducirAlEsp(Constantes.filtrosDietaOSMIngles()), R.id.recyclerDietaEspecial, 3);
+        crearRecyclerFiltros(root, Constantes.traducirAlEsp(Constantes.filtrosPaisIngles()), R.id.recyclerFiltrosPais, 3);
+        crearRecyclerFiltros(root, Constantes.traducirAlEsp(Constantes.filtrosComidaIngles()), R.id.recyclerFiltrosComida, 3);
 
         //Carga los filtros y realiza la busqueda
         Button botonFiltrar = root.findViewById(R.id.botonFiltrar);
@@ -109,7 +105,8 @@ public class FiltrosFragment extends Fragment {
     public static ArrayList<Pair<String, Boolean>> transform(Set<String> filtros, boolean modo){
         ArrayList<Pair<String, Boolean>> datos = new ArrayList<>();
         for (String s: filtros) {
-            datos.add(new Pair<String, Boolean>(s, modo));
+            if(s != null)
+                datos.add(new Pair<String, Boolean>(s, modo));
         }
         return datos;
     }
@@ -117,7 +114,8 @@ public class FiltrosFragment extends Fragment {
     public static ArrayList<Pair<String, Boolean>> transform(List<String> filtros, boolean modo){
         ArrayList<Pair<String, Boolean>> datos = new ArrayList<>();
         for (String s: filtros) {
-            datos.add(new Pair<>(s, modo));
+            if(s != null)
+                datos.add(new Pair<>(s, modo));
         }
         return datos;
     }
@@ -161,9 +159,11 @@ public class FiltrosFragment extends Fragment {
         if(act instanceof MainActivity) { //abre el fragment de inicio en modo busqueda (ahi se realiza la busqueda en OpenStreetMap)
             //Guarda los filtros de la busqueda en un bundle
             Bundle b = new Bundle();
-            b.putStringArrayList(Constantes.TIPOS_DIETA, tiposDieta);
-            b.putStringArrayList(Constantes.TIPOS_LOCAL, tiposLocal);
-            b.putStringArrayList(Constantes.TIPOS_COCINA, tiposCocina);
+            Log.i("res", Constantes.traducirAlEsp(tiposLocal).toString());
+            Log.i("res2", tiposLocal.toString());
+            b.putStringArrayList(Constantes.TIPOS_DIETA, Constantes.traducirAlIngles(tiposDieta));
+            b.putStringArrayList(Constantes.TIPOS_LOCAL, Constantes.traducirAlIngles(tiposLocal));
+            b.putStringArrayList(Constantes.TIPOS_COCINA, Constantes.traducirAlIngles(tiposCocina));
             b.putBoolean(Constantes.ACTUALIZAR_INTENT, true);
             b.putInt(Constantes.AREA, metros);
             b.putString(Constantes.FILTROS_BUSQUEDA, tiposLocal + tiposCocina.toString() + "<" + metros + ">");
@@ -171,7 +171,7 @@ public class FiltrosFragment extends Fragment {
             Navigation.findNavController(root).navigate(R.id.navigation_inicio, b);
         } else if(act instanceof AniadirFiltrosActivity) {      //Guarda los filtros en la BD
             Toast.makeText(act, "Filtros añadidos", Toast.LENGTH_SHORT).show();
-            tiposLocal.addAll(tiposCocina);
+            tiposLocal.addAll(Constantes.traducirAlEsp(tiposCocina));
             BaseDatos.getInstance().addFiltrosRestaurante(getArguments().getString(Constantes.RESTAURANTE), tiposLocal);
             act.finish();
         }

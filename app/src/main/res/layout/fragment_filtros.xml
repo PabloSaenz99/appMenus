@@ -30,7 +30,7 @@
             android:id="@+id/textInfoFiltros"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Radio de busqueda"
+            android:text="Radio de búsqueda"
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold|italic" />

@@ -123,7 +123,7 @@ public class WebScrapping {
      * @param filtros: lista con todos los filtros a buscar.
      * Crea su propio Thread.
      */
-    public void setFiltros(final List<List<String>> filtros) {
+    public void setFiltros(final List<Set<String>> filtros) {
         //Necesario el thread para no lanzar excepciones y no sobrecargar el hilo principal
         Thread th = new Thread(new Runnable() {
             @Override
@@ -177,9 +177,9 @@ public class WebScrapping {
      * @return un HashSet con todos los filtros encontrados en la web, sin repetidos
      */
     @NonNull
-    private HashSet<String> buscarTags(String texto, List<List<String>> filtros){
+    private HashSet<String> buscarTags(String texto, List<Set<String>> filtros){
         HashSet<String> nuevosFiltros = new HashSet<>();
-        for (List<String> l: filtros)
+        for (Set<String> l: filtros)
             for (String s: l)
                 if(texto.contains(s))
                     nuevosFiltros.add(s);

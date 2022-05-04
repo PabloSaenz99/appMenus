@@ -59,7 +59,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tipo de gastronomia"
+        android:text="Tipo de gastronomía"
         android:textAlignment="center"
         android:textColor="#FF5722"
         android:textSize="18sp"
