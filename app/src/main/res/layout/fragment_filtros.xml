@@ -86,7 +86,7 @@
         android:drawablePadding="10dp"
         android:includeFontPadding="false"
         android:text="Filtrar"
-        android:textColor="#000000"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
