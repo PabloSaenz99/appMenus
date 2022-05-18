@@ -25,6 +25,8 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ucm.appmenus.MainActivity;
+
 //https://www.tutorialspoint.com/web-scrapping-in-android-application
 public class WebScrapping {
 
@@ -87,6 +89,7 @@ public class WebScrapping {
                 //Log.d("CONTADOR IMG:", aux0 + ", " + --CONTADOR);
             }
         });
+        th.setName(url + ": Img Principal");
         th.start();
     }
     /**
@@ -115,6 +118,7 @@ public class WebScrapping {
                 } catch (Exception ignored) {}
             }
         });
+        th.setName(url + ": Imagenes");
         th.start();
     }
 
@@ -128,8 +132,9 @@ public class WebScrapping {
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
-                int aux0 = ++CONTADOR;
+                //int aux0 = ++CONTADOR;
                 try {
+                    Long tiempoIni = System.nanoTime();
                     //Busca si existen palabras como "menu" o "carta"
                     Document document = Jsoup.connect(url).get();
                     Element elementoMenu = document.select("a:contains(menu)").first();   //Buscar tambien sin tilde
@@ -147,10 +152,13 @@ public class WebScrapping {
                     if(elementoMenu != null || elementoCarta!= null) {
                         listaFiltros.postValue(listaFiltros.getValue());
                     }
+
+                    MainActivity.medirTiempo("Set Filtros", tiempoIni, System.nanoTime());
                 } catch (Exception ignored) {}
                 //Log.d("CONTADOR FIL:", aux0 + ", " + --CONTADOR);
             }
         });
+        th.setName(url + ": Filtros");
         th.start();
     }
 

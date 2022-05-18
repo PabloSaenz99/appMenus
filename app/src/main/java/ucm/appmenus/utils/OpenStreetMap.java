@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import ucm.appmenus.MainActivity;
 import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.ficheros.JSONOpenStreetReader;
@@ -41,12 +42,17 @@ public class OpenStreetMap {
             @Override
             public void run() {
                 try {
+                    long startTime = System.nanoTime();
+
                     //Obtiene los resultados y los guarda en la cola para que se publiquen en cuanto sea posible
                     JSONOpenStreetReader reader = new JSONOpenStreetReader();
                     actualizable.postValue(reader.parsearResultado(getURLData(query), attr.latitud, attr.longitud));
+
+                    MainActivity.medirTiempo("OSM set places", startTime, System.nanoTime());
                 } catch (Exception ignored) {}
             }
         });
+        th.setName("OSM Set Places");
         th.start();
     }
 
@@ -85,6 +91,7 @@ public class OpenStreetMap {
                 } catch (Exception ignored) {}
             }
         });
+        th.setName("PLACES by ID");
         th.start();
     }
 
@@ -99,6 +106,7 @@ public class OpenStreetMap {
                 } catch (Exception ignored) {}
             }
         });
+        th.setName("OSM Dir Restaurante");
         th.start();
     }
 

@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio_sesion);
-//boton de ocultar/mostrar pwd
+        //boton de ocultar/mostrar pwd
         ImageView imageViewShowHidePwd= findViewById(R.id.hidePwd);
         imageViewShowHidePwd.setImageResource(R.drawable.ic_visibility);
         imageViewShowHidePwd.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
      * @param text_password contraseña del usuario
      */
     private void login (String text_email, String text_password){
+        long ini = System.nanoTime();
         firebaseAuth.signInWithEmailAndPassword(text_email, text_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
@@ -143,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.medirTiempo("Login", ini, System.nanoTime());
             }
         });
     }

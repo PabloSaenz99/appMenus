@@ -1,6 +1,7 @@
 package ucm.appmenus;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -54,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    public static void medirTiempo(String nombreFunc, long nanoIni, long nanoFin) {
+        double res = (nanoFin - nanoIni)/1000000000.0;
+        Log.i("tiempo",  nombreFunc + ": " + res + "s");
     }
  }
 

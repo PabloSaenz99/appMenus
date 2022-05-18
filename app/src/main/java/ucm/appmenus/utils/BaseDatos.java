@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ucm.appmenus.MainActivity;
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
 
@@ -57,6 +58,7 @@ public class BaseDatos {
      * @param resenia la reseña a añadir
      */
     public void addResenia(Resenia resenia){
+        long ini = System.nanoTime();
         //TODO: añadir tiempo Log.i("BD", Calendar.getInstance().getTime().toString());
         databaseResenias.child(resenia.getIdResenia()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -66,6 +68,7 @@ public class BaseDatos {
                     databaseUsuarios.child(RESENIAS).push().setValue(resenia.getIdResenia());
                 }
                 databaseResenias.child(resenia.getIdResenia()).setValue(resenia);
+                MainActivity.medirTiempo("Añadir reseña", ini, System.nanoTime());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) { }
@@ -79,6 +82,7 @@ public class BaseDatos {
      * @param filtros los filtros nuevos
      */
     public void addFiltrosRestaurante(String idRestaurante, List<String> filtros){
+        long ini = System.nanoTime();
         //Transforma los filtros a un mapa
         Map<String, Long> valoresNuevos = new HashMap<>();
         for (String s: filtros)
@@ -94,6 +98,7 @@ public class BaseDatos {
                 valoresAntiguos.forEach((k, v) -> valoresNuevos.merge(k, v, Long::sum));
                 //Actualiza la BD
                 databaseRestaurantes.child(idRestaurante).child(FILTROS_NO_APROBADOS).setValue(valoresNuevos);
+                MainActivity.medirTiempo("Añadir filtros", ini, System.nanoTime());
             }
         });
     }
@@ -113,6 +118,7 @@ public class BaseDatos {
      * @param res lista donde se guaradrá el resultado
      */
     public void getReseniasRestaurante(String idRestaurante, MutableLiveData<List<Resenia>> res){
+        long ini = System.nanoTime();
         //Obtiene la lista de ids de las reseñas de ese restaurante
         databaseRestaurantes.child(idRestaurante).child(RESENIAS).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
@@ -127,6 +133,7 @@ public class BaseDatos {
                         }
                     });
                 }
+                MainActivity.medirTiempo("Get Reseñas restaurante", ini, System.nanoTime());
             }
         });
     }

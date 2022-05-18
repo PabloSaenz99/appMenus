@@ -134,6 +134,7 @@ public class InicioFragment extends Fragment {
         outState.putString(Constantes.FILTROS_BUSQUEDA, filtrosAplicados.getText().toString());
     }
 
+    /*
     @Override
     public void onPrimaryNavigationFragmentChanged(boolean bool){
         super.onPrimaryNavigationFragmentChanged(bool);
@@ -162,5 +163,5 @@ public class InicioFragment extends Fragment {
     public  void onDestroy() {
         super.onDestroy();
         Log.i("info", "destroy");
-    }
+    }*/
 }

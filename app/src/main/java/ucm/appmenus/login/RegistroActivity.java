@@ -3,6 +3,7 @@ package ucm.appmenus.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
 
 import android.content.Context;
@@ -94,6 +95,7 @@ public class RegistroActivity extends AppCompatActivity {
      * @param password contraseña del usuario
      */
     private void registerUser(String nombre, String email, String password) {
+        long ini = System.nanoTime();
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
@@ -121,6 +123,7 @@ public class RegistroActivity extends AppCompatActivity {
                                 Intent intent = new Intent(RegistroActivity.this, LoginActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
+                                MainActivity.medirTiempo("Registro", ini, System.nanoTime());
                             } else {
                                 Toast.makeText(RegistroActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
