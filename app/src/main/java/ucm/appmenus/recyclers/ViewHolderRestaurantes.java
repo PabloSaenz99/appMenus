@@ -131,9 +131,9 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         final Observer<Precios> observerPrecios = precios -> {
             if(precios.esCorrecto()) {
                 view.findViewById(R.id.layoutPrecios).setVisibility(View.VISIBLE);
-                precioMin.setText("Min: " + precios.minimo + "$");
-                precioMed.setText("Med: " + precios.mediana + "$");
-                precioMax.setText("Max: " + precios.maximo + "$");
+                precioMin.setText("Min: " + precios.minimo + "€");
+                precioMed.setText("Med: " + precios.mediana + "€");
+                precioMax.setText("Max: " + precios.maximo + "€");
             }
             else {
                 view.findViewById(R.id.layoutPrecios).setVisibility(View.INVISIBLE);

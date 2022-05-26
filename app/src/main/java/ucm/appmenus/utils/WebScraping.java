@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 import ucm.appmenus.MainActivity;
 
 //https://www.tutorialspoint.com/web-scrapping-in-android-application
-public class WebScrapping {
+public class WebScraping {
 
     private static int CONTADOR = 0;
 
@@ -48,8 +48,8 @@ public class WebScrapping {
      * @param listaImagenes: lista de imagenes en la que se guardara el resultado de la busqueda.
      *                    Es un MutableLiveData para poder actualizar la interfaz en tiempo real.
      */
-    public WebScrapping(String url, MutableLiveData<Set<String>> listaFiltros,
-                        MutableLiveData<List<Bitmap>> listaImagenes, MutableLiveData<Precios> precios) {
+    public WebScraping(String url, MutableLiveData<Set<String>> listaFiltros,
+                       MutableLiveData<List<Bitmap>> listaImagenes, MutableLiveData<Precios> precios) {
         this.url= url;
         this.listaFiltros = listaFiltros;
         this.listaImagenes = listaImagenes;
@@ -103,6 +103,7 @@ public class WebScrapping {
             @Override
             public void run() {
                 try {
+                    long ini = System.nanoTime();
                     Document document = Jsoup.connect(url).get();
                     Elements imagenes = document.getElementsByTag("img");
                     if(imagenes != null){
@@ -115,6 +116,7 @@ public class WebScrapping {
                         }
                         listaImagenes.postValue(imagenesAux);
                     }
+                    MainActivity.medirTiempo("Imagenes", ini, System.nanoTime());
                 } catch (Exception ignored) {}
             }
         });
@@ -134,20 +136,27 @@ public class WebScrapping {
             public void run() {
                 //int aux0 = ++CONTADOR;
                 try {
-                    Long tiempoIni = System.nanoTime();
+                    long tiempoIni = System.nanoTime();
                     //Busca si existen palabras como "menu" o "carta"
                     Document document = Jsoup.connect(url).get();
-                    Element elementoMenu = document.select("a:contains(menu)").first();   //Buscar tambien sin tilde
-                    Element elementoCarta = document.select("a:contains(order)").first();  //Buscar tambien por "carta"
+                    //Element elementoMenu = document.select("a:contains(menu)").first();   //Busquedas en ingles
+                    //Element elementoCarta = document.select("a:contains(order)").first(); //Busquedas en ingles
+
+                    Element elementoMenu = document.select("a:contains(menu)").first();     //Busqueda en español
+                    if(elementoMenu == null)
+                        elementoMenu = document.select("a:contains(menú)").first();         //Busqueda en español
+                    Element elementoCarta = document.select("a:contains(carta)").first();   //Busqueda en españo
 
                     //Accede a dichos parametros, cargando su enlace (href)
                     String textoURL = "";
                     if(elementoMenu != null)
                         textoURL += obtenerTextoMenu(url, elementoMenu.attr("href"));
-                    else if(elementoCarta != null) //TODO: hacerlo solo else?
+                    if(elementoCarta != null)
                         textoURL += obtenerTextoMenu(url, elementoCarta.attr("href"));
                     listaFiltros.getValue().addAll(buscarTags(textoURL, filtros));
-                    buscarPrecios(textoURL);
+                    long preciosIni = System.nanoTime();
+                    String precios = buscarPrecios(textoURL) ? "Precios encontrados": "precios no encontrados";
+                    MainActivity.medirTiempo(precios, preciosIni, System.nanoTime());
 
                     if(elementoMenu != null || elementoCarta!= null) {
                         listaFiltros.postValue(listaFiltros.getValue());
@@ -194,13 +203,18 @@ public class WebScrapping {
         return nuevosFiltros;
     }
 
-    private void buscarPrecios(String texto){
+    /**
+     * Devuelve los precios
+     * @param texto
+     * @return true si hay precios, false sino
+     */
+    private boolean buscarPrecios(String texto){
         List<Double> list = new ArrayList<>();
         Map<Double, Integer> map = new TreeMap<>();
         double moda = 0, modaPrecio = 0;
         try {
-            //Pattern original: (?=\\$)*\\d+(,|.)\\d+
-            Pattern pattern = Pattern.compile("\\$\\d+(,|.)\\d");
+            //Pattern pattern = Pattern.compile("\\$\\d+(,|.)\\d+");     //Pattern dolares
+            Pattern pattern = Pattern.compile("\\d+(,|.)\\d+€");      //Pattern euros
             Matcher matcher = pattern.matcher(texto);
             while (matcher.find()) {
                 double d = Double.parseDouble(matcher.group().replace("$", ""));
@@ -222,5 +236,6 @@ public class WebScrapping {
             //Log.i("moda", modaPrecio + " nª veces: " + map.get(modaPrecio));
             this.precios.postValue(new Precios(list.get(0), list.get(list.size() / 2), list.get(list.size() -1)));
         }
+        return !list.isEmpty();
     }
 }

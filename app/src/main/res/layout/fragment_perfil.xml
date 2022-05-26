@@ -31,7 +31,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/botonCerrarSesion"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -57,7 +57,7 @@
                 android:textColor="#A4FF5722"
                 android:textSize="34sp"
                 android:textStyle="bold" />
-<!--
+            <!--
             <ImageButton
                 android:id="@+id/imageButton2"
                 android:layout_width="wrap_content"
@@ -80,10 +80,10 @@
             android:id="@+id/emailUsuarioPerfilFragment"
             android:layout_width="match_parent"
             android:layout_height="25dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_horizontal"
             android:text="Email"
             android:textColor="#30514E"
-            android:layout_marginBottom="20dp"
             android:textSize="18sp"
             android:textStyle="bold|italic" />
 
@@ -96,9 +96,9 @@
                 android:id="@+id/buttonMisResenias"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
                 android:text="Mis Reseñas"
-                android:layout_marginHorizontal="10dp"
                 android:textColor="#FFFFFF" />
 
             <Button
@@ -118,7 +118,6 @@
             android:layout_height="4dp"
             android:layout_marginTop="-6dp"
             android:background="@color/logoAzul0" />
-
 
 
         <androidx.recyclerview.widget.RecyclerView

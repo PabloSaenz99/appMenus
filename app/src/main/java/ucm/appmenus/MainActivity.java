@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void medirTiempo(String nombreFunc, long nanoIni, long nanoFin) {
-        double res = (nanoFin - nanoIni)/1000000000.0;
-        Log.i("tiempo",  nombreFunc + ": " + res + "s");
+        double res = (nanoFin - nanoIni)/1000000.0;
+        Log.i("tiempo",  nombreFunc + ": " + res + "ms");
     }
  }
 

@@ -1,11 +1,8 @@
 package ucm.appmenus.entities;
 
-import static android.provider.Settings.System.DATE_FORMAT;
-
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,9 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -30,7 +24,7 @@ import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.OpenStreetMap;
 import ucm.appmenus.utils.Precios;
-import ucm.appmenus.utils.WebScrapping;
+import ucm.appmenus.utils.WebScraping;
 
 public class Restaurante implements Parcelable {
 
@@ -51,7 +45,7 @@ public class Restaurante implements Parcelable {
     private final MutableLiveData<List<Resenia>> listaResenias;
 
     //Utilizado para hacer webscrapping y poder cargar datos extra cuando se accede a la vista con detalles
-    private final WebScrapping ws;
+    private final WebScraping ws;
 
     public Restaurante(String idRestaurante, String nombre, String url, String direccion, double lat, double lon,
                        int distanciaEnMetros, int telefono, String horarios, double valoracion, ArrayList<String> filtrosIni){
@@ -76,7 +70,7 @@ public class Restaurante implements Parcelable {
         this.listaFiltros = new MutableLiveData<>(filtrosAux);
 
         //Importante que vaya despues de iniciar los filtros
-        ws = new WebScrapping(url, listaFiltros, listaImagenes, precios);
+        ws = new WebScraping(url, listaFiltros, listaImagenes, precios);
         if(url != null){
             ws.setFiltros(filtrosBasicos());
             ws.setImagenPrincipal();
@@ -196,7 +190,7 @@ public class Restaurante implements Parcelable {
         listaResenias = new MutableLiveData<>(new ArrayList<>());
         listaFiltros = new MutableLiveData<>(new HashSet<>(in.createStringArrayList()));
         listaFiltrosBD = new MutableLiveData<>(new HashSet<>());
-        ws = new WebScrapping(url, listaFiltros, listaImagenes, precios);
+        ws = new WebScraping(url, listaFiltros, listaImagenes, precios);
     }
 
     public static final Creator<Restaurante> CREATOR = new Creator<Restaurante>() {

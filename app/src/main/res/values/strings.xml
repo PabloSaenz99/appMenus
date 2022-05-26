@@ -28,4 +28,8 @@
     <string name="aperturaDesconocida">Desconocido</string>
     <string name="aperturaCerrado">Cerrado</string>
     <string name="aperturaAbierto">Abierto</string>
+
+    <!--Patterns reges web scraping precios-->
+    <string name="PatternBusquedaEuros">\\d+(,|.)\\d+€</string>
+    <string name="PatternBusquedaDolares">\\$\\d+(,|.)\\d+</string>
 </resources>
