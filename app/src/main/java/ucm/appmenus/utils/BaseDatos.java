@@ -1,5 +1,7 @@
 package ucm.appmenus.utils;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
@@ -206,6 +208,14 @@ public class BaseDatos {
                 }
             }
         });
+    }
+
+    public void cambiarNombreUsuario(String nombre){
+        databaseUsuarios.child("usuarioNombre").setValue(nombre);
+    }
+
+    public void cambiarPassword(String password){
+        FirebaseAuth.getInstance().getCurrentUser().updatePassword(password);
     }
 
     private Resenia parseResenia(DataSnapshot res) {

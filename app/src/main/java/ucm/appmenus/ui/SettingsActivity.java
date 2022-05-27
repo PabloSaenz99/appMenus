@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.login.LoginActivity;
+import ucm.appmenus.utils.BaseDatos;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -108,9 +109,7 @@ public class SettingsActivity extends AppCompatActivity {
             }else if(!newPasswordConfirm.getText().toString().equals(newPassword.getText().toString())){
                 Toast.makeText(view.getContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
             }else{
-                //TODO do something
-
-
+                BaseDatos.getInstance().cambiarPassword(newPassword.getText().toString());
                 dialog.dismiss();
             }
 
@@ -156,7 +155,7 @@ public class SettingsActivity extends AppCompatActivity {
         changeNameButton.setOnClickListener(view -> {
             if (newName.getText().toString().equals("")) {
 
-                Toast.makeText(view.getContext(), "Tienes que poner algo",
+                Toast.makeText(view.getContext(), "Tienes que poner un nombre",
                         Toast.LENGTH_LONG).show();
 
             } else if (newName.getText().toString().matches("\\d+")) {
@@ -164,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(), "El nombre no puede tener números",
                         Toast.LENGTH_LONG).show();
             } else {
-                //TODO do something
+                BaseDatos.getInstance().cambiarNombreUsuario(newName.getText().toString());
                 dialog.dismiss();
             }
         });
