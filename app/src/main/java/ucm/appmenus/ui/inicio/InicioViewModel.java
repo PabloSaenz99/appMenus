@@ -15,7 +15,7 @@ import ucm.appmenus.utils.Constantes;
  * */
 public class InicioViewModel extends ViewModel {
 
-    private static MutableLiveData<ArrayList<Restaurante>> restaurantes;
+    private static MutableLiveData<ArrayList<Restaurante>> restaurantes = new MutableLiveData<>(new ArrayList<>());
 
     public InicioViewModel() {
         restaurantes = new MutableLiveData<ArrayList<Restaurante>>();

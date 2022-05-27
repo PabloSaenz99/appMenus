@@ -51,9 +51,7 @@ public class JSONOpenStreetReader {
                         telefono, horario, 0, filtros));
             }
         }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
+        catch (JSONException ignore) {}
         return restaurantes;
     }
 
@@ -62,10 +60,7 @@ public class JSONOpenStreetReader {
         try {
             JSONObject info = new JSONObject(res).getJSONObject("address");
             dir = getStringFor(info, "road") + ", " + getStringFor(info, "house_number");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        //Log.i("Dir es", dir);
+        } catch (JSONException ignore) {}
         return dir;
     }
 

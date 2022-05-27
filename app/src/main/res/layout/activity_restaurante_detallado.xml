@@ -61,55 +61,30 @@
             android:layout_gravity="center"
             android:theme="@style/RatingBarLong" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filtrosRestauranteRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="70dp"
+            android:scrollbars="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filtrosRestauranteRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:scrollbars="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        </androidx.recyclerview.widget.RecyclerView>
 
-            </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/infoFiltrosBD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Filtros de los usuarios"
+            android:textColor="#FF9800"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/infoFiltrosBD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Filtros de los usuarios"
-                android:textColor="#FF9800"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/filtrosRestauranteRecycler" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filtrosBDRestauranteRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:scrollbars="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/infoFiltrosBD" />
-
-            <ProgressBar
-                android:id="@+id/progressBarFiltros"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/infoFiltrosBD" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filtrosBDRestauranteRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:scrollbars="vertical" />
 
         <TextView
             android:id="@+id/webRestaurante"

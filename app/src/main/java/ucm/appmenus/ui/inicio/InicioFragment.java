@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -32,11 +33,12 @@ import ucm.appmenus.utils.OrdenarRestaurantes;
 public class InicioFragment extends Fragment {
 
     private MainActivity mainActivity;
-    private RecyclerAdapter recyclerAdapter;
+    private RecyclerAdapter<ViewHolderRestaurantes, Restaurante> recyclerAdapter;
 
-    private TextView filtrosAplicados;
+    private TextView filtrosAplicados, textViewNoLocalInfo;
     private InicioViewModel inicioViewModel;
     private View root;
+    private ProgressBar progressBar;
 
     //TODO: seguir este tutorial: https://androidwave.com/fragment-communication-using-viewmodel/
 
@@ -47,56 +49,21 @@ public class InicioFragment extends Fragment {
 
         inicioViewModel = new ViewModelProvider(getActivity()).get(InicioViewModel.class);
         this.root = inflater.inflate(R.layout.fragment_inicio, container, false);
-
-        root.findViewById(R.id.progressBarInicio).setVisibility(View.VISIBLE);
-        filtrosAplicados = root.findViewById(R.id.descripcionFiltrosAplicados);
-
-        //Usado para no hacer la busqueda cada vez que se abre el fragment
-        //Si es distinto de null, es que en algun momento se han cargado restaurantes o que hay que cargarlos.
-        if(getArguments() != null){
-            /*Si esta marcado, significa que se ha llegado a este fragment desde el boton de "filtrar"
-            en el fragment de filtros, por lo tanto hay que realizar una bsuqueda en OpenStreetMap
-            con dichos filtros (guardados en getArguments() mediante un Bundle)*/
-            if(getArguments().getBoolean(Constantes.ACTUALIZAR_INTENT)) {
-                //Usado para cargar los datos de OpenStreetMap (ver funciones para mas informacion)
-                OpenStreetMap osm = new OpenStreetMap();
-                osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
-                        getArguments().getStringArrayList(Constantes.TIPOS_DIETA),
-                        getArguments().getStringArrayList(Constantes.TIPOS_LOCAL),
-                        getArguments().getStringArrayList(Constantes.TIPOS_COCINA),
-                        getArguments().getInt(Constantes.AREA),
-                        Usuario.getUsuario().getLocalizacion().latitude,
-                        Usuario.getUsuario().getLocalizacion().longitude));
-            }
-
-            /*Sino, significa que se ha llegado a este fragmento mediante swipe desde uno de los otros fragmentos,
-            pero previamente se habia realizado una busqueda y por lo tanto se recuperan los datos guardados
-            en saveInstanceState mediante la funcion onSaveInstanceState(@NonNull Bundle outState)*/
-            else{
-                inicioViewModel.getRestaurantes().postValue(
-                        savedInstanceState.<Restaurante>getParcelableArrayList(Constantes.LISTA_RESTAURANTES));
-            }
-            filtrosAplicados.setText("Buscando por: " + getArguments().getString(Constantes.FILTROS_BUSQUEDA));
-        }
-        /*Es la primera vez que se llega a este Fragment, por lo tanto no hay datos prebuscados ni filtros
-        establecidos, asi que se realiza una bsuqueda basica preestablecida*/
-        else {
-            //TODO: Pedir los datos por defecto (los almacenados en la config inicial en un fichero) en vez de estos
-            OpenStreetMap osm = new OpenStreetMap();
-            osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
-                    new ArrayList<>(),
-                    new ArrayList<String>(){{add("restaurant");}},
-                    new ArrayList<>(),
-                    1500,
-                    Usuario.getUsuario().getLocalizacion().latitude,
-                    Usuario.getUsuario().getLocalizacion().longitude));
-        }
+        this.filtrosAplicados = root.findViewById(R.id.descripcionFiltrosAplicados);
+        this.progressBar = root.findViewById(R.id.progressBarInicio);
+        this.textViewNoLocalInfo = root.findViewById(R.id.textViewNoLocal);
 
         //Actualiza el recycler cuando se reciben los datos
         final Observer<ArrayList<Restaurante>> observer = restaurantes -> {
-            root.findViewById(R.id.progressBarInicio).setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
+            if(restaurantes.isEmpty())
+                textViewNoLocalInfo.setVisibility(View.VISIBLE);
+            else
+                textViewNoLocalInfo.setVisibility(View.INVISIBLE);
             recyclerAdapter = RecyclerAdapter.crearRecyclerLineal(restaurantes, ViewHolderRestaurantes.class, R.id.recyclerRestauranteInicio,
                     R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);
+            textViewNoLocalInfo.invalidate();
+            progressBar.invalidate();
         };
         inicioViewModel.getRestaurantes().observe(getActivity(), observer);
 
@@ -114,7 +81,72 @@ public class InicioFragment extends Fragment {
                     R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);
         });
 
+        resetVistasDeInformacion();
+
+        //Usado para no hacer la busqueda cada vez que se abre el fragment
+        //Si es distinto de null, es que en algun momento se han cargado restaurantes o que hay que cargarlos.
+        if(getArguments() != null){
+            if(getArguments().getBoolean(Constantes.ACTUALIZAR_INTENT)) {
+                /*Si esta marcado, significa que se ha llegado a este fragment desde el boton de "filtrar"
+                en el fragment de filtros, por lo tanto hay que realizar una bsuqueda en OpenStreetMap
+                con dichos filtros (guardados en getArguments() mediante un Bundle)*/
+                busquedaFiltros();
+            }
+            else{
+                 /*Sino, significa que se ha llegado a este fragmento mediante swipe desde uno de los otros fragmentos,
+                pero previamente se habia realizado una busqueda y por lo tanto se recuperan los datos guardados
+                en saveInstanceState mediante la funcion onSaveInstanceState(@NonNull Bundle outState)*/
+                /*resetVistasDeInformacion();
+                inicioViewModel.getRestaurantes().postValue(
+                        savedInstanceState.getParcelableArrayList(Constantes.LISTA_RESTAURANTES));
+                 */
+            }
+            filtrosAplicados.setText("Buscando por: " + getArguments().getString(Constantes.FILTROS_BUSQUEDA));
+        }
+        else {
+            /*Es la primera vez que se llega a este Fragment, por lo tanto no hay datos prebuscados ni filtros
+            establecidos, asi que se realiza una bsuqueda basica preestablecida*/
+            if(inicioViewModel.getRestaurantes().getValue() == null)
+                busquedaBasica();
+            else
+                progressBar.setVisibility(View.INVISIBLE);
+        }
         return root;
+    }
+
+    /**
+     * Como el observer de los restaurantes se llama al instanciarlo, automaticamente se oculta la
+     * progressbar y se muestra la info de no local, asi que aqui las pongo como al inicio
+     */
+    private void resetVistasDeInformacion(){
+        progressBar.setVisibility(View.VISIBLE);
+        textViewNoLocalInfo.setVisibility(View.INVISIBLE);
+    }
+
+    private void busquedaFiltros(){
+        inicioViewModel.getRestaurantes().getValue().clear();
+        resetVistasDeInformacion();
+        //Usado para cargar los datos de OpenStreetMap (ver funciones para mas informacion)
+        OpenStreetMap osm = new OpenStreetMap();
+        osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
+                getArguments().getStringArrayList(Constantes.TIPOS_DIETA),
+                getArguments().getStringArrayList(Constantes.TIPOS_LOCAL),
+                getArguments().getStringArrayList(Constantes.TIPOS_COCINA),
+                getArguments().getInt(Constantes.AREA),
+                Usuario.getUsuario().getLocalizacion().latitude,
+                Usuario.getUsuario().getLocalizacion().longitude));
+    }
+
+    private void busquedaBasica(){
+        //TODO: Pedir los datos por defecto (los almacenados en la config inicial en un fichero) en vez de estos
+        OpenStreetMap osm = new OpenStreetMap();
+        osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(
+                new ArrayList<>(),
+                new ArrayList<String>(){{add("restaurant");}},
+                new ArrayList<>(),
+                1500,
+                Usuario.getUsuario().getLocalizacion().latitude,
+                Usuario.getUsuario().getLocalizacion().longitude));
     }
 
     /**
