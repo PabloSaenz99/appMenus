@@ -36,47 +36,51 @@ public class Localizacion {
 
     private FusedLocationProviderClient fusedLocationClient;
 
+    public boolean actualizar;
     public double longitude;
     public double latitude;
 
     public Localizacion(MainActivity mainActivity){
+        this.actualizar = true;
         this.mainActivity = mainActivity;
         this.context = this.mainActivity.getApplicationContext();
         actualizarLocalizacion();
+        Log.i("loc", "long: " + longitude + ". lat:" + latitude);
     }
 
     @SuppressLint("MissingPermission")
     public void actualizarLocalizacion(){
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+        if(actualizar) {    //En caso de que se haya establecido una ubicacion por defecto no se actualiza
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
-        if (checkPermissions()) {
-            // check if location is enabled
-            if (isLocationEnabled()) {
-                final LocationManager lm = (LocationManager) mainActivity.getSystemService(Context.LOCATION_SERVICE);
-                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if(location != null) {
-                    longitude = location.getLongitude();//-122.0040131;//-122.0965848;//location.getLongitude();
-                    latitude = location.getLatitude();//37.3891201;//37.3943617;//location.getLatitude();
-                }
-                else{
-                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
-                        @Override
-                        public void onLocationChanged(@NonNull Location location) {
-                            longitude = location.getLongitude();
-                            latitude = location.getLatitude();
-                            lm.removeUpdates(this);
-                        }
-                    });
+            if (checkPermissions()) {
+                // check if location is enabled
+                if (isLocationEnabled()) {
+                    final LocationManager lm = (LocationManager) mainActivity.getSystemService(Context.LOCATION_SERVICE);
+                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    if (location != null) {
+                        longitude = location.getLongitude();//-122.0040131;//-122.0965848;//location.getLongitude();
+                        latitude = location.getLatitude();//37.3891201;//37.3943617;//location.getLatitude();
+                    } else {
+                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+                            @Override
+                            public void onLocationChanged(@NonNull Location location) {
+                                longitude = location.getLongitude();
+                                latitude = location.getLatitude();
+                                lm.removeUpdates(this);
+                            }
+                        });
+                    }
+                } else {
+                    Toast.makeText(context, "Por favor permitenos utilizar la localizacion", Toast.LENGTH_LONG).show();
+                    //Va mal en android 10
+                    //Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    //mainActivity.startActivity(intent);
                 }
             } else {
-                Toast.makeText(context, "Por favor permitenos utilizar la localizacion", Toast.LENGTH_LONG).show();
-                //Va mal en android 10
-                //Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                //mainActivity.startActivity(intent);
+                // if permissions aren't available, request for permissions
+                requestPermissions();
             }
-        } else {
-            // if permissions aren't available, request for permissions
-            requestPermissions();
         }
     }
 

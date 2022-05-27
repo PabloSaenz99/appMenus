@@ -58,8 +58,6 @@ public class InicioFragment extends Fragment {
             en el fragment de filtros, por lo tanto hay que realizar una bsuqueda en OpenStreetMap
             con dichos filtros (guardados en getArguments() mediante un Bundle)*/
             if(getArguments().getBoolean(Constantes.ACTUALIZAR_INTENT)) {
-                //Actualizar la localizacion con la posicion actual
-                Usuario.getUsuario().getLocalizacion().actualizarLocalizacion();
                 //Usado para cargar los datos de OpenStreetMap (ver funciones para mas informacion)
                 OpenStreetMap osm = new OpenStreetMap();
                 osm.setPlaces(inicioViewModel.getRestaurantes(), new OpenStreetMap.OpenStreetAttributes(

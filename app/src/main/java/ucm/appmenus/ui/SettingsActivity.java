@@ -44,6 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
         Button botonCambiarContrasena = findViewById(R.id.changePassword);
         Button botonCambiarNombre = findViewById(R.id.changeName);
         Button botonCambiarLocalizacion = findViewById(R.id.changeLocation);
+        Button botonRestablecerLocalizacion = findViewById(R.id.restoreLocation);
         Button botonBorrarDatos = findViewById(R.id.deleteData);
         Button botonBorrarCuenta = findViewById(R.id.deleteAccount);
 
@@ -59,6 +60,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         botonCambiarLocalizacion.setOnClickListener(view -> {
             changeLocation();
+        });
+
+        botonRestablecerLocalizacion.setOnClickListener(view -> {
+            Usuario.getUsuario().getLocalizacion().actualizar = true;
+            Usuario.getUsuario().getLocalizacion().actualizarLocalizacion();
         });
 
         botonBorrarDatos.setOnClickListener(view -> {
@@ -204,7 +210,6 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     private void changeLocation() {
-
         dialogBuilder = new AlertDialog.Builder(this);
         final View changeLocationView = getLayoutInflater().inflate(R.layout.pop_up_location, null);
         latitude = (EditText) changeLocationView.findViewById(R.id.latitude);
@@ -220,13 +225,15 @@ public class SettingsActivity extends AppCompatActivity {
             if (latitude.getText().toString().equals("") || longitude.getText().toString().equals("")) {
                 Toast.makeText(view.getContext(), "Hay algún campo vacío", Toast.LENGTH_LONG).show();
 
-            } else if (latitude.getText().toString().matches("^[0-9,.]+$")
-                    || longitude.getText().toString().matches("^[0-9,.]+$")) {
+            } else if (!latitude.getText().toString().matches("^-*[0-9]+\\.[0-9]+$") //Reges antiguo: ^[0-9,.]+$
+                    || !longitude.getText().toString().matches("^-*[0-9]+\\.[0-9]+$")) {
                 Toast.makeText(view.getContext(), "No es una localización válida", Toast.LENGTH_LONG).show();
-
             } else {
-                //TODO do something
-
+                Usuario.getUsuario().getLocalizacion().actualizar = false;
+                Usuario.getUsuario().getLocalizacion().latitude = Double.parseDouble(latitude.getText().toString());
+                Usuario.getUsuario().getLocalizacion().longitude = Double.parseDouble(longitude.getText().toString());
+                Toast.makeText(view.getContext(), "Localización cambiada a " +
+                        latitude.getText().toString() + " " + longitude.getText().toString(), Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         });

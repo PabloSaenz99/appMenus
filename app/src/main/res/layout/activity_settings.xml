@@ -95,6 +95,17 @@
             />
 
         <Button
+            android:id="@+id/restoreLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Restablecer localización"
+            android:textColor="@color/black"
+            android:backgroundTint="#E6E5E5"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
+            />
+
+        <Button
             android:id="@+id/deleteData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

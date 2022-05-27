@@ -2,12 +2,11 @@ package ucm.appmenus.ui.perfil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -20,14 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ucm.appmenus.R;
+import ucm.appmenus.entities.Restaurante;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.login.LoginActivity;
-import ucm.appmenus.login.RegistroActivity;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderResenia;
 import ucm.appmenus.recyclers.ViewHolderRestaurantes;
 import ucm.appmenus.ui.SettingsActivity;
-import ucm.appmenus.ui.filtros.FiltrosFragment;
 import ucm.appmenus.utils.Constantes;
 
 public class PerfilFragment extends Fragment {

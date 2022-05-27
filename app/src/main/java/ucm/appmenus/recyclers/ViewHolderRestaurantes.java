@@ -1,6 +1,7 @@
 package ucm.appmenus.recyclers;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -62,12 +63,10 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         Usuario usuario = Usuario.getUsuario();
 
         favorito.setOnClickListener(v -> {
-
             if(usuario.getEmail().equals(Constantes.EMAIL_INVITADO)){
                 favorito.setChecked(false);
                 Toast.makeText(view.getContext(), Constantes.NECESARIO_LOGIN, Toast.LENGTH_LONG).show();
             }else{
-
                 if(favorito.isChecked()) {
                     Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
                             Toast.LENGTH_LONG).show();
@@ -174,5 +173,10 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         Intent intent = new Intent(view.getContext(), RestauranteDetalladoActivity.class);
         intent.putExtra(Constantes.RESTAURANTE, restaurante);
         view.getContext().startActivity(intent);
+    }
+
+    public void setVistaFavorito(){
+        Log.i("DSadsa", "favooooo");
+        this.favorito.setChecked(true);
     }
 }

@@ -24,6 +24,7 @@ import java.util.Set;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.recyclers.RecyclerAdapter;
 import ucm.appmenus.recyclers.ViewHolderFiltros;
 import ucm.appmenus.ui.inicio.AniadirFiltrosActivity;
@@ -157,10 +158,9 @@ public class FiltrosFragment extends Fragment {
 
         Activity act = getActivity();
         if(act instanceof MainActivity) { //abre el fragment de inicio en modo busqueda (ahi se realiza la busqueda en OpenStreetMap)
+            Usuario.getUsuario().getLocalizacion().actualizarLocalizacion();    //Actualiza la localizacion
             //Guarda los filtros de la busqueda en un bundle
             Bundle b = new Bundle();
-            Log.i("res", Constantes.traducirAlEsp(tiposLocal).toString());
-            Log.i("res2", tiposLocal.toString());
             b.putStringArrayList(Constantes.TIPOS_DIETA, Constantes.traducirAlIngles(tiposDieta));
             b.putStringArrayList(Constantes.TIPOS_LOCAL, Constantes.traducirAlIngles(tiposLocal));
             b.putStringArrayList(Constantes.TIPOS_COCINA, Constantes.traducirAlIngles(tiposCocina));
