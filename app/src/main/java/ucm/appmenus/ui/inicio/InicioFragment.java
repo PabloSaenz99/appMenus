@@ -92,15 +92,6 @@ public class InicioFragment extends Fragment {
                 con dichos filtros (guardados en getArguments() mediante un Bundle)*/
                 busquedaFiltros();
             }
-            else{
-                 /*Sino, significa que se ha llegado a este fragmento mediante swipe desde uno de los otros fragmentos,
-                pero previamente se habia realizado una busqueda y por lo tanto se recuperan los datos guardados
-                en saveInstanceState mediante la funcion onSaveInstanceState(@NonNull Bundle outState)*/
-                /*resetVistasDeInformacion();
-                inicioViewModel.getRestaurantes().postValue(
-                        savedInstanceState.getParcelableArrayList(Constantes.LISTA_RESTAURANTES));
-                 */
-            }
             filtrosAplicados.setText("Buscando por: " + getArguments().getString(Constantes.FILTROS_BUSQUEDA));
         }
         else {

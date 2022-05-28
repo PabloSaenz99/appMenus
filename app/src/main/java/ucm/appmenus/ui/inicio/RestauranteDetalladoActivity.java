@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
@@ -53,8 +55,6 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         TextView horario = findViewById(R.id.horarioRestaurante);
         Button botonResenia = findViewById(R.id.botonAniadirResenia);
         Button botonFiltros = findViewById(R.id.botonAniadirFiltros);
-        findViewById(R.id.progressBarImagenes).setVisibility(View.VISIBLE);
-        findViewById(R.id.progressBarFiltros).setVisibility(View.VISIBLE);
 
         nombre.setText(restaurante.getNombre());
         url.setText(restaurante.getStringURL());
@@ -84,15 +84,17 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
 
         //Recycler filtros BD
         final Observer<Set<String>> observerFiltrosBD = filtros -> {
+            Log.i("filtros", filtros.toString());
             RecyclerAdapter.crearRecyclerGrid(
                     FiltrosFragment.transform(Constantes.traducirAlEsp(filtros), false), ViewHolderFiltros.class,
                     R.id.filtrosBDRestauranteRecycler, R.layout.recycler_filtros, v, 3);
-            findViewById(R.id.progressBarFiltros).setVisibility(View.INVISIBLE);
-            if(filtros.isEmpty()) {
-                findViewById(R.id.infoFiltrosBD).setVisibility(View.INVISIBLE);
-            }
-            else {
+            if (filtros.isEmpty()) {
+                Log.i("dsadsa", "no hay");
+                findViewById(R.id.filtrosBDRestauranteRecycler).setVisibility(View.GONE);
+                findViewById(R.id.infoFiltrosBD).setVisibility(View.GONE);
+            } else {
                 findViewById(R.id.infoFiltrosBD).setVisibility(View.VISIBLE);
+                findViewById(R.id.filtrosBDRestauranteRecycler).setVisibility(View.VISIBLE);
             }
         };
         restaurante.getLivedataFiltrosBD().observe(this, observerFiltrosBD);
@@ -101,7 +103,10 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         final Observer<List<Bitmap>> observerImagenes = img -> {
             RecyclerAdapter.crearRecyclerLineal(img, ViewHolderImagenes.class, R.id.recyclerImagenesRestaurante,
                     R.layout.recycler_imagenes, v, LinearLayoutManager.HORIZONTAL);
-            findViewById(R.id.progressBarImagenes).setVisibility(View.INVISIBLE);
+            if(img.isEmpty()){
+                img.add(BitmapFactory.decodeResource(getResources(), R.drawable.no_image));
+            }
+            Log.i("IMAGENES", img.toString() + findViewById(R.id.recyclerImagenesRestaurante).getVisibility());
         };
         restaurante.getliveDataImagen().observe(this, observerImagenes);
 
