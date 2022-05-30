@@ -41,14 +41,6 @@ public class ViewHolderResenia  extends RecyclerView.ViewHolder implements IRecl
         creador.setText(res.getUsuarioNombre());
         texto.setText(res.getDescripcion());
         valoracion.setRating((float) res.getValoracion());
-        valoracion.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float value, boolean b) {
-                resenia.setValoracion(value);
-                BaseDatos.getInstance().setValoracionRestaurante(resenia.getIdRestaurante(), value);
-                BaseDatos.getInstance().addResenia(resenia);
-            }
-        });
     }
 
     @Override

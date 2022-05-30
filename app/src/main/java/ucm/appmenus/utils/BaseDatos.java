@@ -1,6 +1,7 @@
 package ucm.appmenus.utils;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -59,19 +62,27 @@ public class BaseDatos {
      * Añade una reseña a la Base de Datos. Se añade una nueva entrada en Reseñas y se añade su id en el
      * restaurante al cual pertenece y en el usaurio que la creó.
      * Los objetos activos actualmente en la app no se modifican.
+     *
      * @param resenia la reseña a añadir
+     * @param reseniasList la lista con todas las reseñas del usuario (incluyendo esta)
      */
-    public void addResenia(Resenia resenia){
+    public void addResenia(Resenia resenia, Set<Resenia> reseniasList){
         long ini = System.nanoTime();
         //TODO: añadir tiempo Log.i("BD", Calendar.getInstance().getTime().toString());
         databaseResenias.child(resenia.getIdResenia()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(!snapshot.exists()){                      //No existe una reseña, por lo que se añade a todas partes
-                    databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).push().setValue(resenia.getIdResenia());
-                    databaseUsuarios.child(RESENIAS).push().setValue(resenia.getIdResenia());
+                    databaseRestaurantes.child(resenia.getIdRestaurante()).removeValue();
+                    databaseResenias.child(resenia.getIdResenia()).removeValue();
                 }
-                databaseResenias.child(resenia.getIdResenia()).setValue(resenia);
+                Set<String> idResenias = new HashSet<>();
+                for (Resenia r: reseniasList)
+                    idResenias.add(r.getIdResenia());
+
+                databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).push().setValue(resenia.getIdResenia());
+                databaseResenias.child(resenia.getIdResenia()).setValue(resenia);;
+                databaseUsuarios.child(RESENIAS).setValue(new ArrayList<>(idResenias));
                 MainActivity.medirTiempo("Añadir reseña", ini, System.nanoTime());
             }
             @Override

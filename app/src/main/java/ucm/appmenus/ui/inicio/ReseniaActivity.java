@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
+import java.util.ArrayList;
+
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Resenia;
 import ucm.appmenus.entities.Usuario;
@@ -54,8 +56,8 @@ public class ReseniaActivity extends AppCompatActivity {
             if(resenia != null) {
                 Usuario.getUsuario().removeResenia(resenia);
             }
-            BaseDatos.getInstance().addResenia(r);
             Usuario.getUsuario().addResenia(r);
+            BaseDatos.getInstance().addResenia(r, Usuario.getUsuario().getResenias());
             finish();
         });
     }
