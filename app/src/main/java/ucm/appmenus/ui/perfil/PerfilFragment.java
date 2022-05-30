@@ -68,7 +68,6 @@ public class PerfilFragment extends Fragment {
             //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
             email.setText(usuario.getEmail());
             nombre.setText(usuario.getNombre());
-
         }
 
         botonResenias.setOnClickListener(view -> {
@@ -86,9 +85,7 @@ public class PerfilFragment extends Fragment {
         });
 
         botonCerrarSesion.setOnClickListener(view -> {
-            Usuario.cerrarSesion(getActivity());
-            startActivity(new Intent(root.getContext(), LoginActivity.class));
-            getActivity().finish();
+            Usuario.cerrarSesion();
         });
 
         settings.setOnClickListener(v ->{

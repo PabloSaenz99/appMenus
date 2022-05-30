@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 loginInfo.getString(Constantes.ID_USUARIO, "error"),
                 loginInfo.getString(Constantes.EMAIL_USUARIO, "Error"),
                 new Localizacion(this));
-        BaseDatos.getInstance().setDatosUsuario();
 
         //Importante que esté después del login de usuario o lanzará nullpointer
         //TODO: PONER AFTERLOGIN UNA VEZ

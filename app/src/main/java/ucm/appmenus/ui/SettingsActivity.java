@@ -80,12 +80,8 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         botonCerrarSesion.setOnClickListener(view -> {
-            Usuario.cerrarSesion(this);
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
+            Usuario.cerrarSesion();
         });
-
-
     }
 
 

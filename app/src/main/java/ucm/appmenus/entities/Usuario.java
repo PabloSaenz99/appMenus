@@ -2,6 +2,7 @@ package ucm.appmenus.entities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -13,6 +14,8 @@ import java.util.List;
 
 import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.login.LoginActivity;
+import ucm.appmenus.utils.BaseDatos;
 import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Localizacion;
 
@@ -41,15 +44,16 @@ public class Usuario {
 
     /**
      * Cierra la sesion actual del usuario y borra el login guardado en el dispositivo.
-     * Crea una nueva sesion como invitado.
+     * Abre la pantalla de login.
      */
-    public static void cerrarSesion(Activity activity) {
+    public static void cerrarSesion() {
         SharedPreferences sp = MainActivity.getInstance().getSharedPreferences(
-                activity.getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
+                MainActivity.getInstance().getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
         sp.edit().clear().commit();
 
         instance = null;
-        crearUsuario(Constantes.ID_INVITADO, Constantes.EMAIL_INVITADO, new Localizacion(MainActivity.getInstance()));
+        MainActivity.getInstance().startActivity(new Intent(MainActivity.getInstance(), LoginActivity.class));
+        MainActivity.getInstance().finish();
     }
 
     /**
@@ -80,6 +84,8 @@ public class Usuario {
         this.resenias = resenias;
         this.restaurantesFavoritos = favoritos;
         this.preferencias = preferencias;
+
+        BaseDatos.getInstance().setDatosUsuario();
     }
 
     public String getIdUsuario() { return idUsuario; }

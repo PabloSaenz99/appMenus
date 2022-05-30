@@ -253,7 +253,7 @@ public class BaseDatos {
         databaseUsuarios.removeValue();
         FirebaseAuth.getInstance().getCurrentUser().delete().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                Usuario.cerrarSesion(activity);
+                Usuario.cerrarSesion();
             }
         });
     }
