@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -26,9 +28,8 @@ public class Usuario {
 
     private final String idUsuario;
     private final String email;
-    private String nombre;
+    private MutableLiveData<String> nombre;
     private final Localizacion localizacion;
-    private final String imagenDir;
     private final HashSet<Resenia> resenias;
     private final HashSet<Restaurante> restaurantesFavoritos;
     private ArrayList<String> preferencias;
@@ -69,30 +70,29 @@ public class Usuario {
             HashSet<Restaurante> favoritos = new HashSet<>();
             HashSet<Resenia> resenias = new HashSet<>();
             ArrayList<String> preferencias = new ArrayList<>();
-            instance = new Usuario(idUsuario, email, loc, imagen, favoritos, resenias, preferencias);
+            instance = new Usuario(idUsuario, email, loc, favoritos, resenias, preferencias);
         }
         return instance;
     }
 
     private Usuario(String idUsuario, String email, Localizacion localizacion,
-                    String imagenDir, HashSet<Restaurante> favoritos,
-                    HashSet<Resenia> resenias, ArrayList<String> preferencias) {
+                    HashSet<Restaurante> favoritos, HashSet<Resenia> resenias,
+                    ArrayList<String> preferencias) {
         this.idUsuario = idUsuario;
         this.email = email;
         this.localizacion = localizacion;
-        this.imagenDir = imagenDir;
         this.resenias = resenias;
         this.restaurantesFavoritos = favoritos;
         this.preferencias = preferencias;
+        this.nombre = new MutableLiveData<>();
 
         BaseDatos.getInstance().setDatosUsuario();
     }
 
     public String getIdUsuario() { return idUsuario; }
     public String getEmail() { return email; }
-    public String getNombre() { return nombre; }
+    public MutableLiveData<String> getNombre() { return nombre; }
     public Localizacion getLocalizacion() { return localizacion; }
-    public String getImagenDir() { return imagenDir; }
     public HashSet<Resenia> getResenias() { return resenias; }
     public HashSet<Restaurante> getRestaurantesFavoritos() { return restaurantesFavoritos; }
     public ArrayList<String> getPreferencias() { return preferencias; }
@@ -104,7 +104,7 @@ public class Usuario {
         return res;
     }
 
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setNombre(String nombre) { this.nombre.postValue(nombre); }
     public void addPreferencias(String pref) { preferencias.add(pref); }
     public void addRestauranteFavorito(Restaurante r){ restaurantesFavoritos.add(r); }
     public void addResenia(Resenia r){ resenias.add(r); }

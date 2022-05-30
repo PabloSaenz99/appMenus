@@ -12,6 +12,7 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,7 +68,8 @@ public class PerfilFragment extends Fragment {
         }else{
             //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
             email.setText(usuario.getEmail());
-            nombre.setText(usuario.getNombre());
+            final Observer<String> observer = nombre::setText;
+            Usuario.getUsuario().getNombre().observe(getActivity(), observer);
         }
 
         botonResenias.setOnClickListener(view -> {

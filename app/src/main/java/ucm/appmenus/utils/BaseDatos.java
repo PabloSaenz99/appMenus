@@ -236,7 +236,7 @@ public class BaseDatos {
     public void borrarDatos(Activity activity){
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("usuarioId", Usuario.getUsuario().getIdUsuario());
-        hashMap.put("usuarioNombre", Usuario.getUsuario().getNombre());
+        hashMap.put("usuarioNombre", Usuario.getUsuario().getNombre().getValue());
         hashMap.put("usuarioEmail", Usuario.getUsuario().getEmail());
         databaseUsuarios.setValue(hashMap).addOnCompleteListener(task -> {
             if(task.isSuccessful()) {

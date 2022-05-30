@@ -48,7 +48,7 @@ public class ReseniaActivity extends AppCompatActivity {
 
         Button crearResenia = findViewById(R.id.botonCrearResenia);
         crearResenia.setOnClickListener(view -> {
-            Resenia r = new Resenia(idRestaurante, Usuario.getUsuario().getIdUsuario(), Usuario.getUsuario().getNombre(),
+            Resenia r = new Resenia(idRestaurante, Usuario.getUsuario().getIdUsuario(), Usuario.getUsuario().getNombre().getValue(),
                     titulo.getText().toString(), descripcion.getText().toString(), valoracion.getRating());
 
             if(resenia != null) {
