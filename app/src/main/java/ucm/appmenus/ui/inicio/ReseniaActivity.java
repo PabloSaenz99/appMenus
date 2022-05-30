@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -50,15 +51,20 @@ public class ReseniaActivity extends AppCompatActivity {
 
         Button crearResenia = findViewById(R.id.botonCrearResenia);
         crearResenia.setOnClickListener(view -> {
-            Resenia r = new Resenia(idRestaurante, Usuario.getUsuario().getIdUsuario(), Usuario.getUsuario().getNombre().getValue(),
-                    titulo.getText().toString(), descripcion.getText().toString(), valoracion.getRating());
-
-            if(resenia != null) {
-                Usuario.getUsuario().removeResenia(resenia);
+            if(titulo.getText().toString().length() > 50 || descripcion.getText().toString().length() > 350){
+                Toast.makeText(this, "El título no puede tener más de 50 caracteres y la descripción 350", Toast.LENGTH_SHORT).show();
             }
-            Usuario.getUsuario().addResenia(r);
-            BaseDatos.getInstance().addResenia(r, Usuario.getUsuario().getResenias());
-            finish();
+            else {
+                Resenia r = new Resenia(idRestaurante, Usuario.getUsuario().getIdUsuario(), Usuario.getUsuario().getNombre().getValue(),
+                        titulo.getText().toString(), descripcion.getText().toString(), valoracion.getRating());
+
+                if (resenia != null) {
+                    Usuario.getUsuario().removeResenia(resenia);
+                }
+                Usuario.getUsuario().addResenia(r);
+                BaseDatos.getInstance().addResenia(r, Usuario.getUsuario().getResenias());
+                finish();
+            }
         });
     }
 }

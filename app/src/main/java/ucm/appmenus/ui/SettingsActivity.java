@@ -151,14 +151,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         changeNameButton.setOnClickListener(view -> {
             if (newName.getText().toString().equals("")) {
-
-                Toast.makeText(view.getContext(), "Tienes que poner un nombre",
+                Toast.makeText(view.getContext(), "Tienes que poner un nombre.",
                         Toast.LENGTH_LONG).show();
-
             } else if (newName.getText().toString().matches("\\d+")) {
-
-                Toast.makeText(view.getContext(), "El nombre no puede tener números",
+                Toast.makeText(view.getContext(), "El nombre no puede tener números.",
                         Toast.LENGTH_LONG).show();
+            } else if(newName.length() > 20){
+                Toast.makeText(view.getContext(), "El nombre no puede tener más de 20 caracteres.", Toast.LENGTH_SHORT).show();
             } else {
                 BaseDatos.getInstance().cambiarNombreUsuario(newName.getText().toString(), MainActivity.getInstance());
                 dialog.dismiss();

@@ -81,7 +81,10 @@ public class RegistroActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(nombre) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                     Toast.makeText(RegistroActivity.this, "todos los campos son requeridos", Toast.LENGTH_SHORT).show();
                 } else {
-                    registerUser(nombre, email, password);
+                    if(nombre.length() > 20)
+                        Toast.makeText(RegistroActivity.this, "El nombre no puede contener más de 20 caracteres.", Toast.LENGTH_SHORT).show();
+                    else
+                        registerUser(nombre, email, password);
                 }
             }
         });
