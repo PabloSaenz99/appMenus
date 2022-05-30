@@ -27,6 +27,7 @@ public class Constantes {
     public static final String RESTAURANTE = "Restaurante";
     public static final String RESENIA = "Resenia";
 
+    public static final String ID_INVITADO = "WSDLhro9QRcpuTiQ9LT95YaC3N33";
     public static final String EMAIL_INVITADO = "invitado@invitado.es";
     public static final String NOMBRE_INVITADO = "invitado";
     public static final String PASSWORD_INVITADO = "invitado";

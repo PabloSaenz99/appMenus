@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
 import ucm.appmenus.entities.Usuario;
 import ucm.appmenus.login.LoginActivity;
@@ -109,7 +110,7 @@ public class SettingsActivity extends AppCompatActivity {
             }else if(!newPasswordConfirm.getText().toString().equals(newPassword.getText().toString())){
                 Toast.makeText(view.getContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
             }else{
-                BaseDatos.getInstance().cambiarPassword(newPassword.getText().toString());
+                BaseDatos.getInstance().cambiarPassword(newPassword.getText().toString(), MainActivity.getInstance());
                 dialog.dismiss();
             }
 
@@ -163,7 +164,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(), "El nombre no puede tener números",
                         Toast.LENGTH_LONG).show();
             } else {
-                BaseDatos.getInstance().cambiarNombreUsuario(newName.getText().toString());
+                BaseDatos.getInstance().cambiarNombreUsuario(newName.getText().toString(), MainActivity.getInstance());
                 dialog.dismiss();
             }
         });
@@ -190,17 +191,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         deleteButton.setOnClickListener(view -> {
 
-            //TODO
             if (index == 0) {   //Ha elegido borrar los datos
-
-
+                BaseDatos.getInstance().borrarDatos(MainActivity.getInstance());
             } else {            //Ha elegido borrar la cuenta
-
-
+                BaseDatos.getInstance().borrarCuenta(MainActivity.getInstance());
             }
-            //TODO do something
-
-
             dialog.dismiss();
 
         });

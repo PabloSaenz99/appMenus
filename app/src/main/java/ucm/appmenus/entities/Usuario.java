@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import ucm.appmenus.MainActivity;
 import ucm.appmenus.R;
+import ucm.appmenus.utils.Constantes;
 import ucm.appmenus.utils.Localizacion;
 
 public class Usuario {
@@ -39,12 +41,15 @@ public class Usuario {
 
     /**
      * Cierra la sesion actual del usuario y borra el login guardado en el dispositivo.
+     * Crea una nueva sesion como invitado.
      */
     public static void cerrarSesion(Activity activity) {
-        instance = null;
-        SharedPreferences sp = activity.getSharedPreferences(
+        SharedPreferences sp = MainActivity.getInstance().getSharedPreferences(
                 activity.getString(R.string.ucm_appmenus_ficherologin), Context.MODE_PRIVATE);
         sp.edit().clear().commit();
+
+        instance = null;
+        crearUsuario(Constantes.ID_INVITADO, Constantes.EMAIL_INVITADO, new Localizacion(MainActivity.getInstance()));
     }
 
     /**
@@ -100,4 +105,9 @@ public class Usuario {
 
     public void removeRestauranteFavorito(Restaurante r){ this.restaurantesFavoritos.remove(r); }
     public void removeResenia(Resenia r) { this.resenias.remove(r); }
+
+    public void borrarDatos(){
+        restaurantesFavoritos.clear();
+        resenias.clear();
+    }
 }

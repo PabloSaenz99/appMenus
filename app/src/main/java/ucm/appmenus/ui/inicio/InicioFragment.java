@@ -151,8 +151,10 @@ public class InicioFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.i("Salvo", "cosas");
-        outState.putParcelableArrayList(Constantes.LISTA_RESTAURANTES, inicioViewModel.getRestaurantes().getValue());
-        outState.putString(Constantes.FILTROS_BUSQUEDA, filtrosAplicados.getText().toString());
+        if(inicioViewModel.getRestaurantes().getValue() != null) {
+            outState.putParcelableArrayList(Constantes.LISTA_RESTAURANTES, inicioViewModel.getRestaurantes().getValue());
+            outState.putString(Constantes.FILTROS_BUSQUEDA, filtrosAplicados.getText().toString());
+        }
     }
 
     /*

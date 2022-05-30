@@ -1,10 +1,12 @@
 package ucm.appmenus.utils;
 
+import android.app.Activity;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -210,12 +212,50 @@ public class BaseDatos {
         });
     }
 
-    public void cambiarNombreUsuario(String nombre){
-        databaseUsuarios.child("usuarioNombre").setValue(nombre);
+    public void cambiarNombreUsuario(String nombre, Activity activity){
+        databaseUsuarios.child("usuarioNombre").setValue(nombre).addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                Usuario.getUsuario().setNombre(nombre);
+                Toast.makeText(activity, "Nombre cambiado correctamente.", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(activity, "Ha habido un error al cambiar el nombre.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    public void cambiarPassword(String password){
-        FirebaseAuth.getInstance().getCurrentUser().updatePassword(password);
+    public void cambiarPassword(String password, Activity activity){
+        FirebaseAuth.getInstance().getCurrentUser().updatePassword(password).addOnCompleteListener(task -> {
+            if(task.isSuccessful())
+                Toast.makeText(activity, "Password cambiada correctamente.", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(activity, "Ha habido un error al cambiar la password", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    public void borrarDatos(Activity activity){
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("usuarioId", Usuario.getUsuario().getIdUsuario());
+        hashMap.put("usuarioNombre", Usuario.getUsuario().getNombre());
+        hashMap.put("usuarioEmail", Usuario.getUsuario().getEmail());
+        databaseUsuarios.setValue(hashMap).addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                Toast.makeText(activity, "Datos borrados correctamente.", Toast.LENGTH_SHORT).show();
+                Usuario.getUsuario().borrarDatos();
+            }
+            else {
+                Toast.makeText(activity, "Ha habido un error al borrar los datos.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void borrarCuenta(Activity activity){
+        databaseUsuarios.removeValue();
+        FirebaseAuth.getInstance().getCurrentUser().delete().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Usuario.cerrarSesion(activity);
+            }
+        });
     }
 
     private Resenia parseResenia(DataSnapshot res) {

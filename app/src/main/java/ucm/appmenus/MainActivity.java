@@ -1,5 +1,6 @@
 package ucm.appmenus;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -27,12 +28,17 @@ public class MainActivity extends AppCompatActivity {
     private Usuario usuario;
     private NavController navController;
 
+    private static MainActivity instance;
+
     /**
      * En principio no hay que hacer nada mas en esta actividad ya que tod0 se hace en los fragments
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        instance = this;
+
         //Loguea al usuario para poder usar sus datos en caso de ser necesarios
         Bundle loginInfo = getIntent().getExtras();
         this.usuario = Usuario.crearUsuario(
@@ -60,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
     public static void medirTiempo(String nombreFunc, long nanoIni, long nanoFin) {
         double res = (nanoFin - nanoIni)/1000000.0;
         Log.i("tiempo",  nombreFunc + ": " + res + "ms");
+    }
+
+    public static MainActivity getInstance(){
+        return instance;
     }
  }
 
