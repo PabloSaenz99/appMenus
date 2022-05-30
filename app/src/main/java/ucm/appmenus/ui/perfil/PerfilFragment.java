@@ -50,6 +50,7 @@ public class PerfilFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recyclerReseniasPerfilFragment);
         View line = root.findViewById(R.id.divider);
         ToggleButton settings = root.findViewById(R.id.settings);
+        TextView textInfo = root.findViewById(R.id.textViewInfoPerfil);
 
 
         if(usuario.getEmail().equals(Constantes.EMAIL_INVITADO)){
@@ -64,6 +65,7 @@ public class PerfilFragment extends Fragment {
             botonCerrarSesion.setText("INICIA SESION");
             botonCerrarSesion.setVisibility(View.VISIBLE);
             settings.setVisibility(View.INVISIBLE);
+            textInfo.setVisibility(View.INVISIBLE);
 
         }else{
             //imagen.setImageBitmap(BitmapFactory.decodeFile(usuario.getImagenDir()));
@@ -77,6 +79,11 @@ public class PerfilFragment extends Fragment {
                     R.id.recyclerReseniasPerfilFragment, R.layout.recycler_resenias, root, LinearLayoutManager.VERTICAL);
             botonFavoritos.setBackgroundColor(root.getResources().getColor(R.color.botonDesactivado));
             botonResenias.setBackgroundColor(root.getResources().getColor(R.color.botonActivado));
+            textInfo.setVisibility(View.INVISIBLE);
+            if(usuario.getResenias().isEmpty()){
+                textInfo.setVisibility(View.VISIBLE);
+                textInfo.setText("Parece que aún no has\npublicado ninguna reseña.");
+            }
         });
 
         botonFavoritos.setOnClickListener(view -> {
@@ -84,6 +91,11 @@ public class PerfilFragment extends Fragment {
                     R.id.recyclerReseniasPerfilFragment, R.layout.recycler_restaurantes, root, LinearLayoutManager.VERTICAL);
             botonResenias.setBackgroundColor(root.getResources().getColor(R.color.botonDesactivado));
             botonFavoritos.setBackgroundColor(root.getResources().getColor(R.color.botonActivado));
+            textInfo.setVisibility(View.INVISIBLE);
+            if(usuario.getRestaurantesFavoritos().isEmpty()){
+                textInfo.setVisibility(View.VISIBLE);
+                textInfo.setText("Parece que aún no has añadido\nningún restaurante a favoritos.");
+            }
         });
 
         botonCerrarSesion.setOnClickListener(view -> {

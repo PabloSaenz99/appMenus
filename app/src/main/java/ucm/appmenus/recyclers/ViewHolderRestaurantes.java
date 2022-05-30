@@ -65,16 +65,16 @@ public class ViewHolderRestaurantes extends RecyclerView.ViewHolder implements I
         favorito.setOnClickListener(v -> {
             if(usuario.getEmail().equals(Constantes.EMAIL_INVITADO)){
                 favorito.setChecked(false);
-                Toast.makeText(view.getContext(), Constantes.NECESARIO_LOGIN, Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), Constantes.NECESARIO_LOGIN, Toast.LENGTH_SHORT).show();
             }else{
                 if(favorito.isChecked()) {
                     Toast.makeText(view.getContext(), nombre.getText().toString() + " añadido a favoritos",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
                     Usuario.getUsuario().addRestauranteFavorito(restaurante);
                 }
                 else {
                     Toast.makeText(view.getContext(), nombre.getText().toString() + " eliminado de favoritos",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
                     Usuario.getUsuario().removeRestauranteFavorito(restaurante);
                 }
                 BaseDatos.getInstance().addFavoritosUsuario(Usuario.getUsuario().getRestaurantesFavoritosID());
