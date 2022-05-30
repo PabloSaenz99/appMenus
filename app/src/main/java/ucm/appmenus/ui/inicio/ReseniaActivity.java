@@ -52,7 +52,10 @@ public class ReseniaActivity extends AppCompatActivity {
         Button crearResenia = findViewById(R.id.botonCrearResenia);
         crearResenia.setOnClickListener(view -> {
             if(titulo.getText().toString().length() > 50 || descripcion.getText().toString().length() > 350){
-                Toast.makeText(this, "El título no puede tener más de 50 caracteres y la descripción 350", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "El título no puede tener más de 50 caracteres y la descripción 350.", Toast.LENGTH_SHORT).show();
+            }
+            else if(titulo.getText().length() == 0 || descripcion.getText().length() == 0){
+                Toast.makeText(this, "Debes rellenar todos los campos.", Toast.LENGTH_SHORT).show();
             }
             else {
                 Resenia r = new Resenia(idRestaurante, Usuario.getUsuario().getIdUsuario(), Usuario.getUsuario().getNombre().getValue(),
