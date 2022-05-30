@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -72,17 +75,23 @@ public class BaseDatos {
         databaseResenias.child(resenia.getIdResenia()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(!snapshot.exists()){                      //No existe una reseña, por lo que se añade a todas partes
-                    databaseRestaurantes.child(resenia.getIdRestaurante()).removeValue();
-                    databaseResenias.child(resenia.getIdResenia()).removeValue();
-                }
-                Set<String> idResenias = new HashSet<>();
-                for (Resenia r: reseniasList)
-                    idResenias.add(r.getIdResenia());
+                databaseResenias.child(resenia.getIdResenia()).setValue(resenia);
 
                 databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).push().setValue(resenia.getIdResenia());
-                databaseResenias.child(resenia.getIdResenia()).setValue(resenia);;
-                databaseUsuarios.child(RESENIAS).setValue(new ArrayList<>(idResenias));
+                /*MutableLiveData<List<Resenia>> reseniasRestaurantes = new MutableLiveData<>(new ArrayList<>());
+                getReseniasRestaurante(resenia.getIdRestaurante(), reseniasRestaurantes);
+                Observer<List<Resenia>> observer = resenias -> {
+                    List<String> idReseniasRestaurante = new ArrayList<>();
+                    for(Resenia r: resenias)
+                        idReseniasRestaurante.add(r.getIdResenia());
+                    databaseRestaurantes.child(resenia.getIdRestaurante()).child(RESENIAS).setValue(idReseniasRestaurante);
+                };
+                reseniasRestaurantes.observe(MainActivity.getInstance(), observer);*/
+
+                Set<String> idReseniasUsuario = new HashSet<>();
+                for (Resenia r: reseniasList)
+                    idReseniasUsuario.add(r.getIdResenia());
+                databaseUsuarios.child(RESENIAS).setValue(new ArrayList<>(idReseniasUsuario));
                 MainActivity.medirTiempo("Añadir reseña", ini, System.nanoTime());
             }
             @Override
@@ -132,18 +141,20 @@ public class BaseDatos {
      * @param idRestaurante id del resaturante del cual buscar las reseñas
      * @param res lista donde se guaradrá el resultado
      */
-    public void getReseniasRestaurante(String idRestaurante, MutableLiveData<List<Resenia>> res){
+    public void getReseniasRestaurante(String idRestaurante, MutableLiveData<Map<String, Resenia>> res){
         long ini = System.nanoTime();
         //Obtiene la lista de ids de las reseñas de ese restaurante
         databaseRestaurantes.child(idRestaurante).child(RESENIAS).get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                List<Resenia> resenias = res.getValue();
+                Map<String, Resenia> resenias = res.getValue();
                 for (DataSnapshot d: task.getResult().getChildren()) {
                     //Obtiene los datos de la reseña (busca el id de cada reseña)
                     databaseResenias.child(String.valueOf(d.getValue())).get().addOnCompleteListener(task1 -> {
                         //Añade las reseñas
                         if(task1.isSuccessful()) {
-                            resenias.add(parseResenia(task1.getResult()));
+                            Resenia r = parseResenia(task1.getResult());
+                            if(!resenias.containsKey(r.getIdResenia()))
+                                resenias.put(r.getIdResenia(), r);
                             res.postValue(resenias);
                         }
                     });

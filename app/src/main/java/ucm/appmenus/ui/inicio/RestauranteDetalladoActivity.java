@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import ucm.appmenus.R;
@@ -111,8 +113,8 @@ public class RestauranteDetalladoActivity extends AppCompatActivity {
         restaurante.getliveDataImagen().observe(this, observerImagenes);
 
         //Recycler reseñas
-        final Observer<List<Resenia>> observerResenias = res -> {
-            RecyclerAdapter.crearRecyclerLineal(res, ViewHolderResenia.class, R.id.recyclerReseniaRestaurante,
+        final Observer<Map<String, Resenia>> observerResenias = res -> {
+            RecyclerAdapter.crearRecyclerLineal(new ArrayList<>(res.values()), ViewHolderResenia.class, R.id.recyclerReseniaRestaurante,
                     R.layout.recycler_resenias, v, LinearLayoutManager.VERTICAL);
             Log.i("resenias res", res.toString());
         };
