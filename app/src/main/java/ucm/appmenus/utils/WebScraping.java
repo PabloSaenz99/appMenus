@@ -213,8 +213,8 @@ public class WebScraping {
         Map<Double, Integer> map = new TreeMap<>();
         double moda = 0, modaPrecio = 0;
         try {
-            //Pattern pattern = Pattern.compile("\\$\\d+(,|.)\\d+");     //Pattern dolares
-            Pattern pattern = Pattern.compile("\\d+(,|.)\\d+€");      //Pattern euros
+            //Pattern pattern = Pattern.compile("\\$ ?\\d+(,|.)\\d+");     //Pattern dolares
+            Pattern pattern = Pattern.compile("\\d+(,|.)\\d+ ?€");      //Pattern euros
             Matcher matcher = pattern.matcher(texto);
             while (matcher.find()) {
                 double d = Double.parseDouble(matcher.group().replace("$", ""));
