@@ -1,5 +1,5 @@
-# appMenus
-Trabajo de Fin de Grado, Universidad Complutense de Madrid, Facultad de Informática.
+# Food Feeltr
+Trabajo de Fin de Grado "Desarrollo de una aplicación móvil para búsqueda de menús alimenticios según intereses y basados en opiniones", Universidad Complutense de Madrid, Facultad de Informática.
 
 ## Importante: en la rama de testing se encuentra la versión más reciente de la aplicación, con búsquedas en español
 
